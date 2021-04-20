@@ -1,0 +1,236 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tab_layout_vertical_Content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_gravity="bottom">
+
+
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/layout">
+
+                <RelativeLayout
+                    android:id="@+id/tab_layout_bck_bttn_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless">
+
+                    <ImageView
+                        android:id="@+id/img_back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                        android:contentDescription="@string/todo" />
+
+                    <TextView
+                        android:id="@+id/tab_layout_txt_back_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_toEndOf="@+id/img_back_btn"
+                        android:layout_alignBottom="@+id/img_back_btn"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:text="@string/back"
+                        android:visibility="visible"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="17sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/unit"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/unit_selected_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number"
+                        android:layout_toEndOf="@+id/unit"
+                        android:layout_marginStart="2dp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/title_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/word_list"
+                        android:layout_toEndOf="@+id/unit_selected_number"/>
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/tab_layout_crs_menu"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    android:src="@drawable/vertical_dot"
+                    android:contentDescription="@string/todo" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:tabGravity="center"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/colorPrimary"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:isScrollContainer="false"
+            android:scrollY="110dp"
+            android:scrollX="@dimen/cardview_compat_inset_shadow"/>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/story_component_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:animateLayoutChanges="true"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="10dp"
+        android:visibility="invisible"
+        android:layout_gravity="bottom">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.jackandphantom.circularimageview.RoundedImage
+                android:id="@+id/card_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/mx_play_normal"
+                android:layout_centerVertical="true"/>
+
+
+            <SeekBar
+                android:id="@+id/music_seek_bar"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                style="@style/Base.Widget.AppCompat.SeekBar"
+                android:layout_toEndOf="@+id/card_image"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="-15dp"
+                android:layout_centerInParent="true"/>
+
+
+            <TextView
+                android:id="@+id/progress_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/music_seek_bar"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:text="@string/default_time"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/divider_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="@string/divide"
+                android:layout_toEndOf="@id/progress_time_text"/>
+
+
+            <TextView
+                android:id="@+id/audio_total_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_time"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/divider_text"
+                android:gravity="center"/>
+
+
+            <ImageButton
+                android:id="@+id/click_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_translate_24"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="7dp"/>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+    
+
+    
+    
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

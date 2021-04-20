@@ -1,0 +1,147 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tab_layout_vertical_Content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_gravity="bottom">
+
+
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/quiz_result_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/quiz_result_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/quiz_result_layout">
+
+                <RelativeLayout
+                    android:id="@+id/quiz_result_tab_layout_bck_bttn_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless">
+
+                    <ImageView
+                        android:id="@+id/quiz_result_img_back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                        android:contentDescription="@string/todo" />
+
+                    <TextView
+                        android:id="@+id/quiz_result_tab_layout_txt_back_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_toEndOf="@+id/quiz_result_img_back_btn"
+                        android:layout_alignBottom="@+id/quiz_result_img_back_btn"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center"
+                        android:text="@string/back"
+                        android:visibility="visible"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="17sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/quiz_result_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/unit"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/unit_selected_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number"
+                        android:layout_toEndOf="@+id/quiz_result_unit"
+                        android:layout_marginStart="2dp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/quiz_result_title_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/word_list"
+                        android:layout_toEndOf="@+id/unit_selected_number"/>
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/quiz_result_tab_layout_crs_menu"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    android:src="@drawable/vertical_dot"
+                    android:contentDescription="@string/todo" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/quiz_result_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:tabGravity="fill"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/colorPrimary"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/quiz_result_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:isScrollContainer="true"/>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

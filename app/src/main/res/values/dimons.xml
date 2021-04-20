@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="width">10dp</dimen>
+    <dimen name="textSize">70sp</dimen>
+    <dimen name="metricSize">14dp</dimen>
+    <dimen name="metricPaddingY">25dp</dimen>
+
+    //quiz dimens
+    <dimen name="quiz_option_width">167dp</dimen>
+    <dimen name="quiz_relative_margin">10dp</dimen>
+    <dimen name="quiz_card_elevation">0dp</dimen>
+    <dimen name="quiz_text_margin">20dp</dimen>
+
+    //quiz textView counter
+    <dimen name="counter_text_size">12sp</dimen>
+
+</resources>

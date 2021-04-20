@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorGravity="top"
+        app:tabGravity="fill"
+        android:layout_marginTop="3dp"
+        app:tabIndicatorColor="#30CF13"/>
+
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/sample_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageButton
+        android:id="@+id/sample_translate_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_word_detailed_baseline_translate_24"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:contentDescription="@string/todo" />
+
+</RelativeLayout>

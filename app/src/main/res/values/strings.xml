@@ -1,0 +1,278 @@
+<resources>
+    <string name="app_name">4000 Essential Words Book 1</string>
+
+    <string name="unit_title">Unit Title</string>
+    <string name="unit_num">Unit #</string>
+    <string name="story_button">Story</string>
+    <string name="story">Story</string>
+    <string name="quiz_button">Quiz</string>
+    <string name="quiz">Quiz</string>
+    <string name="enter">Enter</string>
+    <string name="unit_text">Unit  </string>
+    <string name="word_list">List</string>
+
+    //word detailed strings
+    <string name="word_text_definition">Definition</string>
+    <string name="word_text_example">Example</string>
+    <string name="word_divider">:</string>
+    <string name="favorite_text">Favorite</string>
+    <string name="review_words">Review</string>
+    <string name="translate_text">Translate</string>
+
+    //menu sample String
+    <string name="item_1">item one</string>
+    <string name="item_2">item two</string>
+    <string name="item_3">item three</string>
+    <string name="item_4">item four</string>
+
+    <string name="sample">TextView</string>
+    <string name="unit">Unit</string>
+    <string name="number">Num: </string>
+    <string name="tab_title">tab title</string>
+
+    //dum String
+    <string name="percent">1</string>
+    <string name="txt_option_one">Option #1</string>
+    <string name="txt_option_two">Option #2</string>
+    <string name="txt_option_three">Option #3</string>
+    <string name="txt_option_four">Option #4</string>
+
+    //quiz fragment text
+    <string name="eng_to_per_quiz">English To Persian Quiz</string>
+    <string name="Photo_word_quiz">Photo Words Quiz </string>
+    <string name="Per_to_eng_quiz">Persian To English Quiz</string>
+    <string name="skip_answer">Skip Question</string>
+
+    //review Strings
+    <string name="easy_btn">Easy</string>
+    <string name="hard_btn">Hard</string>
+    <string name="i_know">I Know</string>
+    <string name="need_to_learn">Need to learn</string>
+
+    //user answer
+    <string name="user_answer">Your Answer</string>
+    <string name="correct_answer">Correct Answer</string>
+
+
+
+    //unit stories
+
+    <string name="story_unit_1">
+        A cruel lion lived in the forest. Every day, he killed and ate a lot of animals. The other animals were afraid the lion would kill them all.\n\n
+        یک شیر بی رحم در جنگل زندگی می کرد. او هر روز حیوانات زیادی را می کشت و می خورد. حیوانات دیگر می ترسیدند که شیر همه آنها را بکشد.\n\n
+        The animals told the lion, ”Let’s make a deal. If you promise to eat only one animal each day, then one of us will come to you every day. Then you don’t have to hunt and kill us.\n\n
+        حیوانات به شیر گفتند: ”بیایید معامله کنیم. اگر قول می دهید هر روز فقط یک حیوان بخورید ، هر روز یکی از ما به شما مراجعه خواهد کرد. پس لازم نیست ما را شکار کنید و بکشید.”\n\n
+        The plan sounded well thought-out to the lion, so he agreed, but he also said, ”If you don’t come every day, I promise to kill all of you the next day!\n\n
+        این طرح به نظر شیر خوب فکر شده بود ، بنابراین او موافقت کرد ، اما او همچنین گفت ، ”اگر هر روز نمی آیی ، من قول می دهم همه شما را روز بعد بکشم!\n\n
+        Each day after that, one animal went to the lion so that the lion could eat it. Then, all the other animals were safe.\n\n
+        هر روز پس از آن ، یک حیوان نزد شیر می رفت تا شیر بتواند آن را بخورد. سپس ، همه حیوانات دیگر در امان بودند.\n\n
+        Finally, it was the rabbit’s turn to go to the lion. The rabbit went very slowly that day, so the lion was angry when the rabbit finally arrived.\n\n
+        سرانجام ، نوبت خرگوش بود که به سراغ شیر برود. خرگوش آن روز خیلی آهسته پیش رفت ، بنابراین شیر سرانجام وقتی خرگوش رسید خشمگین شد.\n\n
+        The lion angrily asked the rabbit, ”Why are you late?”\n\n
+        شیر با عصبانیت از خرگوش پرسید ، ”چرا دیر کردی؟\n\n
+        I was hiding from another lion in the forest. That lion said he was the king, so I was afraid.”\n\n
+        من در جنگل از یک شیر دیگر پنهان شده بودم. آن شیر گفت که او پادشاه است ، بنابراین من ترسیدم.\n\n
+        The lion told the rabbit, ”I am the only king here! Take me to that other lion, and I will kill him.”\n\n
+        شیر به خرگوش گفت ، ”من اینجا تنها پادشاه هستم! مرا به نزد آن شیر دیگر ببر و من او را خواهم کشت.”\n\n
+        The rabbit replied, ”I will be happy to show you where he lives.”\n\n
+        خرگوش پاسخ داد ، ”من خوشحال خواهم شد که به شما نشان دهم کجا زندگی می کند.”\n\n
+        The rabbit led the lion to an old well in the middle of the forest. The well was very deep with water at the bottom. The rabbit told the lion, ”Look in there. The lion lives at the bottom.”\n\n
+        خرگوش شیر را به یک چاه قدیمی در وسط جنگل هدایت کرد. چاه بسیار عمیق بود و پایین آن آب بود. خرگوش به شیر گفت: «به آنجا نگاه کن. شیر در پایین زندگی می کند.\n\n
+        When the lion looked in the well, he could see his own face in-the water. He thought that was the other lion. Without waiting another moment, the lion jumped into the well to attack the other lion. He never came out.\n\n
+        وقتی شیر به چاه نگاه می کرد ، می توانست چهره خودش را در آب ببیند. او فکر کرد این شیر دیگر است. شیر بدون انتظار لحظه ای دیگر ، به داخل چاه پرید تا به شیر دیگر حمله کند. او هرگز بیرون نیامد.\n\n
+        All of the other animal in the forest were very pleased with the rabbit’s clever trick\n\n
+        همه حیوانات دیگر در جنگل از نیرنگ هوشمندانه خرگوش بسیار راضی بودند.\n\n
+    </string>
+
+    <string name="story_content">
+        A cruel lion lived in the forest. Every day, he killed and ate a lot of animals. The other animals were afraid the lion would kill them all.\n\n
+        The animals told the lion, “Let’s make a deal. If you promise to eat only one animal each day, then one of us will come to you every day. Then you don’t have to hunt and kill us.”\n\n
+        The plan sounded well thought-out to the lion, so he agreed, but he also said, “If you don’t come every day, I promise to kill all of you the next day!”\n\n
+        Each day after that, one animal went to the lion so that the lion could eat it. Then, all the other animals were safe.\n\n
+        Finally, it was the rabbit’s turn to go to the lion. The rabbit went very slowly that day, so the lion was angry when the rabbit finally arrived.\n\n
+        The lion angrily asked the rabbit, “Why are you late?”\n\n
+        “I was hiding from another lion in the forest. That lion said he was the king, so I was afraid.”\n\n
+        The lion told the rabbit, “I am the only king here! Take me to that other lion, and I will kill him."\n\n
+        The rabbit replied, “I will be happy to show you where he lives.”\n\n
+        The rabbit led the lion to an old well in the middle of the forest. The well was very deep with water at the bottom. The rabbit told the lion, “Look in there. The lion lives at the bottom.”\n\n
+        When the lion looked in the well, he could see his own face in-the water. He thought that was the other lion. Without waiting another moment, the lion jumped into the well to attack the other lion. He never came out.\n\n
+        All of the other animal in the forest were very pleased with the rabbit’s clever trick.\n\n
+    </string>
+
+
+    <string name="story_unit_2">Mia’s father had a laboratory, but she had no idea what was in it. Her dad always closed and locked the door when he went in. She knew that he used it to do projects for work. He never told Mia what these projects were.
+        1 One night, Mia approached the door to the laboratory. She stopped and thought, “I wonder what crazy experiment he is doing now.” Suddenly, she heard a loud noise. It sounded like an evil laugh. The noise scared her, so she walked quickly back to her room.
+        The next night, her friend Liz came to her house. When Liz arrived, Mia told her about the night before. “Oh, it was terrible,” she said.
+        “Why don’t we see what is in there?” Liz asked. “It will be a fun adventure!” Mia felt nervous about going into her father’s laboratory, but she agreed. As always, the door was locked. They waited until Mia’s father left the laboratory to eat dinner. “He didn’t lock the door!” Liz said. “Let’s go.”
+        The laboratory was dark. The girls walked down the stairs Carefully. Mia smelled strange chemicals. What terrible thing was her father creating?
+        Suddenly, they heard an evil laugh. It was even worse than the one Mia heard the night before. What if a monster was going to kill them? Mia had to do something. She shouted for help.
+        Mia’s father ran into the room and turned on the lights. “Oh, no,” he said. “You must have learned my secret.” “Your monster tried to kill us,” Mia said.
+        “Monster?” he asked. “You mean this?” He had a pretty doll in his hands. The doll laughed. The laugh didn’t sound so evil anymore. “I made this foryour birthday. I wanted to give it to you then, but you can have it now. I hope you like it !"</string>
+
+    <string name="story_unit_3">Lee sat among the books at the library and thought about his group project.
+        They had to turn it in soon, but he hadn’t even started his part! Jack and Claire were in his group. They had worked hard. They were also very smart, and Lee didn’t want them to get a bad grade.
+        Jack did the report. He wrote a lot of very good sentences and described things with great adjectives. Claire drew a nice map of the stars. Now, Lee needed to do his part of the project.
+        “Well, I suppose I need to start my model,” Lee thought.
+        Making a model of a planet was really hard. Lee tried to read several books, but he couldn’t comprehend any of the charts. “We’re going to fail because of me!” Lee said. He put his head down on the table and said, “I wish I could see a planet, instead of having to read about it!”
+        Suddenly, there was a bright light. Lee was pulled from his chair, through the roof, and right into a strange ship! “Hello, kid,” said an alien. “Did you ask for help?”
+        Lee told the friendly alien all about his project. The alien agreed to help Lee solve his problem. “First, we’ll fly through space to view the universe. Then, I can help you make a model of my planet.”
+        Soon, they were going through the clouds. They passed the moon. Then they viewed Mars. Lee was very excited. Instead of a bad grade, his group would have the best project ever!
+        “It’s time to go home,” the alien finally said. On the way back, he helped Lee make a model of the planet Mars. Soon, they were on Earth.
+        “Thanks,” Lee said. “My model will be awesome!” Then he took his model and said goodbye to his new friend.
+        Reading Comprehension</string>
+
+    <string name="story_unit_4">John’s dog was a bad dog. He bit people frequently. John had great concern about this.\n
+        سگ جان یک سک بدی بود. اون مرتب مردم رو گاز میگرفت. جان نگرانی بزرگی دراین مورد داشت\n
+        It was not an appropriate way for a dog to behave. His friends in the village always expected the dog to bite them. The news about John’s dog spread through the village. None of the people wanted to go to John’s house. John tried to instruct the dog to behave, but it never worked. He tried to be patient and teach the dog to be calm. That also didn’t work. John didn’t want to punish the dog. “How will I stop my dog’s bad habit?” John asked himself.
+        John’s friend came to talk to him about the issue. During their important meeting, his friend said, “The people in the village asked me to represent them. We want your dog to stop this habit. Why don’t you put a bell around the dog’s neck? This way, we would hear your dog coming down the street.”
+        John thought this was a great idea. Now, people could stay away from the dog. It would not be able to bite anyone anymore.
+        The dog liked the bell, too. People looked at him when they heard his bell. This made the dog very content. He liked the song the bell played when he walked.
+        One day, John’s dog strolled through the village and met some other dogs. He expected them to want a bell like his. But they laughed at his bell. They said the bell made people avoid him. John’s dog shook his head. “No, they look at me because they like the bell.”
+        The other dogs said, “You have the wrong idea of what makes you popular. Of course they like your bell. It tells them where you are so they can avoid you. You aren’t able to bite them anymore!”
+        You see, being popular isn’t something positive when it’s for the wrong reason.</string>
+
+    <string name="story_unit_5">A jackal is a wild dog with a big black back. It resides in the desert. But how did the jackal get his black back? This was how it happened.
+        One day, the jackal saw a girl. She was sitting upon a rock. She was not a normal child. She was a rare and beautiful sun child. She was bright and warm like the sun. The child saw the jackal and smiled.
+        She said, “Jackal, I have been relaxing on this rock for too long. I must get home soon. But, I am slow and you are fast. You will likely get me home more quickly.” Then she requested, “Will you carry me home? If you do, I’ll give you a gift. This necklace belongs to me, but I will give it to you.”
+        The wild jackal agreed. So the sun child sat on the dog’s back. They started to walk. But soon, the jackal felt ill. The sun child was very hot on his back. The heat was hurting his back very badly. “I made a terrible error in judgment.” he thought. He shouldn’t have agreed to carry her. So he asked her to get off.
+        But she did not. The jackal’s back continued to get hotter and hotter. He had to get away from the sun child. So he made a plan. First, he ran as fast as he could. He hoped the sun child would fall off. But she did not. So when the sun child was looking at the sky, not aware of the jackal’s next plan, he jumped into a field of flowers. As a result, the child rolled off his back. The jackal ran away.
+        But the sun child left a mark on the jackal’s back, a visible black mark. Ever since his experience with the sun child, the jackal has had a black back.</string>
+
+    <string name="story_unit_6">A nice woman lived by a large river. She loved children. She wanted to help them in any way. She loved her community, and everyone in the community loved her. She lived a very long time and became very wise.
+        When she died, she became a ghost. She was dead, but every night she returned to her community. She wanted to help children and not to cause them fright. But she had a scary voice. Children were afraid of her, but the ghost was a good one. She only scared them to help them.
+        One night, some children and a dog were playing by the river. They were having fun with their pet. But they were far from home. Then the weather became bad. It rained and rained. The river was rising. It was very dark. The children knew they were lost. They needed to go north, but they didn’t know which direction it was. When the moon came out, they saw a ghost by the river. The ghost said, “Go away!”
+        The children felt great fright. They knew it was a ghost. Then the ghost moved closer. She yelled again, “Go away!” The children became very upset. Some of them began to cry. The children knew they had a choice: they could escape, or they could stay and face this scary individual in the dark.
+        The children ran a long distance away. The ghost followed them all the way. Finally, the children reached home. The ghost was very happy. Soon the river rose higher and higher. It was very dangerous. The ghost had helped the children survive! She had saved them from the rising water. She also used her power to lead them home. Sometimes, meeting a ghost has advantages. A ghost can save your life!</string>
+
+    <string name="story_unit_7">King Minos was very sick. His condition was getting worse. He had three sons. He loved them all. He had to announce who would become king.
+        Two of the princes stood waiting outside the king’s room. Theseus was the oldest and strongest. He thought his father would make him king. Pelias, the second son, thought differently. He was an expert with weapons. He thought the king would choose him.
+        “When I’m king,” Theseus told Pelias, “I’ll let you contribute to the defense of our country. You can lead the army.”
+        Pelias became angry. “Father knows I’m famous for my sword skills. He’ll make me king.”
+        “You?” Theseus yelled. “He won’t choose you!”
+        “The kingdom is mine!” Pelias claimed. “Father will give it to me—or I’ll use force to take it!”
+        Theseus made a sudden move to take out his sword. Then Pelias did the same.
+        “Beating me will be a challenge,” Theseus said. “Fight me now. The winner gets the kingdom!”
+        Pelias agreed.
+        King Minos could hear his sons fighting. The youngest son, Jason, stood beside him. He sensed his father’s sadness. The king laid his hand flat on Jason’s arm.
+        “Your brothers fight too much,” the king told him. “I must protect my kingdom from all harm. They’ll divide it between them. The people won’t know what to do. There’ll be war. I can’t allow either of them to be king. Therefore, I’m making you king. Your kindness has always made you special. It’s the difference between you and your brothers. You can bring peace. They can’t.”
+        Then the king died. Theseus and Pelias heard that their youngest brother was king. They were surprised. They realized that their fighting was wrong. It had kept them from saying goodbye to their father. They agreed to have Jason as their king. He was the best choice.</string>
+
+    <string name="story_unit_8">Do you ever wonder where the moon and the sun came from? The Inuit people of Alaska have a theory.
+        They tell a story about a beautiful girl. She was very nice. In contrast, her brother was a mean little boy. One day he proposed something. “We should go to a party,” he said. The girl accepted. First, it was necessary for her to prepare. She arranged her hair and put on nice clothes. This required a lot of time. But the girl worked hard, and soon she had success. She looked perfect.
+        They attended the party together. The girl was having fun. Later, she walked into the bathroom. Suddenly, the lights were turned off! Someone grabbed her hair and tore her clothes. She ran out of the bathroom. She wanted to know who did this to her.
+        Then she had an idea. She fixed her hair again. This time it was even more beautiful. She even balanced beautiful jewels in it. She wanted to encourage the person to grab it again. She put black dirt in her hair. The purpose of this was to catch the person.
+        She went to the bathroom again, and it was the same pattern. The lights went off, and someone grabbed her hair. When he released it, his hand was black. The girl returned to the party. She knew there was only a single person with a black hand. When she saw that person, he was very familiar. It was her brother!
+        He ran into the woods. The girl ran after him. They both carried fire so they could see in the dark. The smoke went into the air. As they ran, they grew. They became huge. Then they went into space. When the girl’s fire went out, she hung in the sky. She became the moon, and her brother became the sun. They chase each other forever.</string>
+
+    <string name="story_unit_9">Last summer I took a trip to an island. I had a lot of fun. I sat and watched the waves and listened to the ocean. I learned to identify birds. I discovered pretty things and enjoyed the taste of new foods. It was a very nice time.
+        One evening I took a pleasant walk by the ocean. When the waves came in, many starfish* fell on the beach. Some starfish went back into the water, and they were safe. But other starfish were still on the sand. They would die if they did not get into the water. There were many starfish on the beach that night. It made me sad, but I knew I could not fix the problem. I stepped very carefully so I did not damage them.
+        Then I saw a little girl. She was also sad about the starfish. She wanted to prevent all of them from dying. She asked me if I could perhaps help her.
+        “To be frank, I don’t think we can do anything,” I said.
+        The little girl started to cry. She sat back against a rock and thought for a while. Finally, the emotion was gone. She stopped crying and stood up. Then she picked up a starfish and threw it into the water.
+        “What are you doing?” I asked her. But she did not answer me. She just threw as many starfish as she could. “You cannot save all of them!” I said.
+        She stopped to look at me. “No, I cannot save them all,” she replied. Then she picked up a very big starfish and said, “But I can save this one.” And then she smiled and threw the starfish as far as she could into the ocean.
+        *starfish - an animal shaped like a star that lives in the water</string>
+
+    <string name="story_unit_10">Argos lived in Ancient Greece. He was a husband and a proud father. He worked hard and did well at his job. But one thing about him wasn’t normal. He was born with 100 eyes. Having many eyes was usually a benefit to him. He had a chance to see many things.
+        Also, since he had so many eyes, he was very good at guarding things. While sleeping, he only rested a few eyes at a time. The others stayed awake. He worked for Hera, a great goddess. His primary function was to guard a special cow. The cow was very important to Hera. It was her favorite pet. The most essential part of his job was to keep the cow alone. It had to be kept separate from all the other cows and far away from people.
+        This was an easy job for Argos. The cow just ate grass all day. But the god Zeus wanted the cow. He wanted to take it away from Hera. He had a plan. He found a great music player. He asked the man to play a beautiful song for Argos. Zeus was certain Argos would go to sleep.
+        The song had an immediate effect. Argos couldn’t focus on his job. He fell asleep. Zeus saw this, and he took the cow.
+        Hera was very angry with Argos. She turned him into a peacock. She put his many eyes on his tail. Argos was very sad.
+        Zeus saw how much trouble he had caused Argos. He made another plan. He turned Argos into a group of stars. He wanted Argos to remain in the sky forever. Even today, Argos’ image remains there, above the site where all his problems began. We can still see him in the night sky.</string>
+
+    <string name="story_unit_11">There was once a beautiful princess named Rose. Her mother, the queen, however, was not as beautiful as the princess. The queen felt bad that she was not the most beautiful woman in the kingdom anymore. She was tired of competing with her daughter. She made a decision. She prepared a drink for the princess. After the princess drank it, she fell asleep. Then the queen took the princess to the forest. She left the princess there. It was a very serious thing to do. “Either she will be killed by animals or she will get lost in the forest,” the queen thought.
+        The princess had a dream. She dreamed about a man with brown hair and brown eyes. It was the man she would wed.
+        The princess woke up. She saw a strange creature on the ground. It looked like a man, but he was hairy and green. He had horns on his head and a pig’s nose.
+        The creature said, “Did I scare you? I hope not. Let me introduce myself. I am Henry.”
+        “I am not scared. To tell you the truth, I think you are cute,” said Rose.
+        Rose and Henry spent the day together. They collected berries, caught fish, and had lunch. They had a very good day filled with nice conversations.
+        “Rose, I have to go home,” said Henry. “My ship will sail home soon. I can’t leave you here in the forest alone. Will you come with me?”
+        Rose was very happy. She gave Henry a kiss right on his pig nose. As soon as she kissed Henry, he began to change. His pig nose turned into a man’s nose. His horns and green hair went away. Standing in front of her was the man Rose had dreamt about.
+        Rose and Henry were married, and they lived happily.</string>
+
+    <string name="story_unit_12">Frenhoferwas the best artist in the world. Everyone loved him. The quality of his paintings was very high. He always used the best materials. He made a big profit from his paintings. He had delicious meals with his rich neighbors. He taught art classes. Life was good.
+        Then his attitude changed. He stopped selling paintings and teaching. He tried a new method of painting. He stayed alone in his apartment all day. He worked all day and all night, rarely eating. Soon Frenhofer became very thin. But he kept working on the same painting for many years. He worked as hard as he could.
+        Finally, he finished the painting. He was very happy and invited other artists to see it. “I want your professional opinion,” he said. He wanted them to judge it and compare it to other paintings. Everyone was very excited as they went up the stairs to his apartment. Frenhofer was excited to show his painting, and the artists were excited to see it. “They’ll love it,” he thought. But they did not.
+        They were surprised by his painting. There was no white anywhere. Frenhofer filled the whole painting with lines and colors. There was no space for a normal picture. It was full of strange shapes. It looked bad to the other artists. He used symbols, and they didn’t understand them. They thought it was terrible. “Why did you paint this strange picture?” someone asked. They didn’t understand its beauty.
+        But after some time, many people began to like his painting. People wrote articles about it in magazines. They said it was his best work. They loved his strange symbols. They loved his strange colors. Frenhofer’s painting reminded everyone that just because something was new didn’t mean that it was bad. He also helped them to realize that sometimes it takes people a little time to understand great things.</string>
+
+    <string name="story_unit_13">Arthur was a responsible farmer, and Maria was a nice lady. But they were poor. They owed the town lord money for their land. One summer, their farm burned. One structure caught fire, and most of the animals ran away. Only the cats stayed. So Arthur and Maria had to bring in their crops without an animal’s help.
+        On a fall day, the lord demanded his money. Arthur asked if the lord could wait until he brought in his crops.
+        The lord was angry. He raised his hands high and yelled, “Pay me by the end of the week. If you don’t, I will increase the money you have to pay. I might put you in a jail cell.”
+        So Arthur and Maria worked until there was blood on their hands. They finished four lines of corn and went to bed.
+        But the next morning, eight lines were finished! “Maria, didn’t we stop in this spot here?” Arthur asked.
+        “Yes, that is correct. And the tools were in a different position, too,” Maria said. They were surprised and happy. That day, they worked hard and finished five lines.
+        But in the morning, ten lines were done! Each day they did a lot of work. Each night, someone else did an equal amount of work. In a week, the whole field was finished. “Tomorrow I will sell the crops and pay the lord,” Arthur said. But that morning, the crops were gone. A bag was in the middle of the field. It contained money.
+        “Maria, let’s see who has helped us work.” Through a hole in the wall, they saw a funny sight. The cats were dancing in the field and eating corn! Now Arthur knew what had happened. The cats had worked at night! After that, Arthur was very nice to his cats and fed them lots of corn.</string>
+
+    <string name="story_unit_14">Sarah loved to read. She read novels and poems. She loved the beautiful descriptions and phrases. She loved reading work from poets and novelists. She didn’t like video games or technology. She was on the basketball team, but she didn’t like sports. Her parents made her play basketball. In fact, Sarah’s parents made her do many things. But she didn’t want to do those things. She just wanted to sit and read all day.
+        One day, a small book came in the mail. It was for Sarah. The book looked very special. It was printed on sheets of gold. Sarah began to read. The outline of the story was simple. It was about a magical place. Strange things happened there. One example from the book was about a boy who could control people. In one scene, he made his friends tell funny jokes.
+        Sarah loved the book. She read it all the time. Then something strange happened. The book gave Sarah a special power. She could control other people. She was like the boy in the book. During one exam, she made her friend tell silly jokes. Her friend got in trouble.
+        After school, Sarah did not make a direct trip home. On the way, she went to the local store. She wanted to play more tricks on people. She caused problems. She made people fall down. She laughed and had fun.
+        Finally she left and started to walk home. Then she saw something. Her basketball coach was about to walk in front of a bus. He was looking the other way. She had to stop him! She used her power. She controlled him. She made him stop walking.
+        Sarah learned something that day. It was better to help people than make them suffer. So, she put a limit on how she used her power. She did not want to do bad things with it anymore. She only wanted to do good.</string>
+
+    <string name="story_unit_15">A dog saw a group of animals across the road. He walked over to meet them. “What are you doing?” he asked them.
+        “I just sold them tickets to a race between the rabbit and the turtle,” the duck responded.
+        This news excited the dog. He felt fortunate that he happened to be there. “I don’t have anything to do today,” the dog said. “I want to buy a ticket, too.”
+        The dog sat down to observe the race. The race would be extreme. It would be many kilometers in length. The rabbit and the turtle stood next to each other. They waited for the race to start. The dog wondered why the turtle agreed to run against the rabbit. Being fast was not a characteristic of turtles. The rabbit was going to win easily.
+        Suddenly, the race began. The rabbit ran extremely quickly. The turtle walked slowly. After a minute, the rabbit looked back. He saw that the turtle was far behind him and was breathing quickly because he was so tired. The rabbit smiled and slowed to a walk.
+        A minute later, the rabbit said, “I’m winning, so I’ll take a rest.” He sat and began to consume some grass. Then, he let his eyes close. He wasn’t the winner yet. But there was no risk of him losing the race. He went to sleep.
+        Hours later, a loud sound woke him. All of the animals were yelling and looking at the field. He felt fear for the first time. The turtle was almost at the finish line. Now, the rabbit realized his mistake. But the race was over. He gave the turtle an opportunity to win, and the turtle took it. The duck handed the turtle his prize. It was the happiest day of the turtle’s life.
+        The dog was happy for the turtle. “He isn’t fast,” the dog thought. “But he tried his best and did something great.”</string>
+
+    <string name="sample_2">All of the other animal in the forest were very pleased with the rabbit’s clever trick</string>
+    <string name="quiz_sample_string">When the lion looked in the well, he could see his own face in-the water</string>
+
+
+
+    //unit_1
+    <string name="afraid">afraid</string> <string name="afraid_pho">[əˈfreid] adj</string> <string name="afraid_translate">ترسیده</string> <string name="afraid_defi">When someone is afraid, they feel fear.</string> <string name="afraid_dfntn_trnslt">وقتی کسی می ترسد ، احساس ترس می کند.</string> <string name="afraid_exmpl">The woman was afraid of what she saw.</string> <string name="afraid_exmpl_tran">زن از چیزی که دیده بود ترسید</string>
+    <string name="agree">agree</string> <string name="phon_agree">[əˈɡriː] v</string> <string name="agree_meaning">موافق بودن</string> <string name="agree_defini">To agree is to say “yes” or to think the same way</string> <string name="agree_dfntn_trnslt">موافقت این است که "بله" بگویید یا همان فکر را داشته باشید.</string> <string name="agree_exmpl">A: The food is very good in that restaurant. B: I agree with you</string> <string name="agree_exmpl_meaning">الف: غذا در آن رستوران خیلی خوب است ب: من باهات موافقم</string>
+    <string name="angry">angry</string> <string name="angry_phon">[ˈæŋɡrɪ] adj</string> <string name="angry_meaning">عصبانی</string> <string name="angry_defi">When someone is angry, they may want to speak loudly or fight</string> <string name="angry_dfntn_trnslt">وقتی کسی عصبانی است ، ممکن است بخواهد با صدای بلند صحبت کند یا دعوا کند.</string> <string name="angry_exmpl">She didn’t do her homework, so her father is angry</string> <string name="angry_exmpl_meaning">اون تکالیفش را انجام نداده بود, پس پدرش عصبانی هست</string>
+    <string name="arrive">arrive</string> <string name="arrive_pho">[əˈraɪv] v.</string> <string name="arrive_translate">رسیدن</string> <string name="arrive_dfntn">To arrive is to get to or reach some place.</string> <string name="arrive_dfntn_trnslt">رسیدن یعنی رسیدن به جایی یا رسیدن به آن.</string> <string name="arrive_exmpl">The bus always arrives at the corner of my street at 4:00.</string> <string name="arrive_exmpe_trnslt">اتوبوس همیشه ساعت 4:00 به گوشه خیابان من می رسد.</string>
+    <string name="attack">attack</string> <string name="attack_pho">[əˈtæk] v.</string> <string name="attack_trnslt">حمله کردن</string> <string name="attack_dfntn">To attack is to try to fight or to hurt.</string> <string name="attack_dfntn_trnslt">حمله ، تلاش برای جنگیدن یا صدمه زدن است.</string> <string name="attack_exmpl">The man with the sword attacked the other man first.</string> <string name="attack_exmpl_trnslt">مرد با شمشیر ابتدا به مرد دیگر حمله کرد</string>
+    <string name="bottom">bottom</string> <string name="bottom_pho">[ˈbɒtəm] n.</string> <string name="bottom_trnslt">پایین</string> <string name="bottom_dfntn">The bottom is the lowest part.</string> <string name="bottom_dfntn_trnslt">پایین پایین ترین قسمت است.</string> <string name="bottom_exmpl">The bottom of my shoe has a hole in it.</string> <string name="bottom_exmpl_trnslt">پایین کفش من سوراخی دارد.</string>
+    <string name="clever">clever</string> <string name="clever_pho">[ˈklɛv ər] adj.</string> <string name="clever_trnslt">باهوش</string> <string name="clever_dfntn">When someone is clever, they can solve a hard puzzle or problem</string> <string name="clever_dfntn_trnslt">وقتی کسی زیرک باشد ، می تواند یک معما یا مشکل سخت را حل کند.</string> <string name="clever_exmpl">The clever boy thought of a good idea.</string> <string name="clever_exmple_trnslt">پسر باهوش فکر خوبی فکر کرد</string>
+    <string name="cruel">cruel</string> <string name="cruel_pho">[ˈkruːəl] adj.</string> <string name="cruel_trnslt">ظالم, بی رحم</string> <string name="cruel_dfntn">When someone is cruel, they do bad things to hurt others.</string> <string name="cruel_dfntn_trnslt">وقتی کسی بی رحم است ، کارهای بدی انجام می دهد تا دیگران را آزار دهد.</string> <string name="cruel_exmpl">The cruel man yelled at his sister.</string> <string name="cruel_exmpl_trnslt">مرد بی رحم خواهرش را فریاد زد</string>
+    <string name="finally_1">finally</string> <string name="finally_pho">[ˈfaɪnəlɪ] adv.</string> <string name="finally_trnsle">درآخر</string> <string name="finally_dfntn">If something happens finally, it happens after a longtime or at the end.</string> <string name="finally_dfntn_trnslt">اگر اتفاقی سرانجام رخ دهد ، پس از مدت ها یا پایان آن اتفاق می افتد.</string> <string name="finally_exmpl">He finally crossed the finish line after five hours of running.</string> <string name="finally_exmpl_trnslt">او سرانجام پس از پنج ساعت دویدن از خط پایان عبور کرد</string>
+    <string name="hide">hide</string> <string name="hide_pho">[haɪd] v.</string> <string name="hide_trnslt">مخفی شدن</string> <string name="hide_dfntn">To hide is to try not to let others see you.</string> <string name="hide_dfntn_trnslt">پنهان کردن این است که سعی کنید اجازه ندهید دیگران شما را ببینند.</string> <string name="hide_exmpl">The other children will hide while you count to 100.</string> <string name="hide_exmpl_trnslt">بچه های دیگر پنهان می شوند در حالی که شما تا 100 می شمارید.</string>
+    <string name="hunt">hunt</string> <string name="hunt_pho">[hʌnt] v.</string> <string name="hunt_trnslt">شکار کردن</string> <string name="hunt_dfntn">To hunt is to look for or search for an animal to kill.</string> <string name="hunt_dfntn_trnslt">شکار جستجوی حیوان برای کشتن است.</string> <string name="hunt_exmpl">Long ago, people hunted with bows and arrows.</string> <string name="hunt_exmpl_trnlt">مدت ها پیش ، مردم با تیر و کمان شکار می کردند</string>
+    <string name="lot">lot</string> <string name="lot_pho">[lɒt] n.</string> <string name="lot_trnslt">زیاد</string> <string name="lot_dfntn">A lot means a large number or amount of people, animals, things, etc.</string> <string name="lot_dfntn_trnslt">مقدار زیاد به معنای تعداد یا تعداد زیادی از افراد ، حیوانات ، اشیا است</string> <string name="lot_exmpl">There are a lot of apples in the basket.</string> <string name="lot_exmpl_trnslt">تعداد زیادی سیب در سبد وجود دارد.</string>
+    <string name="middle">middle</string> <string name="middle_pho">[mɪdl] n.</string> <string name="middle_trnslt">وسط, بین</string> <string name="middle_dfntn">The middle of something is the center or halfway point.</string> <string name="middle_dfntn_trnslt">وسط چیزی مرکز یا نیمه راه است.</string> <string name="middle_exmpl">The Canadian flag has a maple leaf in the middle of it.</string> <string name="middle_exmpl_trnslt">پرچم کانادا یک برگ افرا در وسط آن دارد.</string>
+    <string name="moment">moment</string> <string name="moment_pho">[ˈmoʊmənt] n.</string> <string name="moment_trnslt">لحظه</string> <string name="moment_dfntn">A moment is a second or a very short time.</string> <string name="moment_dfntn_trnslt">یک لحظه یک ثانیه است یا یک زمان بسیار کوتاه.</string> <string name="moment_exmpl">I was only a few moments late for the meeting.</string> <string name="moment_exmpl_trnslt">فقط چند لحظه برای جلسه تأخیر داشتم</string>
+    <string name="pleased">pleased</string> <string name="pleased_pho"> [pli:zd] adj.</string> <string name="pleased_trnslt">خشنود</string> <string name="pleased_dfntn">When someone is pleased, they are happy.</string> <string name="pleased_dfntn_trnslt">وقتی کسی راضی باشد خوشحال می شود.</string> <string name="pleased_exmpl">She was pleased with the phone call she received.</string> <string name="pleased_exmpl_trnslt">اون از تماسی که دریافت کرده بود راضی بود</string>
+    <string name="promise">promise</string> <string name="promise_pho"> [ˈprɒmɪs] v.</string> <string name="promise_trnslt">قول دادن</string> <string name="promise_dfntn">To promise is to say you will do something for sure.</string> <string name="promise_dfntn_trnslt">قول دادن این است که بگویید مطمئناً کاری خواهید کرد.</string> <string name="promise_exmpl">He promised to return my key by tomorrow.</string> <string name="promise_exmpl_trnslt">او قول داد تا فردا کلید من را برگرداند.</string>
+    <string name="reply">reply</string> <string name="reply_pho">[rɪˈplaɪ] v.</string> <string name="reply_trnslt">پاسخ دادن</string> <string name="reply_dfntn">To reply is to give an answer or say back to someone.</string> <string name="reply_dfntn_trnslt">پاسخ دادن به این معنی است که به شخصی پاسخ دهید یا بگویید.</string> <string name="reply_exmpl">She asked him what time his meeting was. He replied, “at three.”</string> <string name="reply_exmpl_trnslt">او از او پرسید که ملاقاتش ساعت چند است؟ او پاسخ داد ، "در سه."</string>
+    <string name="safe">safe</string> <string name="safe_pho">[seɪf] adj.</string> <string name="safe_trnslt">ایمن, امن</string> <string name="safe_dfntn">When a person is safe, they are not in danger.</string> <string name="safe_dfntn_trnslt">وقتی فردی در امنیت است ، خطری در او نیست.</string> <string name="safe_exmpl">Put on your seat belt in the car to be safe.</string> <string name="safe_exmpl_trnslt">کمربند ایمنی خود را در ماشین قرار دهید تا ایمن باشد.</string>
+    <string name="trick">trick</string> <string name="trick_pho">[trɪk] n.</string> <string name="trick_trnslt">حقه</string> <string name="trick_dfntn">A trick is something you do to fool another person.</string> <string name="trick_dfntn_trnslt">ترفند کاری است که شما برای فریب شخص دیگری انجام می دهید.</string> <string name="trick_exmpl">His card trick really surprised us.</string> <string name="trick_exmpl_trnslt">ترفند کارت وی واقعاً ما را متعجب کرد.</string>
+    <string name="well">well</string> <string name="well_pho">[wɛl] adv.</string> <string name="well_trnslt">خوب</string> <string name="well_dfntn">You use well to say that something was done in a good way.</string> <string name="well_dfntn_trnslt">شما خوب استفاده می کنید تا بگویید کاری به طرز خوبی انجام شده است.</string> <string name="well_exmpl">The couple can dance quite well.</string> <string name="well_exmpl_trnslt">زن و شوهر می توانند کاملاً خوب برقصند.</string>
+
+
+
+
+    //story image URL's
+    <string name="one">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-1/reading/23723.jpg</string>
+    <string name="two">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-2/reading/23735.jpg</string>
+    <string name="three">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-3/reading/23742.jpg</string>
+    <string name="four">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-4/reading/23752.jpg</string>
+    <string name="five">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-5/reading/23760.jpg</string>
+    <string name="six">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-6/reading/23783.jpg</string>
+    <string name="seven">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-7/reading/23790.jpg</string>
+    <string name="eight">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-8/reading/23799.jpg</string>
+    <string name="nine">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-9/reading/23808.jpg</string>
+    <string name="ten">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-10/reading/23815.jpg</string>
+    <string name="eleven">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-11/reading/23823.jpg</string>
+    <string name="twelve">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-12/reading/23830.jpg</string>
+    <string name="thirteen">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-13/reading/23841.jpg</string>
+    <string name="fourteen">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-14/reading/23847.jpg</string>
+    <string name="fifteen">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-15/reading/23853.jpg</string>
+    <string name="todo">TODO</string>
+    <string name="counter_default">0</string>
+    <string name="divide">/</string>
+    <string name="default_time">00:00</string>
+    <string name="translate">Translate</string>
+    <string name="back">Back</string>
+
+
+</resources>

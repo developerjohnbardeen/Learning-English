@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "82806899779",
+    "project_id": "essentialwordsbook1",
+    "storage_bucket": "essentialwordsbook1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82806899779:android:b3bb484c653c1d033e80f6",
+        "android_client_info": {
+          "package_name": "com.example.a4000essentialwordsbook1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82806899779-536ptjh6m271igpc7fpqi8d6loe69jgr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRnYpfz8n25oROldZqopRzXpN_7_a7ft8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82806899779-536ptjh6m271igpc7fpqi8d6loe69jgr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

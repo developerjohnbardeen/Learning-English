@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:minWidth="0dp"
+    android:minHeight="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/word_image_pop_up"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            app:siRadius="15dp"
+            android:background="@color/fui_transparent"
+            android:src="@drawable/peacock"/>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/word_pop_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todo"/>
+
+            <TextView
+                android:id="@+id/word_pop_up_phonetic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/word_pop_up"
+                android:layout_marginStart="7dp"
+                android:text="@string/todo"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+
+            <ImageButton
+                android:id="@+id/word_pop_up_ply_audio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_volume_up_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/todo"/>
+
+
+            <ImageButton
+                android:id="@+id/word_pop_up_translate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/word_pop_up_ply_audio_btn"
+                android:layout_marginStart="7dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_word_detailed_baseline_translate_24"
+                android:contentDescription="@string/todo"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/word_pop_up_definition_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:id="@+id/word_pop_up_def"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/word_text_definition"/>
+
+            <TextView
+                android:id="@+id/word_pop_up_def_divider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/word_divider"
+                android:layout_toEndOf="@+id/word_pop_up_def"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:id="@+id/word_pop_up_definition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:layout_toEndOf="@+id/word_pop_up_def_divider"/>
+
+            <TextView
+                android:id="@+id/word_pop_up_detailed_definition_translate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:visibility="invisible"
+                android:layout_toEndOf="@+id/word_pop_up_def_divider"
+                android:layout_below="@+id/word_pop_up_definition"
+                android:layout_marginTop="7dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/word_pop_up_example_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="30dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:id="@+id/word_pop_up_ex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/word_text_example"/>
+
+            <TextView
+                android:id="@+id/word_pop_up_ex_divider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/word_divider"
+                android:layout_toEndOf="@+id/word_pop_up_ex"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+
+            <TextView
+                android:id="@+id/word_pop_up_example"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/word_pop_up_ex_divider"
+                android:text="@string/app_name"/>
+
+            <TextView
+                android:id="@+id/word_pop_up_detailed_example_translate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_toEndOf="@+id/word_pop_up_ex_divider"
+                android:layout_below="@+id/word_pop_up_example"
+                android:text="@string/app_name"
+                android:layout_marginTop="7dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

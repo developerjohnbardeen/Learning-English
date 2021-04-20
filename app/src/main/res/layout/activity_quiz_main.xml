@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_quiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="false">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/quiz_question_outline_effect"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/quiz_text_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/quiz_sample_string"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_margin="@dimen/quiz_text_margin"
+                />
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <com.github.siyamed.shapeimageview.DiamondImageView
+        android:id="@+id/diamond_quiz_image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:siBorderWidth="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        app:siBorderColor="#0AF416"
+        android:src="@drawable/agree"
+        app:siBorderType="fill"
+        android:layout_marginTop="30dp"
+        android:elevation="8dp"
+        android:visibility="invisible"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:id="@+id/counter_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:layout_marginTop="105dp"
+        android:gravity="center">
+        <ProgressBar
+
+            android:id="@+id/circularProgressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:elevation="8dp"
+            android:progressDrawable="@drawable/circular"
+            android:backgroundTint="@color/gary"
+            android:secondaryProgress="100"/>
+
+        <com.jackandphantom.circularimageview.CircleImage
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/one"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/todo" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:text="@string/percent"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_counter_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/counter_layout"
+        android:layout_marginStart="10dp"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="#EDE7E7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/quiz_question_outline_effect">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/correct_card_view_counter"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:backgroundTint="#219700"
+                    app:cardCornerRadius="7dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/correct_answer_txt_counter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/counter_default"
+                            android:textSize="@dimen/counter_text_size"
+                            android:textColor="@color/black"/>
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/wrong_card_view_counter"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/correct_card_view_counter"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:backgroundTint="#FF2F2F"
+                    app:cardCornerRadius="7dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/wrong_answer_txt_counter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/counter_default"
+                            android:textSize="@dimen/counter_text_size"
+                            android:textColor="@color/black"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/skipped_card_view_counter"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/wrong_card_view_counter"
+                    android:backgroundTint="#C3BEBE"
+                    app:cardCornerRadius="7dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/skipped_answer_txt_counter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/counter_default"
+                            android:textSize="@dimen/counter_text_size"
+                            android:textColor="@color/black"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <RelativeLayout
+        android:id="@+id/option_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_quiz_option_one"
+            android:layout_width="@dimen/quiz_option_width"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/quiz_card_elevation"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ripple_effect_outline"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_quiz_option_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_option_one"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/quiz_text_margin"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_quiz_option_two"
+            android:layout_width="@dimen/quiz_option_width"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/quiz_card_elevation"
+            app:cardCornerRadius="10dp"
+            android:layout_alignParentEnd="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ripple_effect_outline"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_quiz_option_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_option_two"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/quiz_text_margin"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_quiz_option_three"
+            android:layout_width="@dimen/quiz_option_width"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/quiz_card_elevation"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_below="@+id/card_view_quiz_option_one">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ripple_effect_outline"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_quiz_option_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_option_three"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/quiz_text_margin"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_quiz_option_four"
+            android:layout_width="@dimen/quiz_option_width"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/quiz_card_elevation"
+            app:cardCornerRadius="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/card_view_quiz_option_two">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/ripple_effect_outline">
+
+                <TextView
+                    android:id="@+id/txt_quiz_option_four"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_option_four"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/quiz_text_margin"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_quiz_option_quiz_skip_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/quiz_card_elevation"
+            app:cardCornerRadius="10dp"
+            android:layout_below="@id/card_view_quiz_option_four"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ripple_effect_outline"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_quiz_option_skip_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skip_answer"
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp"
+                    android:gravity="center"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

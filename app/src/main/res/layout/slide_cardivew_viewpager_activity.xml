@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/slide_card_view_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_word_detailed_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/favorite_launcher_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/review_words"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:stateListAnimator="@null"
+                    android:backgroundTint="#D3CFCF"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true">
+
+                    <Button
+                        android:id="@+id/easy_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:gravity="end|center"
+                        android:layout_centerVertical="true"
+                        android:text="@string/easy_btn"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_margin="3dp"
+                        android:backgroundTint="#55C305"
+                        android:stateListAnimator="@null"/>
+
+                    <Button
+                        android:id="@+id/hard_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:text="@string/hard_btn"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_toEndOf="@+id/easy_button"
+                        android:backgroundTint="#FD4949"
+                        android:gravity="start|center"
+                        android:stateListAnimator="@null"/>
+
+                </RelativeLayout>
+
+
+
+
+                <Button
+                    android:id="@+id/word_detailed_all_translate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/translate_text"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_margin="2dp"
+                    android:stateListAnimator="@null"
+                    android:backgroundTint="#D3CFCF"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.jackandphantom.circularimageview.RoundedImage
+                    android:id="@+id/word_detailed_card_ply_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/mx_play_normal"
+                    android:layout_centerVertical="true"/>
+
+                <SeekBar
+                    android:id="@+id/word_detailed_music_seek_bar"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Widget.AppCompat.SeekBar"
+                    android:layout_toEndOf="@+id/word_detailed_card_ply_image"
+                    android:layout_centerVertical="true"/>
+
+
+                <TextView
+                    android:id="@+id/word_detailed_progress_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/word_detailed_music_seek_bar"
+                    android:layout_centerVertical="true"
+                    android:text="@string/default_time"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/word_detailed_divider_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/divide"
+                    android:layout_toEndOf="@id/word_detailed_progress_time_text"/>
+
+
+                <TextView
+                    android:id="@+id/word_detailed_audio_total_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_time"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/word_detailed_divider_text"
+                    android:gravity="center"/>
+
+
+            </RelativeLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/indicator_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:tabIndicator="@drawable/line_indicator"
+                app:tabIndicatorColor="#0FDD17"
+                app:tabGravity="fill"
+                android:layout_gravity="bottom"
+                app:tabIndicatorGravity="top"
+                android:visibility="visible"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

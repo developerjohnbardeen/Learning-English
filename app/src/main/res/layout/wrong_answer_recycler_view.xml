@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/card_view_wrong_answers"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="165dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:layout_margin="3dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/wrong_tv_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/afraid"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:layout_centerHorizontal="true" />
+
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/wrong_tv_image_view"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/peacock"
+            android:visibility="invisible"
+            app:siRadius="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_answer"
+                android:textColor="#F81A1A"
+                android:textStyle="italic"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:id="@+id/user_wrong_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/afraid_translate"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                android:textSize="30sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/wrong_book_image"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_bookmark_border_24"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:contentDescription="@string/todo" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/correct_answer"
+                android:textColor="#5EFB3C"
+                android:textStyle="italic"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"/>
+
+            <TextView
+                android:id="@+id/txt_wrong_correct_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/afraid_translate"
+                android:textColor="@color/black"
+                android:textStyle="italic"
+                android:textSize="30sp"
+                android:layout_marginEnd="10dp"/>
+
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

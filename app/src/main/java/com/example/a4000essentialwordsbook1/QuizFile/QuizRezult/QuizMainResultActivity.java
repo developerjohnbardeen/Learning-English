@@ -50,7 +50,7 @@ public class QuizMainResultActivity extends AppCompatActivity {
     private void viewPagerAdapterSetter(){
         qrPagerAdapter = new QuizResultPagerAdapter(QuizMainResultActivity.this
                 , correctList , wrongList, skippedList,
-                getSupportFragmentManager());
+                getSupportFragmentManager(), 0);
 
         qrViewPager.setAnimationCacheEnabled(true);
         qrViewPager.setAdapter(qrPagerAdapter);
@@ -74,9 +74,10 @@ public class QuizMainResultActivity extends AppCompatActivity {
     }
 
     public void tabLayoutIconSetter(){
-        Objects.requireNonNull(qrTabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_correct_answer_24));
-        Objects.requireNonNull(qrTabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_wrong_answer_24));
-        Objects.requireNonNull(qrTabLayout.getTabAt(2).setIcon(R.drawable.ic_skip_icon));
+        Objects.requireNonNull(Objects.requireNonNull(qrTabLayout.getTabAt(0)).setIcon(R.drawable.ic_baseline_pie_chart_24));
+        Objects.requireNonNull(Objects.requireNonNull(qrTabLayout.getTabAt(1)).setIcon(R.drawable.ic_baseline_correct_answer_24));
+        Objects.requireNonNull(Objects.requireNonNull(qrTabLayout.getTabAt(2)).setIcon(R.drawable.ic_baseline_wrong_answer_24));
+        Objects.requireNonNull(Objects.requireNonNull(qrTabLayout.getTabAt(3)).setIcon(R.drawable.ic_skip_icon));
     }
 
 

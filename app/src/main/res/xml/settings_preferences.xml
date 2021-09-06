@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/application_category"
+        app:iconSpaceReserved="false"
+        android:layoutDirection="rtl">
+
+        <CheckBoxPreference
+            android:key="@string/key_auto_night_mode"
+            android:defaultValue="false"
+            android:title="@string/night_mode_title"
+            android:summary="@string/night_mode_summary"
+            app:iconSpaceReserved="false" />
+
+        <CheckBoxPreference
+            android:key="@string/key_auto_play_audio_word"
+            android:defaultValue="true"
+            android:title="@string/auto_play_words_title"
+            android:summary="@string/auto_play_words_summary"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="@string/key_text_size"
+            android:title="@string/text_view_size_title"
+            android:summary="@string/text_view_size_summary"
+            app:iconSpaceReserved="false"/>
+
+        <Preference
+            android:key="@string/key_text_font"
+            android:title="@string/text_view_font_title"
+            android:summary="@string/text_view_font_summary"
+            app:iconSpaceReserved="false"/>
+
+
+        <CheckBoxPreference
+            android:key="@string/key_display_translation"
+            android:title="@string/display_translation_title"
+            android:summary="@string/display_translation_summary"
+            android:defaultValue="true"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

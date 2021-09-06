@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
-import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordModel;
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 
 import java.util.ArrayList;
 
@@ -24,13 +24,14 @@ public class WordListRecyclerView extends RecyclerView.Adapter<WordListRecyclerV
     private final Context wordContext;
     private final LayoutInflater inflater;
     private final ArrayList<WordModel> wordList;
-    private final int unitNum;
+    private final int unitNum, dbNum;
 
-    public  WordListRecyclerView(Context context, ArrayList<WordModel> wordList, int unitNum){
+    public  WordListRecyclerView(Context context, ArrayList<WordModel> wordList, int unitNum, int dbNum){
         this.wordContext = context;
         this.inflater = LayoutInflater.from(context);
         this.wordList = wordList;
         this.unitNum = unitNum;
+        this.dbNum = dbNum;
     }
 
 
@@ -61,7 +62,8 @@ public class WordListRecyclerView extends RecyclerView.Adapter<WordListRecyclerV
         holder.wordCardView.setOnClickListener(v -> {
             Intent wordDetailedIntent = new Intent(wordContext, WordSlideCardViewActivity.class);
             wordDetailedIntent.putExtra("unitNumber", unitNum);
-            wordDetailedIntent.putExtra("CARD_POSITION", position);
+            wordDetailedIntent.putExtra("dbNumber", dbNum);
+            wordDetailedIntent.putExtra("wordId", position);
             wordContext.startActivity(wordDetailedIntent);
         });
     }
@@ -140,22 +142,4 @@ public class WordListRecyclerView extends RecyclerView.Adapter<WordListRecyclerV
             super.onPostExecute(aVoid);
         }
     }
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

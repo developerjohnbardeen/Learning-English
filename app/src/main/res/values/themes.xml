@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.4000EssentialWordsBook1" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.4000EssentialWordsBook1" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -20,18 +20,32 @@
         <item name="shadow_color">@color/fui_transparent</item>
     </style>
 
-    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+
         <item name="titleTextColor">#FFFFFF</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#00FF91</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColorPrimary">#1B1A1A</item>
+        <item name="android:textColorSecondary">#252323</item>
+
+
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="Apple" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.SubNav" parent="Theme.AppCompat.NoActionBar">
+        <item name="titleTextColor">#FFFFFF</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="ButtonStyle" parent="Base.Widget.AppCompat.Button.Colored">
@@ -42,6 +56,19 @@
         <item name="colorPrimary">#C7F856</item>
         <item name="backgroundColor">#C7F856</item>
     </style>
+
+    <style name="Theme.4000EssentialWordsBook1.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="NavigationTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+    </style>
+
+    <style name="Theme.4000EssentialWordsBook1.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.4000EssentialWordsBook1.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

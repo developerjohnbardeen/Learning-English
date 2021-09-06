@@ -7,31 +7,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizMainActivity;
 import com.example.a4000essentialwordsbook1.R;
 
+
+
 public class QuizListFragment extends Fragment implements View.OnClickListener{
     private final Context quzContext;
     private String intentValue = "quizType";
-    private int unitNum;
+    private final int  unitNum, dbNumb;
     private CardView photoWords;
     private CardView persianToEnglish;
     private CardView englishToPersian;
     private ImageView imgQuizView;
-    private ImageView imgEngToPer;
-    private ImageView imgPerToEng;
-    private ImageView imgPhWords;
 
-    public QuizListFragment(Context context, int unitNmb){
+    public QuizListFragment(Context context, int unitNmb, int dbNumb){
         this.quzContext = context;
         this.unitNum = unitNmb;
+        this.dbNumb = dbNumb;
     }
 
     @Override
@@ -51,9 +48,6 @@ public class QuizListFragment extends Fragment implements View.OnClickListener{
         persianToEnglish = view.findViewById(R.id.per_to_eng_quiz);
         photoWords = view.findViewById(R.id.photo_word_quiz);
         imgQuizView = view.findViewById(R.id.image_Story_quiz);
-        imgEngToPer = view.findViewById(R.id.eng_to_per_photo);
-        imgPerToEng = view.findViewById(R.id.per_to_eng_photo);
-        imgPhWords = view.findViewById(R.id.photo_word_photo);
 
         setComponentValues();
         setOnclickListener();
@@ -71,7 +65,6 @@ public class QuizListFragment extends Fragment implements View.OnClickListener{
                 .placeholder(R.drawable.loadimg)
                 .error(R.drawable.loadimg)
                 .into(imgQuizView);
-
     }
 
 

@@ -8,10 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
@@ -23,43 +25,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.ViewPager;
 import com.example.a4000essentialwordsbook1.AudioTimeUtil.TimeUtil;
+import com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords.MainReviewMarkedWordActivity;
+import com.example.a4000essentialwordsbook1.NavigationClasses.MainNavigationActivity;
+import com.example.a4000essentialwordsbook1.SelectedBook.SelectedBookActivity;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.R;
-import com.example.a4000essentialwordsbook1.UnitSqliteOpenHelper;
+import com.example.a4000essentialwordsbook1.DataBases.UnitSqliteOpenHelper;
 import com.google.android.material.tabs.TabLayout;
 import java.util.Objects;
-
 
 
 public class ActivitySelectedTab extends AppCompatActivity implements View.OnClickListener {
     private androidx.appcompat.widget.Toolbar toolbar;
     private TabLayout tabLayout;
-    private TextView fixed_unit;
-    private TextView unitTextNumber;
-    private TextView titleTab;
-    private ImageView imgBackBtn;
+    private TextView unitTextNumber, titleTab;
     private ViewPager viewPager;
-    private UnitSectionPagerAdapter pagerAdapter;
     private RelativeLayout backBtnLayout;
     private final String msg = "Android : ";
-    private int unitNum = 0;
-    private int unitAudio = 0;
+    private int unitNum = 0, unitAudio = R.raw.a, dbNum;
     private CardView cardViewContainer;
-    private TextView txt;
-
-
     private MediaPlayer mediaPlayer;
-    private TextView duration;
-    private TextView totalTimeTextView;
-
-    private long timeElapsed = 0;
-    private long finalTime = 0;
-    private final Handler durationHandler = new Handler();
+    private TextView duration, totalTimeTextView;
+    private long timeElapsed = 0, finalTime = 0;
+    private final Handler durationHandler = new Handler(Looper.getMainLooper());
     private SeekBar seekbar;
     private View view;
     private ImageView plyImg;
     private long current_pos;
     private TimeUtil utils;
+    private boolean flag = false;
+    private int viewPosition = -1;
 
 
 
@@ -68,8 +63,10 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.selected_tab_activity);
+        if (savedInstanceState == null) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.selected_tab_activity);
+        }
 
         //functions' order matters
         viewsFinderById();
@@ -84,21 +81,36 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         initializeView();
         toolbarBackArrow();
         customTabLayout();
+
     }
 
     public void pagerAdapterSetter(){
-        pagerAdapter = new UnitSectionPagerAdapter(unitNum ,ActivitySelectedTab.this, getSupportFragmentManager());
+        UnitSectionPagerAdapter pagerAdapter = new UnitSectionPagerAdapter(unitNum, dbNum, this, getSupportFragmentManager());
         viewPager.setAnimationCacheEnabled(true);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        /* viewPager.setCurrentItem(1, true); */
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if (viewPosition != 0) {
+            viewPosition = viewPager.getCurrentItem();
+        }
+        if (viewPosition == 0){
+            super.onBackPressed();
+        }else {
+            viewPager.setCurrentItem(0, true);
+        }
+    }
 
     private final Runnable audioThread = () -> audioFileReceiverFromDatabase(unitNum);
 
     public void audioFileReceiverFromDatabase(int position){
         UnitSqliteOpenHelper unitAudioDatabase = new UnitSqliteOpenHelper(this);
         SQLiteDatabase db = unitAudioDatabase.getReadableDatabase();
+
         Cursor audioCursor = db.query(DB_NOTES.UNIT_TABLE,
                 new String[]{DB_NOTES.UNIT_AUDIO}
                 , DB_NOTES.UNIT_ID + " = " + position,
@@ -118,11 +130,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
 
 
     public void initializeView(){
-        duration = findViewById(R.id.progress_time_text);
-        totalTimeTextView = findViewById(R.id.audio_total_time_text);
-        seekbar = findViewById(R.id.music_seek_bar);
         utils = new TimeUtil();
-
 
         mediaPlayer = MediaPlayer.create(this, unitAudio);
         finalTime = mediaPlayer.getDuration();
@@ -150,11 +158,13 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         seekbar.setEnabled(true);
     }
 
+
+
     public void play(View views){
         mediaPlayer.start();
         timeElapsed = mediaPlayer.getCurrentPosition();
         seekbar.setProgress((int) timeElapsed);
-        durationHandler.postDelayed(updateSeekBarTime, 10);
+        durationHandler.postDelayed(updateSeekBarTime, 100);
         plyImg.setImageResource(R.drawable.mx_pause_normal);
     }
 
@@ -170,7 +180,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
             String leftTime = "" + utils.milliSecondsToTimer(timeElapsed);
             duration.setText(leftTime);
             totalTimeTextView.setText(stringTotalTime);
-            durationHandler.postDelayed(this, 10);
+            durationHandler.postDelayed(this, 100);
         }
     };
 
@@ -197,7 +207,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     protected void onStart() {
         super.onStart();
         Log.d(msg, "The onStart() event");
-        //Toast.makeText(this, "MainActivity is on start..", Toast.LENGTH_LONG).show();
+        initializeView();
     }
 
     @Override
@@ -210,22 +220,22 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     public void toolbarBackArrow(){
 
         setSupportActionBar(toolbar);
-        backBtnLayout.setOnClickListener(v -> onBackPressed());
+        backBtnLayout.setOnClickListener(v -> {
+            viewPosition = 0;
+            onBackPressed();
+        });
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
-
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
-
             }
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
@@ -252,7 +262,6 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
                         cardViewGetDownAnimation();
                         pause(view);
                         plyImg.setImageResource(R.drawable.mx_play_normal);
-
                         break;
                     case 1:
                         titleTab.setText(R.string.story);
@@ -266,13 +275,11 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
                         break;
                     default:
                         break;
-
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                //Toast.makeText(ActivitySelectedTab.this, "the state is " + state, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -289,7 +296,6 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         });
         animator.start();
     }
-
     public void cardViewGetDownAnimation(){
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 500f);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -315,17 +321,18 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case (R.id.item_1):
-                Toast.makeText(this, "Menu Item one", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(this, "Option #1", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, MainNavigationActivity.class);
+                startActivity(intent);
                 return true;
             case (R.id.item_2):
-                Toast.makeText(this, "Menu Item two", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Option #2", Toast.LENGTH_SHORT).show();
                 return true;
             case (R.id.item_3):
-                Toast.makeText(this, "Menu Item three", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Option #3", Toast.LENGTH_SHORT).show();
                 return true;
             case (R.id.item_4):
-                Toast.makeText(this, "Menu Item four", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Option #4", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -333,25 +340,30 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     }
 
 
+
     public void extrasValueGetter(){
         Intent intent = getIntent();
         unitNum = intent.getIntExtra("unitNumber", 0);
+        dbNum = intent.getIntExtra("dbNumber", 0);
     }
 
     public void viewsFinderById(){
-
         cardViewContainer = findViewById(R.id.story_component_container);
-        plyImg = findViewById(R.id.card_image);
-        //toolbarTitle();
+        plyImg = findViewById(R.id.ply_img_btn);
+        plyImg.setOnClickListener(this);
+
         toolbar = findViewById(R.id.toolbar);
         backBtnLayout = findViewById(R.id.tab_layout_bck_bttn_layout);
         viewPager = findViewById(R.id.viewPager);
-        imgBackBtn = findViewById(R.id.img_back_btn);
-        //textViews
-        fixed_unit = findViewById(R.id.unit);
+
         unitTextNumber = findViewById(R.id.unit_selected_number);
         titleTab = findViewById(R.id.title_tab);
         tabLayout = findViewById(R.id.tabs);
+
+
+        duration = findViewById(R.id.progress_time_text);
+        totalTimeTextView = findViewById(R.id.audio_total_time_text);
+        seekbar = findViewById(R.id.music_seek_bar);
     }
 
     @Override

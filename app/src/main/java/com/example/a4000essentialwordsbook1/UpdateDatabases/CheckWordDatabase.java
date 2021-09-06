@@ -4,8 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.WordDatabase.WordDatabaseOpenHelper;
-import com.google.android.exoplayer2.util.NalUnitUtil;
+import com.example.a4000essentialwordsbook1.DataBases.WordDatabaseOpenHelper;
 
 import java.util.ArrayList;
 

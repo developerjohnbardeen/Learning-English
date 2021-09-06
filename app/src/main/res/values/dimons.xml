@@ -9,9 +9,14 @@
     <dimen name="quiz_option_width">167dp</dimen>
     <dimen name="quiz_relative_margin">10dp</dimen>
     <dimen name="quiz_card_elevation">0dp</dimen>
-    <dimen name="quiz_text_margin">20dp</dimen>
+    <dimen name="quiz_text_margin">15dp</dimen>
 
     //quiz textView counter
     <dimen name="counter_text_size">12sp</dimen>
+
+    //search_icon_padding
+    <dimen name="search_icon_padding">15dp</dimen>
+
+    <dimen name="appbar_title_size">15sp</dimen>
 
 </resources>

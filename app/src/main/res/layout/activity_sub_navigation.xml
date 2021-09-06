@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sub_nav_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/sub_nav_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:fitsSystemWindows="true"
+            android:background="@drawable/search_boarder_background">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/imageViewIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fitsSystemWindows="true"
+                        android:src="@drawable/book_cover_1"
+                        android:scaleType="fitXY"
+                        app:layout_collapseMode="parallax"
+                        android:contentDescription="@string/todo"/>
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/sub_nav_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
+
+                            <androidx.appcompat.widget.Toolbar
+                                android:id="@+id/sub_nav_second_toolbar"
+                                android:layout_width="match_parent"
+                                android:layout_height="?attr/actionBarSize"
+                                app:layout_collapseMode="pin"
+                                android:layout_marginEnd="17dp"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="3dp"
+                                android:gravity="center"
+                                android:background="@drawable/search_boarder_background"
+                                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                                android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/search_text_view"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:text="@string/search_word"
+                                        android:layout_centerVertical="true"
+                                        android:textColor="#040404"
+                                        android:paddingStart="-50dp"
+                                        android:paddingEnd="0dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentStart="true"
+                                        android:gravity="center"/>
+
+
+
+                                </RelativeLayout>
+                            </androidx.appcompat.widget.Toolbar>
+
+
+
+
+                        </RelativeLayout>
+                    </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sub_nav_main_cardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="50dp"
+                    android:layout_marginBottom="7dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/continuestudying"
+                            android:textColor="@color/black"
+                            android:layout_margin="15dp"
+                            android:contentDescription="@string/todo"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_return_to_last_study_state_24"
+                            android:layout_margin="15dp"
+                            android:contentDescription="@string/todo"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sub_nav_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="3dp"
+                    android:layout_below="@id/sub_nav_main_cardview"
+                    android:paddingBottom="2dp"/>
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/sub_nav_navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="start"
+        android:theme="@style/NavigationTheme"
+        app:headerLayout="@layout/nav_header_layout"
+        app:menu="@menu/sub_nav_menu_drawer"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
+

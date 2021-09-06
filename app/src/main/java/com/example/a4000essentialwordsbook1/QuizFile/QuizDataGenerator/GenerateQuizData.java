@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
-import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.WordDatabase.WordDatabaseOpenHelper;
+import com.example.a4000essentialwordsbook1.DataBases.WordDatabaseOpenHelper;
 
 import java.util.concurrent.ThreadLocalRandom;
 

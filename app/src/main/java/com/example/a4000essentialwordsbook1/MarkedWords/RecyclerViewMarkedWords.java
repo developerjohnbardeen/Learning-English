@@ -17,15 +17,14 @@ import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords.MainReviewMarkedWordActivity;
 import com.example.a4000essentialwordsbook1.R;
-import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.WordDatabase.WordDatabaseOpenHelper;
-import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordModel;
+import com.example.a4000essentialwordsbook1.DataBases.WordDatabaseOpenHelper;
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 import java.util.ArrayList;
 
-public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMarkedWords.ViewHolder>{
+public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMarkedWords.ViewHolder> implements View.OnClickListener{
     private final ArrayList<WordModel> list;
     private final Context context;
     private final LayoutInflater inflater;
-    private Intent intent;
 
 
     public RecyclerViewMarkedWords(Context context, ArrayList<WordModel> list){
@@ -88,6 +87,7 @@ public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMa
         holder.wordName.setText(word);
         holder.wordPhonetic.setText(phonetic);
         holder.cardView.setOnClickListener(v -> intentActivity(position));
+
     }
 
     private void viewOnClickListener(ViewHolder holder, int position, WordModel markedList){
@@ -101,10 +101,15 @@ public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMa
     }
 
     private void intentActivity(int position){
-        intent = new Intent(context, MainReviewMarkedWordActivity.class);
+        Intent intent = new Intent(context, MainReviewMarkedWordActivity.class);
         intent.putParcelableArrayListExtra("reviewList", list);
         intent.putExtra("cardPosition", position);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
 
@@ -113,6 +118,7 @@ public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMa
         ImageView wordImage;
         ImageButton imgButton;
         TextView wordName;
+        TextView wordTranslate;
         TextView wordPhonetic;
 
         public ViewHolder(@NonNull View itemView) {
@@ -123,6 +129,7 @@ public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMa
             wordName = itemView.findViewById(R.id.marked_words_name);
             wordPhonetic = itemView.findViewById(R.id.marked_words_phonetic);
             imgButton = itemView.findViewById(R.id.marked_btn_word_changer);
+            wordTranslate = itemView.findViewById(R.id.marked_words_translate);
 
          }
     }

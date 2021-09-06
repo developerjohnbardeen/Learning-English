@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_adapter_card_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="20dp"
+    android:layout_margin="3dp"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/main_adapter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/main_adapter_image_view"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            app:riv_corner_radius="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/book_cover_2"
+            android:contentDescription="@string/todo"/>
+
+        <LinearLayout
+            android:id="@+id/main_adapter_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/main_adapter_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/remain_1"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="7dp"
+                android:fontFamily="@font/bamshad"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

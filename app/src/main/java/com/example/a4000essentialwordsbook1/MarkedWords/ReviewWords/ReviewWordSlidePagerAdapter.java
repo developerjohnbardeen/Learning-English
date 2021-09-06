@@ -18,7 +18,7 @@ import androidx.cardview.widget.CardView;
 import com.chabbal.slidingdotsplash.ViewPagerAdapter;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.R;
-import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordModel;
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.SpannableString.TextViewBolder;
 import com.example.a4000essentialwordsbook1.UpdateDatabases.UpdateWordDatabase;
 
@@ -52,7 +52,6 @@ public class ReviewWordSlidePagerAdapter extends ViewPagerAdapter {
         View view = inflater.inflate(R.layout.slide_word_review_pager_adapter, container, false);
         viewsFinder(view, position);
         container.addView(view, 0);
-        Toast.makeText(rwContext, "" + getItemPosition(container), Toast.LENGTH_SHORT).show();
         return view;
     }
 
@@ -70,14 +69,10 @@ public class ReviewWordSlidePagerAdapter extends ViewPagerAdapter {
         txtTranslateExmpl = view.findViewById(R.id.word_review_detailed_example_translate);
         removeItemBtn = view.findViewById(R.id.remove_review_word_item);
         cardView = ((Activity) rwContext).findViewById(R.id.review_marked_word_card_view_word_detailed_container);
-        btn = ((Activity) rwContext).findViewById(R.id.review_marked_word_translate);
+        //btn = ((Activity) rwContext).findViewById(R.id.review_marked_word_translate);
         plyImg = ((Activity) rwContext).findViewById(R.id.review_marked_word_detailed_card_ply_image);
 
-        btn.setOnClickListener(v ->
-                Toast.makeText(rwContext, "Hello There", Toast.LENGTH_SHORT).show());
 
-
-        //btn = Objects.requireNonNull(getActivity()).findViewById(R.id.click_button);
         valuesGetter(position);
     }
 

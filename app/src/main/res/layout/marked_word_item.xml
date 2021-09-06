@@ -44,6 +44,16 @@
                 android:layout_marginStart="5dp"
                 android:text="@string/todo"/>
 
+            <TextView
+                android:id="@+id/marked_words_translate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/marked_words_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="5dp"
+                android:visibility="invisible"
+                android:text="@string/todo"/>
+
 
         </RelativeLayout>
 
@@ -55,8 +65,6 @@
             android:layout_margin="10dp">
 
 
-
-
             <ImageButton
                 android:id="@+id/play_audio_marked_word"
                 android:layout_width="wrap_content"
@@ -65,23 +73,13 @@
                 android:background="@drawable/round_button"
                 android:contentDescription="@string/todo" />
 
-            <ImageButton
-                android:id="@+id/marked_word_translate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/play_audio_marked_word"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/ic_word_detailed_baseline_translate_24"
-                android:background="@drawable/round_button"
-                android:contentDescription="@string/todo"/>
-
 
             <ImageButton
                 android:id="@+id/marked_btn_word_changer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/marked_word_translate"
-                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/play_audio_marked_word"
+                android:layout_marginStart="15dp"
                 android:src="@drawable/ic_baseline_cancel_24"
                 android:background="@drawable/round_button"
                 android:contentDescription="@string/todo"/>

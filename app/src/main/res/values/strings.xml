@@ -7,7 +7,7 @@
     <string name="story">Story</string>
     <string name="quiz_button">Quiz</string>
     <string name="quiz">Quiz</string>
-    <string name="enter">Enter</string>
+    <string name="enter_1">Enter</string>
     <string name="unit_text">Unit  </string>
     <string name="word_list">List</string>
 
@@ -18,17 +18,21 @@
     <string name="favorite_text">Favorite</string>
     <string name="review_words">Review</string>
     <string name="translate_text">Translate</string>
+    <string name="play_word">Play Word</string>
 
     //menu sample String
-    <string name="item_1">item one</string>
-    <string name="item_2">item two</string>
-    <string name="item_3">item three</string>
-    <string name="item_4">item four</string>
+    <string name="item_1">Auto Playy Word Audio file</string>
+    <string name="item_2">Auto Playa Word</string>
+    <string name="item_3">Text Font Setting</string>
+    <string name="item_4">change font</string>
 
     <string name="sample">TextView</string>
     <string name="unit">Unit</string>
+    <string name="Book">Essentials Book</string>
+    <string name="marked_word_title">Marked Word</string>
     <string name="number">Num: </string>
     <string name="tab_title">tab title</string>
+
 
     //dum String
     <string name="percent">1</string>
@@ -47,16 +51,57 @@
     <string name="easy_btn">Easy</string>
     <string name="hard_btn">Hard</string>
     <string name="i_know">I Know</string>
+    <string name="need_to_review">need to review</string>
+    <string name="ask_me_again">Ask Me Again</string>
     <string name="need_to_learn">Need to learn</string>
 
     //user answer
     <string name="user_answer">Your Answer</string>
-    <string name="correct_answer">Correct Answer</string>
+    <string name="correct_answer">Correct</string>
+    <string name="wrong_answer">Wrong</string>
+    <string name="skipped_answer">Skipped</string>
+    <string name="result_pie_chart">Result of Game</string>
+
+    <string name="remain_1">لغات باقی مانده</string>
+    <string name="studied">Studied :</string>
+    <string name="search_word">Search Words</string>
+    <string name="continuestudying">Resume Your Study</string>
+    <string name="search_hint">Type Your Words Letters</string>
+
+    <string name="name_book_1">کتاب اول چهار هزار لغت ضروری</string>
+    <string name="name_book_2"> کتاب دوم چهار هزار لغت ضروری</string>
+    <string name="name_book_3">کتاب سوم چهار هزار لغت ضروری</string>
+    <string name="name_book_4">کتاب چهارم چهار هزار لغت ضروری</string>
+    <string name="name_book_5">کتاب پنجم چهار هزار لغت ضروری</string>
+    <string name="name_book_6">کتاب ششم چهار هزار لغت ضروری</string>
+
+    //Sample Strings
+    <string name="short_sample">Textview</string>
+
+
+    //Settings Preferences Strings
+    <string name="key_auto_night_mode">KeyAutoNightMode</string>
+    <string name="key_auto_play_audio_word">KeyAutoPlayAudioWord</string>
+    <string name="key_text_size">KeyTextViewSize</string>
+    <string name="key_text_font">KeyTextViewFont</string>
+    <string name="key_display_translation">keyDisplayTranslation</string>
+
+    <string name="application_category">تنظیمات برنامه</string>
+    <string name="night_mode_title">حالت شب خودکار برنامه</string>
+    <string name="night_mode_summary">حالت شب برنامه بر اساس تنظیمات پیش فرض دستگاه</string>
+    <string name="auto_play_words_title">پخش خودکار تلظ</string>
+    <string name="auto_play_words_summary">هنگام انتخاب یا پیمایش لغات تلفظ کلمه پخش میشود</string>
+    <string name="text_view_size_title">اندازه متن</string>
+    <string name="text_view_size_summary">تغییز اندازه دلخواه متن</string>
+    <string name="text_view_font_title">نوع فونت</string>
+    <string name="text_view_font_summary">تغییر دلخواه فونت متن </string>
+    <string name="display_translation_title">نمایش ترجمه</string>
+    <string name="display_translation_summary">نمایش پیش فرض ترجمه لغات, توضیح, مثال و داستان</string>
+
 
 
 
     //unit stories
-
     <string name="story_unit_1">
         A cruel lion lived in the forest. Every day, he killed and ate a lot of animals. The other animals were afraid the lion would kill them all.\n\n
         یک شیر بی رحم در جنگل زندگی می کرد. او هر روز حیوانات زیادی را می کشت و می خورد. حیوانات دیگر می ترسیدند که شیر همه آنها را بکشد.\n\n
@@ -226,30 +271,6 @@
 
 
 
-    //unit_1
-    <string name="afraid">afraid</string> <string name="afraid_pho">[əˈfreid] adj</string> <string name="afraid_translate">ترسیده</string> <string name="afraid_defi">When someone is afraid, they feel fear.</string> <string name="afraid_dfntn_trnslt">وقتی کسی می ترسد ، احساس ترس می کند.</string> <string name="afraid_exmpl">The woman was afraid of what she saw.</string> <string name="afraid_exmpl_tran">زن از چیزی که دیده بود ترسید</string>
-    <string name="agree">agree</string> <string name="phon_agree">[əˈɡriː] v</string> <string name="agree_meaning">موافق بودن</string> <string name="agree_defini">To agree is to say “yes” or to think the same way</string> <string name="agree_dfntn_trnslt">موافقت این است که "بله" بگویید یا همان فکر را داشته باشید.</string> <string name="agree_exmpl">A: The food is very good in that restaurant. B: I agree with you</string> <string name="agree_exmpl_meaning">الف: غذا در آن رستوران خیلی خوب است ب: من باهات موافقم</string>
-    <string name="angry">angry</string> <string name="angry_phon">[ˈæŋɡrɪ] adj</string> <string name="angry_meaning">عصبانی</string> <string name="angry_defi">When someone is angry, they may want to speak loudly or fight</string> <string name="angry_dfntn_trnslt">وقتی کسی عصبانی است ، ممکن است بخواهد با صدای بلند صحبت کند یا دعوا کند.</string> <string name="angry_exmpl">She didn’t do her homework, so her father is angry</string> <string name="angry_exmpl_meaning">اون تکالیفش را انجام نداده بود, پس پدرش عصبانی هست</string>
-    <string name="arrive">arrive</string> <string name="arrive_pho">[əˈraɪv] v.</string> <string name="arrive_translate">رسیدن</string> <string name="arrive_dfntn">To arrive is to get to or reach some place.</string> <string name="arrive_dfntn_trnslt">رسیدن یعنی رسیدن به جایی یا رسیدن به آن.</string> <string name="arrive_exmpl">The bus always arrives at the corner of my street at 4:00.</string> <string name="arrive_exmpe_trnslt">اتوبوس همیشه ساعت 4:00 به گوشه خیابان من می رسد.</string>
-    <string name="attack">attack</string> <string name="attack_pho">[əˈtæk] v.</string> <string name="attack_trnslt">حمله کردن</string> <string name="attack_dfntn">To attack is to try to fight or to hurt.</string> <string name="attack_dfntn_trnslt">حمله ، تلاش برای جنگیدن یا صدمه زدن است.</string> <string name="attack_exmpl">The man with the sword attacked the other man first.</string> <string name="attack_exmpl_trnslt">مرد با شمشیر ابتدا به مرد دیگر حمله کرد</string>
-    <string name="bottom">bottom</string> <string name="bottom_pho">[ˈbɒtəm] n.</string> <string name="bottom_trnslt">پایین</string> <string name="bottom_dfntn">The bottom is the lowest part.</string> <string name="bottom_dfntn_trnslt">پایین پایین ترین قسمت است.</string> <string name="bottom_exmpl">The bottom of my shoe has a hole in it.</string> <string name="bottom_exmpl_trnslt">پایین کفش من سوراخی دارد.</string>
-    <string name="clever">clever</string> <string name="clever_pho">[ˈklɛv ər] adj.</string> <string name="clever_trnslt">باهوش</string> <string name="clever_dfntn">When someone is clever, they can solve a hard puzzle or problem</string> <string name="clever_dfntn_trnslt">وقتی کسی زیرک باشد ، می تواند یک معما یا مشکل سخت را حل کند.</string> <string name="clever_exmpl">The clever boy thought of a good idea.</string> <string name="clever_exmple_trnslt">پسر باهوش فکر خوبی فکر کرد</string>
-    <string name="cruel">cruel</string> <string name="cruel_pho">[ˈkruːəl] adj.</string> <string name="cruel_trnslt">ظالم, بی رحم</string> <string name="cruel_dfntn">When someone is cruel, they do bad things to hurt others.</string> <string name="cruel_dfntn_trnslt">وقتی کسی بی رحم است ، کارهای بدی انجام می دهد تا دیگران را آزار دهد.</string> <string name="cruel_exmpl">The cruel man yelled at his sister.</string> <string name="cruel_exmpl_trnslt">مرد بی رحم خواهرش را فریاد زد</string>
-    <string name="finally_1">finally</string> <string name="finally_pho">[ˈfaɪnəlɪ] adv.</string> <string name="finally_trnsle">درآخر</string> <string name="finally_dfntn">If something happens finally, it happens after a longtime or at the end.</string> <string name="finally_dfntn_trnslt">اگر اتفاقی سرانجام رخ دهد ، پس از مدت ها یا پایان آن اتفاق می افتد.</string> <string name="finally_exmpl">He finally crossed the finish line after five hours of running.</string> <string name="finally_exmpl_trnslt">او سرانجام پس از پنج ساعت دویدن از خط پایان عبور کرد</string>
-    <string name="hide">hide</string> <string name="hide_pho">[haɪd] v.</string> <string name="hide_trnslt">مخفی شدن</string> <string name="hide_dfntn">To hide is to try not to let others see you.</string> <string name="hide_dfntn_trnslt">پنهان کردن این است که سعی کنید اجازه ندهید دیگران شما را ببینند.</string> <string name="hide_exmpl">The other children will hide while you count to 100.</string> <string name="hide_exmpl_trnslt">بچه های دیگر پنهان می شوند در حالی که شما تا 100 می شمارید.</string>
-    <string name="hunt">hunt</string> <string name="hunt_pho">[hʌnt] v.</string> <string name="hunt_trnslt">شکار کردن</string> <string name="hunt_dfntn">To hunt is to look for or search for an animal to kill.</string> <string name="hunt_dfntn_trnslt">شکار جستجوی حیوان برای کشتن است.</string> <string name="hunt_exmpl">Long ago, people hunted with bows and arrows.</string> <string name="hunt_exmpl_trnlt">مدت ها پیش ، مردم با تیر و کمان شکار می کردند</string>
-    <string name="lot">lot</string> <string name="lot_pho">[lɒt] n.</string> <string name="lot_trnslt">زیاد</string> <string name="lot_dfntn">A lot means a large number or amount of people, animals, things, etc.</string> <string name="lot_dfntn_trnslt">مقدار زیاد به معنای تعداد یا تعداد زیادی از افراد ، حیوانات ، اشیا است</string> <string name="lot_exmpl">There are a lot of apples in the basket.</string> <string name="lot_exmpl_trnslt">تعداد زیادی سیب در سبد وجود دارد.</string>
-    <string name="middle">middle</string> <string name="middle_pho">[mɪdl] n.</string> <string name="middle_trnslt">وسط, بین</string> <string name="middle_dfntn">The middle of something is the center or halfway point.</string> <string name="middle_dfntn_trnslt">وسط چیزی مرکز یا نیمه راه است.</string> <string name="middle_exmpl">The Canadian flag has a maple leaf in the middle of it.</string> <string name="middle_exmpl_trnslt">پرچم کانادا یک برگ افرا در وسط آن دارد.</string>
-    <string name="moment">moment</string> <string name="moment_pho">[ˈmoʊmənt] n.</string> <string name="moment_trnslt">لحظه</string> <string name="moment_dfntn">A moment is a second or a very short time.</string> <string name="moment_dfntn_trnslt">یک لحظه یک ثانیه است یا یک زمان بسیار کوتاه.</string> <string name="moment_exmpl">I was only a few moments late for the meeting.</string> <string name="moment_exmpl_trnslt">فقط چند لحظه برای جلسه تأخیر داشتم</string>
-    <string name="pleased">pleased</string> <string name="pleased_pho"> [pli:zd] adj.</string> <string name="pleased_trnslt">خشنود</string> <string name="pleased_dfntn">When someone is pleased, they are happy.</string> <string name="pleased_dfntn_trnslt">وقتی کسی راضی باشد خوشحال می شود.</string> <string name="pleased_exmpl">She was pleased with the phone call she received.</string> <string name="pleased_exmpl_trnslt">اون از تماسی که دریافت کرده بود راضی بود</string>
-    <string name="promise">promise</string> <string name="promise_pho"> [ˈprɒmɪs] v.</string> <string name="promise_trnslt">قول دادن</string> <string name="promise_dfntn">To promise is to say you will do something for sure.</string> <string name="promise_dfntn_trnslt">قول دادن این است که بگویید مطمئناً کاری خواهید کرد.</string> <string name="promise_exmpl">He promised to return my key by tomorrow.</string> <string name="promise_exmpl_trnslt">او قول داد تا فردا کلید من را برگرداند.</string>
-    <string name="reply">reply</string> <string name="reply_pho">[rɪˈplaɪ] v.</string> <string name="reply_trnslt">پاسخ دادن</string> <string name="reply_dfntn">To reply is to give an answer or say back to someone.</string> <string name="reply_dfntn_trnslt">پاسخ دادن به این معنی است که به شخصی پاسخ دهید یا بگویید.</string> <string name="reply_exmpl">She asked him what time his meeting was. He replied, “at three.”</string> <string name="reply_exmpl_trnslt">او از او پرسید که ملاقاتش ساعت چند است؟ او پاسخ داد ، "در سه."</string>
-    <string name="safe">safe</string> <string name="safe_pho">[seɪf] adj.</string> <string name="safe_trnslt">ایمن, امن</string> <string name="safe_dfntn">When a person is safe, they are not in danger.</string> <string name="safe_dfntn_trnslt">وقتی فردی در امنیت است ، خطری در او نیست.</string> <string name="safe_exmpl">Put on your seat belt in the car to be safe.</string> <string name="safe_exmpl_trnslt">کمربند ایمنی خود را در ماشین قرار دهید تا ایمن باشد.</string>
-    <string name="trick">trick</string> <string name="trick_pho">[trɪk] n.</string> <string name="trick_trnslt">حقه</string> <string name="trick_dfntn">A trick is something you do to fool another person.</string> <string name="trick_dfntn_trnslt">ترفند کاری است که شما برای فریب شخص دیگری انجام می دهید.</string> <string name="trick_exmpl">His card trick really surprised us.</string> <string name="trick_exmpl_trnslt">ترفند کارت وی واقعاً ما را متعجب کرد.</string>
-    <string name="well">well</string> <string name="well_pho">[wɛl] adv.</string> <string name="well_trnslt">خوب</string> <string name="well_dfntn">You use well to say that something was done in a good way.</string> <string name="well_dfntn_trnslt">شما خوب استفاده می کنید تا بگویید کاری به طرز خوبی انجام شده است.</string> <string name="well_exmpl">The couple can dance quite well.</string> <string name="well_exmpl_trnslt">زن و شوهر می توانند کاملاً خوب برقصند.</string>
-
-
-
 
     //story image URL's
     <string name="one">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-1/reading/23723.jpg</string>
@@ -269,10 +290,51 @@
     <string name="fifteen">https://www.essentialenglish.review/apps-data/4000-essential-english-words-1/data/unit-15/reading/23853.jpg</string>
     <string name="todo">TODO</string>
     <string name="counter_default">0</string>
-    <string name="divide">/</string>
+    <string name="divide_1">/</string>
     <string name="default_time">00:00</string>
     <string name="translate">Translate</string>
     <string name="back">Back</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="nav_main_text">4000 Essential words</string>
+    <string name="book_level">Book Level one</string>
+
+
+    <string name="settings_str">تنظیمات</string>
+    <string name="dark_mode_str">حالت شب</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="sub_items">Sub items</string>
+    <string name="buy_app">خرید برنامه</string>
+    <string name="nav_contact_us">ارتباط با ما</string>
+    <string name="invite_friends">دعوت از دوستان</string>
+    <string name="appendix">پا ورقی ها</string>
+    <string name="others">سایر</string>
+
+    <string name="books">Books</string>
+    <string name="book_1">Book 1</string>
+    <string name="book_2">Book 2</string>
+    <string name="book_3">Book 3</string>
+    <string name="book_4">Book 4</string>
+    <string name="book_5">Book 5</string>
+    <string name="book_6">Book 6</string>
+
+
+    <string-array name="navigation_item_drawer_array">
+        <item>Content</item>
+        <item>Fixtures</item>
+        <item>Table</item>
+    </string-array>
+
+    <string name="toolbar_title">Notes App</string>
+    <string name="saved_words">مرور لغات</string>
+    <string name="study_status">وضعیت مطالعه</string>
+
 
 
 </resources>

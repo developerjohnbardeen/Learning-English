@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizDataGenerator.GenerateQuizData;
@@ -29,41 +30,31 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class QuizMainActivity extends AppCompatActivity implements View.OnClickListener{
-    private RelativeLayout counterLayout;
-    private int pStatus = 0;
+    private RelativeLayout counterLayout, answerCounterLayout;
     private int[] randomIntList, optNumbGenerator;
     private String mainColumn, optionColumn, answerWord;
-    private int columnId, qzHardFlag;
+    private int columnId, qzHardFlag, pStatus = 0;
     private Intent quizResultIntent;
 
-    private final String engType = "engToPer" ;
-    private final String persianType = "perToEng";
-    private final String photoWordType = "picWord";
+    private final String engType = "engToPer",
+            persianType = "perToEng", photoWordType = "picWord";
 
     //Quiz String & Image
-    private String strTvWord, strOptionOne, strOptionTwo, strOptionThree, strOptionFour;
+    private String strTvWord, strOptionOne, strOptionTwo,
+            strOptionThree, strOptionFour, quizType;
     private int tvImage;
 
-
-    private String quizType;
-    private TextView questionCounter;
     private ProgressBar mProgress;
 
     //quiz CardView
-    private CardView cardOptionOne;
-    private CardView cardOptionTwo;
-    private CardView cardOptionThree;
-    private CardView cardOptionFour;
-    private CardView cardSkipQuestion;
-    private CardView cardViewQuizQuestion;
+    private CardView cardOptionOne, cardOptionTwo, cardOptionThree,
+            cardOptionFour, cardSkipQuestion, cardViewQuizQuestion,
+            crdViewAnswerCounter;
 
     //quiz textView
-    private TextView txtTvWord;
-    private TextView txtOptionOne;
-    private TextView txtOptionTwo;
-    private TextView txtOptionThree;
-    private TextView txtOptionFour;
-    private TextView txtOptionSkip;
+    private TextView txtTvWord, txtOptionOne, questionCounter,
+            txtOptionTwo, txtOptionThree, txtOptionFour, txtOptionSkip,
+            correctTxtCounter, wrongTxtCounter, skippedTxtCounter;
 
     //quiz image
     private ImageView tvQuizImageView;
@@ -74,7 +65,6 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     private ArrayList<SkippedModel> skippedList;
 
     private int correctInt = 0, wrongInt = 0 , skippedInt = 0;
-    private TextView correctTxtCounter, wrongTxtCounter, skippedTxtCounter;
     private CountDownTimer timer;
 
 
@@ -281,12 +271,12 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         assert quizType != null;
         if (quizType.equalsIgnoreCase(photoWordType)){
             tvQuizImageView.setVisibility(View.VISIBLE);
-            counterLayoutMargin(0,270,0,0);
+            counterLayoutMargin(1,10,2,3);
         }else if (quizType.equalsIgnoreCase(engType)){
             txtTvWord.setVisibility(View.VISIBLE);
-            counterLayoutMargin(0,270,0,0);
+            counterLayoutMargin(2,11,3,1);
         }else if (quizType.equalsIgnoreCase(persianType)){
-            counterLayoutMargin(0,270,0,0);
+            counterLayoutMargin(4,12,1,3);
             txtTvWord.setVisibility(View.VISIBLE);
         }
     }
@@ -297,15 +287,15 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         answerCounterViewsFindById();
 
         tvQuizImageView = findViewById(R.id.diamond_quiz_image_view);
-        counterLayout = findViewById(R.id.counter_layout);
+        counterLayout = findViewById(R.id.time_counter_layout);
+        cardViewAnswerCounter(60, 360, 10, 10);
         componentClick();
     }
 
 
 
     public void sampleProgress(){
-        Resources res = getResources();
-        Drawable drawable = res.getDrawable(R.drawable.circular);
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.circular);
         mProgress = findViewById(R.id.circularProgressbar);
         mProgress.setProgress(0);   // Main Progress
         mProgress.setSecondaryProgress(0); // Secondary Progress
@@ -449,8 +439,8 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         cardOptionFour = findViewById(R.id.card_view_quiz_option_four);
         cardSkipQuestion = findViewById(R.id.card_view_quiz_option_quiz_skip_answer);
         cardViewQuizQuestion = findViewById(R.id.cardview_quiz);
+        crdViewAnswerCounter = findViewById(R.id.card_view_answer_counter_container);
     }
-
     private void quizTextViewFindById(){
         //TextView
         questionCounter = findViewById(R.id.tv);
@@ -462,14 +452,34 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         txtOptionSkip = findViewById(R.id.txt_quiz_option_skip_answer);
     }
 
-    public void counterLayoutMargin(int left, int top, int right, int bottom){
+
+    /*private void functionsOfParams(){
+        counterLayoutMargin();
+        cardViewAnswerCounter();
+    }*/
+
+    private void counterLayoutMargin(int marginStart, int marginTop, int marginEnd, int marginBottom){
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(left, top, right, bottom);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.BELOW, R.id.cardview_quiz);
+        params.setMargins(marginStart, marginTop, marginEnd, marginBottom);
         counterLayout.setLayoutParams(params);
     }
+
+    private void cardViewAnswerCounter(int marginStart, int marginTop, int marginEnd, int marginBottom){
+        RelativeLayout.LayoutParams crdViewAnswerCounterParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        crdViewAnswerCounterParams.setMargins(marginStart, marginTop, marginEnd, marginBottom);
+        crdViewAnswerCounter.setLayoutParams(crdViewAnswerCounterParams);
+    }
+
+
+
 
     public void componentClick() {
         cardOptionOne.setOnClickListener(this);

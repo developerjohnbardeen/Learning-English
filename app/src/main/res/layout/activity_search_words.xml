@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/search_appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/search_main_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/search_back_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                        android:scaleType="fitXY"
+                        android:layout_marginStart="-15dp"
+                        android:padding="@dimen/search_icon_padding"
+                        android:contentDescription="@string/todo"/>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/search_compat_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/search_hint"
+                        android:gravity="start|center"
+                        android:singleLine="true"
+                        android:scrollHorizontally="true"
+                        android:allowUndo="true"
+                        android:layout_marginStart="-10dp"
+                        android:layout_marginEnd="-10dp"
+                        android:layout_toEndOf="@+id/search_back_button"
+                        android:layout_toStartOf="@+id/search_delete_all_words"
+                        android:background="@color/fui_transparent"
+                        android:imeOptions="actionSearch"/>
+
+                    <ImageView
+                        android:id="@+id/search_delete_all_words"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_baseline_clear_24"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:padding="@dimen/search_icon_padding"
+                        android:contentDescription="@string/todo"/>
+
+                </RelativeLayout>
+
+
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"/>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

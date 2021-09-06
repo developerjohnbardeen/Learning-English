@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4000essentialwordsbook1.R;
-import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordModel;
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 
 import java.util.ArrayList;
 

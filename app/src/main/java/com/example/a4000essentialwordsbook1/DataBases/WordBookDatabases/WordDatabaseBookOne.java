@@ -20,6 +20,7 @@ public class WordDatabaseBookOne extends SQLiteOpenHelper {
     public WordDatabaseBookOne(Context context){
         super(context, BOOK_ONE_WORD_DATABASE , null , DB_VERSION);
         this.dbContext = context;
+
     }
 
 
@@ -85,27 +86,26 @@ public class WordDatabaseBookOne extends SQLiteOpenHelper {
     }
 
     private void insertWordValueTableOne(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        insert.insertAllWordTables_1(db, R.drawable.afraied, R.raw.a , 0, 0, 1 , 1, 38086, 39946, 39946, 43976, 43976, 47724,  dbContext.getString(R.string.afraid), dbContext.getString(R.string.afraid_pho), dbContext.getString(R.string.afraid_translate), dbContext.getString(R.string.afraid_defi), dbContext.getString(R.string.afraid_dfntn_trnslt), dbContext.getString(R.string.afraid_exmpl), dbContext.getString(R.string.afraid_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.agree, R.raw.a , 0, 0, 1 , 1, 47724, 50500, 50500, 55347, 55347, 62500,  dbContext.getString(R.string.agree), dbContext.getString(R.string.agree_pho), dbContext.getString(R.string.agree_translate), dbContext.getString(R.string.agree_defi), dbContext.getString(R.string.agree_dfntn_trnslt), dbContext.getString(R.string.agree_exmpl), dbContext.getString(R.string.agree_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.angry, R.raw.a , 0, 0, 1 , 1, 62500, 64205, 64205, 69620, 69620, 75384,  dbContext.getString(R.string.angry), dbContext.getString(R.string.angry_pho), dbContext.getString(R.string.angry_translate), dbContext.getString(R.string.angry_defi), dbContext.getString(R.string.angry_dfntn_trnslt), dbContext.getString(R.string.angry_exmpl), dbContext.getString(R.string.angry_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.arrive, R.raw.a , 0, 0, 1 , 1, 75384, 77170, 77170, 81861, 81861, 88131,  dbContext.getString(R.string.arrive), dbContext.getString(R.string.arrive_pho), dbContext.getString(R.string.arrive_translate), dbContext.getString(R.string.arrive_defi), dbContext.getString(R.string.arrive_dfntn_trnslt), dbContext.getString(R.string.arrive_exmpl), dbContext.getString(R.string.arrive_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.attack, R.raw.a , 0, 0, 1 , 1, 88131, 89825, 89825, 94191, 94191, 99925,  dbContext.getString(R.string.attack), dbContext.getString(R.string.attack_pho), dbContext.getString(R.string.attack_translate), dbContext.getString(R.string.attack_defi), dbContext.getString(R.string.attack_dfntn_trnslt), dbContext.getString(R.string.attack_exmpl), dbContext.getString(R.string.attack_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.bottom, R.raw.a , 0, 0, 1 , 1, 99925, 101597, 101597, 104702, 104702, 109767,  dbContext.getString(R.string.bottom), dbContext.getString(R.string.bottom_pho), dbContext.getString(R.string.bottom_translate), dbContext.getString(R.string.bottom_defi), dbContext.getString(R.string.bottom_dfntn_trnslt), dbContext.getString(R.string.bottom_exmpl), dbContext.getString(R.string.bottom_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.clever, R.raw.a , 0, 0, 1 , 1, 109767, 111405, 111405, 116758, 116758, 121503,  dbContext.getString(R.string.clever), dbContext.getString(R.string.clever_pho), dbContext.getString(R.string.clever_translate), dbContext.getString(R.string.clever_defi), dbContext.getString(R.string.clever_dfntn_trnslt), dbContext.getString(R.string.clever_exmpl), dbContext.getString(R.string.clever_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.cruel, R.raw.a , 0, 0, 1 , 1, 121503, 123123, 123123, 128027, 128027, 132714,  dbContext.getString(R.string.cruel), dbContext.getString(R.string.cruel_pho), dbContext.getString(R.string.cruel_translate), dbContext.getString(R.string.cruel_defi), dbContext.getString(R.string.cruel_dfntn_trnslt), dbContext.getString(R.string.cruel_exmpl), dbContext.getString(R.string.cruel_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.finally_1, R.raw.a , 0, 0, 1 , 1, 132714, 134500, 134500, 140471, 140471, 146702,  dbContext.getString(R.string.finally_1), dbContext.getString(R.string.finally_pho), dbContext.getString(R.string.finally_translate), dbContext.getString(R.string.finally_defi), dbContext.getString(R.string.finally_dfntn_trnslt), dbContext.getString(R.string.finally_exmpl), dbContext.getString(R.string.finally_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.hide, R.raw.a , 0, 0, 1 , 1, 146702, 148340, 148340, 152526, 152526, 157984,  dbContext.getString(R.string.hide), dbContext.getString(R.string.hide_pho), dbContext.getString(R.string.hide_translate), dbContext.getString(R.string.hide_defi), dbContext.getString(R.string.hide_dfntn_trnslt), dbContext.getString(R.string.hide_exmpl), dbContext.getString(R.string.hide_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.hunt, R.raw.a , 0, 0, 1 , 1, 157984, 159526, 159526, 164430, 164430, 169740,  dbContext.getString(R.string.hunt), dbContext.getString(R.string.hunt_pho), dbContext.getString(R.string.hunt_translate), dbContext.getString(R.string.hunt_defi), dbContext.getString(R.string.hunt_dfntn_trnslt), dbContext.getString(R.string.hunt_exmpl), dbContext.getString(R.string.hunt_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.lot, R.raw.a , 0, 0, 1 , 1, 169740, 171390, 171390, 178347, 178347, 183115,  dbContext.getString(R.string.lot), dbContext.getString(R.string.lot_pho), dbContext.getString(R.string.lot_translate), dbContext.getString(R.string.lot_defi), dbContext.getString(R.string.lot_dfntn_trnslt), dbContext.getString(R.string.lot_exmpl), dbContext.getString(R.string.lot_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.middle, R.raw.a , 0, 0, 1 , 1, 183115, 184766, 184766, 189558, 189558, 195501,  dbContext.getString(R.string.middle), dbContext.getString(R.string.middle_pho), dbContext.getString(R.string.middle_translate), dbContext.getString(R.string.middle_defi), dbContext.getString(R.string.middle_dfntn_trnslt), dbContext.getString(R.string.middle_exmpl), dbContext.getString(R.string.middle_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.moment, R.raw.a , 0, 0, 1 , 1, 195501, 197218, 197218, 201416, 201416, 206640,  dbContext.getString(R.string.moment), dbContext.getString(R.string.moment_pho), dbContext.getString(R.string.moment_translate), dbContext.getString(R.string.moment_defi), dbContext.getString(R.string.moment_dfntn_trnslt), dbContext.getString(R.string.moment_exmpl), dbContext.getString(R.string.moment_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.pleased, R.raw.a , 0, 0, 1 , 1, 206640, 208339, 208339, 210874, 210874, 216980,  dbContext.getString(R.string.pleased), dbContext.getString(R.string.pleased_pho), dbContext.getString(R.string.pleased_translate), dbContext.getString(R.string.pleased_defi), dbContext.getString(R.string.pleased_dfntn_trnslt), dbContext.getString(R.string.pleased_exmpl), dbContext.getString(R.string.pleased_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.promise, R.raw.a , 0, 0, 1 , 1, 216980, 218669, 218669, 223041, 223041, 228266,  dbContext.getString(R.string.promise), dbContext.getString(R.string.promise_pho), dbContext.getString(R.string.promise_translate), dbContext.getString(R.string.promise_defi), dbContext.getString(R.string.promise_dfntn_trnslt), dbContext.getString(R.string.promise_exmpl), dbContext.getString(R.string.promise_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.reply, R.raw.a , 0, 0, 1 , 1, 228266, 230031, 230031, 234901, 234901, 231380,  dbContext.getString(R.string.reply), dbContext.getString(R.string.reply_pho), dbContext.getString(R.string.reply_translate), dbContext.getString(R.string.reply_defi), dbContext.getString(R.string.reply_dfntn_trnslt), dbContext.getString(R.string.reply_exmpl), dbContext.getString(R.string.reply_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.safe, R.raw.a , 0, 0, 1 , 1, 231380, 240048, 240048, 246987, 246987, 251941,  dbContext.getString(R.string.safe), dbContext.getString(R.string.safe_pho), dbContext.getString(R.string.safe_translate), dbContext.getString(R.string.safe_defi), dbContext.getString(R.string.safe_dfntn_trnslt), dbContext.getString(R.string.safe_exmpl), dbContext.getString(R.string.safe_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.trick, R.raw.a , 0, 0, 1 , 1, 251941, 253435, 253435, 257551, 257551, 262120,  dbContext.getString(R.string.trick), dbContext.getString(R.string.trick_pho), dbContext.getString(R.string.trick_translate), dbContext.getString(R.string.trick_defi), dbContext.getString(R.string.trick_dfntn_trnslt), dbContext.getString(R.string.trick_exmpl), dbContext.getString(R.string.trick_exmpl_tran));
-        insert.insertAllWordTables_1(db, R.drawable.well, R.raw.a , 0, 0, 1 , 1, 262120, 263776, 263776, 268380, 268380, 270500,  dbContext.getString(R.string.well), dbContext.getString(R.string.well_pho), dbContext.getString(R.string.well_translate), dbContext.getString(R.string.well_defi), dbContext.getString(R.string.well_dfntn_trnslt), dbContext.getString(R.string.well_exmpl), dbContext.getString(R.string.well_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.afraied, R.raw.a , 0, 0, 1 , 1,     38086, 39946, 39946, 43976, 43976, 47724,  dbContext.getString(R.string.afraid), dbContext.getString(R.string.afraid_pho), dbContext.getString(R.string.afraid_translate), dbContext.getString(R.string.afraid_defi), dbContext.getString(R.string.afraid_dfntn_trnslt), dbContext.getString(R.string.afraid_exmpl), dbContext.getString(R.string.afraid_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.agree, R.raw.a , 0, 0, 1 , 1,       48723, 50500, 50500, 55347, 55347, 62500,  dbContext.getString(R.string.agree), dbContext.getString(R.string.agree_pho), dbContext.getString(R.string.agree_translate), dbContext.getString(R.string.agree_defi), dbContext.getString(R.string.agree_dfntn_trnslt), dbContext.getString(R.string.agree_exmpl), dbContext.getString(R.string.agree_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.angry, R.raw.a , 0, 0, 1 , 1,       62500, 64205, 64205, 69620, 69620, 75384,  dbContext.getString(R.string.angry), dbContext.getString(R.string.angry_pho), dbContext.getString(R.string.angry_translate), dbContext.getString(R.string.angry_defi), dbContext.getString(R.string.angry_dfntn_trnslt), dbContext.getString(R.string.angry_exmpl), dbContext.getString(R.string.angry_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.arrive, R.raw.a , 0, 0, 1 , 1,      75384, 77170, 77170, 81861, 81861, 88131,  dbContext.getString(R.string.arrive), dbContext.getString(R.string.arrive_pho), dbContext.getString(R.string.arrive_translate), dbContext.getString(R.string.arrive_defi), dbContext.getString(R.string.arrive_dfntn_trnslt), dbContext.getString(R.string.arrive_exmpl), dbContext.getString(R.string.arrive_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.attack, R.raw.a , 0, 0, 1 , 1,      88131, 89825, 89825, 94191, 94191, 99925,  dbContext.getString(R.string.attack), dbContext.getString(R.string.attack_pho), dbContext.getString(R.string.attack_translate), dbContext.getString(R.string.attack_defi), dbContext.getString(R.string.attack_dfntn_trnslt), dbContext.getString(R.string.attack_exmpl), dbContext.getString(R.string.attack_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.bottom, R.raw.a , 0, 0, 1 , 1,      99925, 101597, 101597, 104702, 104702, 109767,  dbContext.getString(R.string.bottom), dbContext.getString(R.string.bottom_pho), dbContext.getString(R.string.bottom_translate), dbContext.getString(R.string.bottom_defi), dbContext.getString(R.string.bottom_dfntn_trnslt), dbContext.getString(R.string.bottom_exmpl), dbContext.getString(R.string.bottom_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.clever, R.raw.a , 0, 0, 1 , 1,      109767, 111405, 111405, 116758, 116758, 121503,  dbContext.getString(R.string.clever), dbContext.getString(R.string.clever_pho), dbContext.getString(R.string.clever_translate), dbContext.getString(R.string.clever_defi), dbContext.getString(R.string.clever_dfntn_trnslt), dbContext.getString(R.string.clever_exmpl), dbContext.getString(R.string.clever_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.cruel, R.raw.a , 0, 0, 1 , 1,       121503, 123123, 123123, 128027, 128027, 132714,  dbContext.getString(R.string.cruel), dbContext.getString(R.string.cruel_pho), dbContext.getString(R.string.cruel_translate), dbContext.getString(R.string.cruel_defi), dbContext.getString(R.string.cruel_dfntn_trnslt), dbContext.getString(R.string.cruel_exmpl), dbContext.getString(R.string.cruel_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.finally_1, R.raw.a , 0, 0, 1 , 1,   132714, 134500, 134500, 140471, 140471, 146702,  dbContext.getString(R.string.finally_1), dbContext.getString(R.string.finally_pho), dbContext.getString(R.string.finally_translate), dbContext.getString(R.string.finally_defi), dbContext.getString(R.string.finally_dfntn_trnslt), dbContext.getString(R.string.finally_exmpl), dbContext.getString(R.string.finally_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.hide, R.raw.a , 0, 0, 1 , 1,        146702, 148340, 148340, 152526, 152526, 157984,  dbContext.getString(R.string.hide), dbContext.getString(R.string.hide_pho), dbContext.getString(R.string.hide_translate), dbContext.getString(R.string.hide_defi), dbContext.getString(R.string.hide_dfntn_trnslt), dbContext.getString(R.string.hide_exmpl), dbContext.getString(R.string.hide_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.hunt, R.raw.a , 0, 0, 1 , 1,        157984, 159526, 159526, 164430, 164430, 169740,  dbContext.getString(R.string.hunt), dbContext.getString(R.string.hunt_pho), dbContext.getString(R.string.hunt_translate), dbContext.getString(R.string.hunt_defi), dbContext.getString(R.string.hunt_dfntn_trnslt), dbContext.getString(R.string.hunt_exmpl), dbContext.getString(R.string.hunt_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.lot, R.raw.a , 0, 0, 1 , 1,         169740, 171390, 171390, 178347, 178347, 183115,  dbContext.getString(R.string.lot), dbContext.getString(R.string.lot_pho), dbContext.getString(R.string.lot_translate), dbContext.getString(R.string.lot_defi), dbContext.getString(R.string.lot_dfntn_trnslt), dbContext.getString(R.string.lot_exmpl), dbContext.getString(R.string.lot_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.middle, R.raw.a , 0, 0, 1 , 1,      183115, 184766, 184766, 189558, 189558, 195501,  dbContext.getString(R.string.middle), dbContext.getString(R.string.middle_pho), dbContext.getString(R.string.middle_translate), dbContext.getString(R.string.middle_defi), dbContext.getString(R.string.middle_dfntn_trnslt), dbContext.getString(R.string.middle_exmpl), dbContext.getString(R.string.middle_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.moment, R.raw.a , 0, 0, 1 , 1,      195501, 197218, 197218, 201416, 201416, 206640,  dbContext.getString(R.string.moment), dbContext.getString(R.string.moment_pho), dbContext.getString(R.string.moment_translate), dbContext.getString(R.string.moment_defi), dbContext.getString(R.string.moment_dfntn_trnslt), dbContext.getString(R.string.moment_exmpl), dbContext.getString(R.string.moment_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.pleased, R.raw.a , 0, 0, 1 , 1,     206640, 208339, 208339, 210874, 210874, 216980,  dbContext.getString(R.string.pleased), dbContext.getString(R.string.pleased_pho), dbContext.getString(R.string.pleased_translate), dbContext.getString(R.string.pleased_defi), dbContext.getString(R.string.pleased_dfntn_trnslt), dbContext.getString(R.string.pleased_exmpl), dbContext.getString(R.string.pleased_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.promise, R.raw.a , 0, 0, 1 , 1,     216980, 218669, 218669, 223041, 223041, 228266,  dbContext.getString(R.string.promise), dbContext.getString(R.string.promise_pho), dbContext.getString(R.string.promise_translate), dbContext.getString(R.string.promise_defi), dbContext.getString(R.string.promise_dfntn_trnslt), dbContext.getString(R.string.promise_exmpl), dbContext.getString(R.string.promise_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.reply, R.raw.a , 0, 0, 1 , 1,       228266, 230031, 230031, 234901, 234901, 241380,  dbContext.getString(R.string.reply), dbContext.getString(R.string.reply_pho), dbContext.getString(R.string.reply_translate), dbContext.getString(R.string.reply_defi), dbContext.getString(R.string.reply_dfntn_trnslt), dbContext.getString(R.string.reply_exmpl), dbContext.getString(R.string.reply_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.safe, R.raw.a , 0, 0, 1 , 1,        241380, 243042, 243042,  246987, 246987, 251941,  dbContext.getString(R.string.safe), dbContext.getString(R.string.safe_pho), dbContext.getString(R.string.safe_translate), dbContext.getString(R.string.safe_defi), dbContext.getString(R.string.safe_dfntn_trnslt), dbContext.getString(R.string.safe_exmpl), dbContext.getString(R.string.safe_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.trick, R.raw.a , 0, 0, 1 , 1,       251941, 253435, 253435, 257551, 257551, 262120,  dbContext.getString(R.string.trick), dbContext.getString(R.string.trick_pho), dbContext.getString(R.string.trick_translate), dbContext.getString(R.string.trick_defi), dbContext.getString(R.string.trick_dfntn_trnslt), dbContext.getString(R.string.trick_exmpl), dbContext.getString(R.string.trick_exmpl_tran));
+        insert.insertAllWordTables_1(db, R.drawable.well, R.raw.a , 0, 0, 1 , 1,        262120, 263776, 263776, 268380, 268380, 270500,  dbContext.getString(R.string.well), dbContext.getString(R.string.well_pho), dbContext.getString(R.string.well_translate), dbContext.getString(R.string.well_defi), dbContext.getString(R.string.well_dfntn_trnslt), dbContext.getString(R.string.well_exmpl), dbContext.getString(R.string.well_exmpl_tran));
     }
 
 
@@ -244,6 +244,7 @@ public class WordDatabaseBookOne extends SQLiteOpenHelper {
         insert.insertAllWordTables_7(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 7, 198223, 199872, 199872, 203746, 203746, 208216,  dbContext.getString(R.string.sudden), dbContext.getString(R.string.sudden_pho), dbContext.getString(R.string.sudden_translate), dbContext.getString(R.string.sudden_defi), dbContext.getString(R.string.sudden_dfntn_trnslt), dbContext.getString(R.string.sudden_exmpl), dbContext.getString(R.string.sudden_exmpl_tran));
         insert.insertAllWordTables_7(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 7, 208216, 210000, 210000, 213408, 213408, 217000,  dbContext.getString(R.string.therefore), dbContext.getString(R.string.therefore_pho), dbContext.getString(R.string.therefore_translate), dbContext.getString(R.string.therefore_defi), dbContext.getString(R.string.therefore_dfntn_trnslt), dbContext.getString(R.string.therefore_exmpl), dbContext.getString(R.string.therefore_exmpl_tran));
     }
+
     private void insertWordValueTableEight(SQLiteDatabase db, int oldVersion, int newVersion){
         insert.insertAllWordTables_8(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 8, 5687, 7367, 7367, 11018, 11018, 15606,  dbContext.getString(R.string.accept), dbContext.getString(R.string.accept_pho), dbContext.getString(R.string.accept_translate), dbContext.getString(R.string.accept_defi), dbContext.getString(R.string.accept_dfntn_trnslt), dbContext.getString(R.string.accept_exmpl), dbContext.getString(R.string.accept_exmpl_tran));
         insert.insertAllWordTables_8(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 8, 15606, 17379, 17379, 21165, 21165, 26682,  dbContext.getString(R.string.arrange), dbContext.getString(R.string.arrange_pho), dbContext.getString(R.string.arrange_translate), dbContext.getString(R.string.arrange_defi), dbContext.getString(R.string.arrange_dfntn_trnslt), dbContext.getString(R.string.arrange_exmpl), dbContext.getString(R.string.arrange_exmpl_tran));
@@ -641,6 +642,8 @@ public class WordDatabaseBookOne extends SQLiteOpenHelper {
         insert.insertAllWordTables_25(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 25, 202884, 204527, 204527, 209184, 209184, 213970,  dbContext.getString(R.string.trash), dbContext.getString(R.string.trash_pho), dbContext.getString(R.string.trash_translate), dbContext.getString(R.string.trash_defi), dbContext.getString(R.string.trash_dfntn_trnslt), dbContext.getString(R.string.trash_exmpl), dbContext.getString(R.string.trash_exmpl_tran));
         insert.insertAllWordTables_25(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 25, 213970, 215547, 215547, 219857, 219857, 222000,  dbContext.getString(R.string.wide), dbContext.getString(R.string.wide_pho), dbContext.getString(R.string.wide_translate), dbContext.getString(R.string.wide_defi), dbContext.getString(R.string.wide_dfntn_trnslt), dbContext.getString(R.string.wide_exmpl), dbContext.getString(R.string.wide_exmpl_tran));
     }
+
+
     private void insertWordValueTableTwentySix(SQLiteDatabase db, int oldVersion, int newVersion){
         insert.insertAllWordTables_26(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 26, 6023, 7745, 7745, 11041, 11041, 17546,  dbContext.getString(R.string.advice), dbContext.getString(R.string.advice_pho), dbContext.getString(R.string.advice_translate), dbContext.getString(R.string.advice_defi), dbContext.getString(R.string.advice_dfntn_trnslt), dbContext.getString(R.string.advice_exmpl), dbContext.getString(R.string.advice_exmpl_tran));
         insert.insertAllWordTables_26(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 26, 17546, 19255, 19255, 25301, 25301, 32081,  dbContext.getString(R.string.along), dbContext.getString(R.string.along_pho), dbContext.getString(R.string.along_translate), dbContext.getString(R.string.along_defi), dbContext.getString(R.string.along_dfntn_trnslt), dbContext.getString(R.string.along_exmpl), dbContext.getString(R.string.along_exmpl_tran));
@@ -685,6 +688,7 @@ public class WordDatabaseBookOne extends SQLiteOpenHelper {
         insert.insertAllWordTables_27(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 27, 193813, 195179, 195179, 198531, 198531, 202981,  dbContext.getString(R.string.trip), dbContext.getString(R.string.trip_pho), dbContext.getString(R.string.trip_translate), dbContext.getString(R.string.trip_defi), dbContext.getString(R.string.trip_dfntn_trnslt), dbContext.getString(R.string.trip_exmpl), dbContext.getString(R.string.trip_exmpl_tran));
         insert.insertAllWordTables_27(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 27, 202981, 204653, 204653, 208320, 208320, 211000,  dbContext.getString(R.string.value), dbContext.getString(R.string.value_pho), dbContext.getString(R.string.value_translate), dbContext.getString(R.string.value_defi), dbContext.getString(R.string.value_dfntn_trnslt), dbContext.getString(R.string.value_exmpl), dbContext.getString(R.string.value_exmpl_tran));
     }
+
     private void insertWordValueTableTwentyEight(SQLiteDatabase db, int oldVersion, int newVersion){
         insert.insertAllWordTables_28(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 28, 5855, 7547, 7547, 10915, 10915, 15019,  dbContext.getString(R.string.band), dbContext.getString(R.string.band_pho), dbContext.getString(R.string.band_translate), dbContext.getString(R.string.band_defi), dbContext.getString(R.string.band_dfntn_trnslt), dbContext.getString(R.string.band_exmpl), dbContext.getString(R.string.band_exmpl_tran));
         insert.insertAllWordTables_28(db, R.drawable.wise, R.raw.a , 0, 0, 1 , 28, 15019, 16604, 16604, 20949, 20949, 26378,  dbContext.getString(R.string.barely), dbContext.getString(R.string.barely_pho), dbContext.getString(R.string.barely_translate), dbContext.getString(R.string.barely_defi), dbContext.getString(R.string.barely_dfntn_trnslt), dbContext.getString(R.string.barely_exmpl), dbContext.getString(R.string.barely_exmpl_tran));
@@ -753,3 +757,78 @@ public class WordDatabaseBookOne extends SQLiteOpenHelper {
 
     }
 }
+   /* public void wordAudioPlayer(){
+        vpUtils = new TimeUtil();
+        wordMediaPlayer = MediaPlayer.create(this, plyAudio);
+        intTotalTime = wordMediaPlayer.getDuration();
+        vpSeekBar.setMax((int) intTotalTime);
+
+        vpSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                currentPos = seekBar.getProgress();
+                wordMediaPlayer.seekTo((int) currentPos);
+            }
+        });
+        vpSeekBar.setClickable(true);
+        vpSeekBar.setFocusable(true);
+        vpSeekBar.setEnabled(true);
+    }
+
+    public void wordPlayAudio(View view){
+        wordMediaPlayer.start();
+        intElapsedTime = wordMediaPlayer.getCurrentPosition();
+        vpSeekBar.setProgress((int) intElapsedTime);
+        wordVPDurationHandler.postDelayed( wordUpdateSeekBar,10);
+        vpPlyImg.setImageResource(R.drawable.mx_pause_normal);
+    }
+    private final Handler wordVPDurationHandler= new Handler(Looper.getMainLooper());
+    private final Runnable wordUpdateSeekBar = new Runnable() {
+        @Override
+        public void run() {
+            intElapsedTime = wordMediaPlayer.getCurrentPosition();
+            vpSeekBar.setProgress((int) intElapsedTime);
+            String vpStringTotalTime = "" + vpUtils.milliSecondsToTimer(intTotalTime);
+            String vpLeftTime = "" + vpUtils.milliSecondsToTimer(intElapsedTime);
+
+            vpTxtDuration.setText(vpLeftTime);
+            vpTxtTotalTime.setText(vpStringTotalTime);
+            wordVPDurationHandler.postDelayed(this, 10);
+        }
+    };
+    public void wordPause(View view) {
+        if (wordMediaPlayer != null) {
+            wordMediaPlayer.pause();
+            vpPlyImg.setImageResource(R.drawable.mx_play_normal);
+        }
+    }
+
+
+    private void wordTrackPlayer(int start, int end){
+        boolean isPlaying = wordMediaPlayer.isPlaying();
+
+        if (isPlaying){
+            wordHandler.removeCallbacks(wordTracKThread);
+            wordMediaPlayer.pause();
+            wordMediaPlayer.seekTo(start);
+        }
+
+        wordMediaPlayer.seekTo(start);
+        wordMediaPlayer.start();
+
+        wordHandler.postDelayed(wordTracKThread, end);
+        wordTracKThread = () -> {
+            wordMediaPlayer.pause();
+            wordMediaPlayer.seekTo(start);
+        };
+
+    }
+    private final Handler wordHandler = new Handler(Looper.getMainLooper());
+    private Runnable wordTracKThread;*/

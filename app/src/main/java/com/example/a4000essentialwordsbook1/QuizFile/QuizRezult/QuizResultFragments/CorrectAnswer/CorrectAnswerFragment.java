@@ -18,13 +18,15 @@ import com.example.a4000essentialwordsbook1.R;
 import java.util.ArrayList;
 
 public class CorrectAnswerFragment extends Fragment {
-    private Context caContext;
+    private final Context caContext;
     private final ArrayList<CorrectModel> correctList;
     private RecyclerView correctRecyclerView;
+    private final int[] dbInfoList;
 
-    public CorrectAnswerFragment(Context context, ArrayList<CorrectModel> list){
+    public CorrectAnswerFragment(Context context, ArrayList<CorrectModel> list, int[] dbInfoList){
         this.caContext = context;
         this.correctList = list;
+        this.dbInfoList = dbInfoList;
     }
 
     @Nullable
@@ -42,7 +44,7 @@ public class CorrectAnswerFragment extends Fragment {
     }
 
     public void recyclerViewValueSetter(View view){
-        RecyclerViewCorrectAnswer correctAnswerAdapter = new RecyclerViewCorrectAnswer(caContext, correctList);
+        RecyclerViewCorrectAnswer correctAnswerAdapter = new RecyclerViewCorrectAnswer(caContext, correctList, dbInfoList);
         correctRecyclerView.setLayoutManager(new GridLayoutManager(caContext, 1));
         //correctAnswerAdapter.notifyDataSetChanged();
         correctRecyclerView.setAdapter(correctAnswerAdapter);

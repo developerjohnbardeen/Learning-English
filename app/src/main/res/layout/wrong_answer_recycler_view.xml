@@ -4,12 +4,12 @@
     android:id="@+id/card_view_wrong_answers"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="165dp"
+    android:layout_height="@dimen/_123sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    android:layout_margin="3dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp">
+    android:layout_margin="@dimen/_2sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardElevation="@dimen/_8sdp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,17 +22,17 @@
             android:text="@string/afraid"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="40sp"
+            android:textSize="@dimen/_30ssp"
             android:layout_centerHorizontal="true" />
 
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/wrong_tv_image_view"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/peacock"
             android:visibility="invisible"
-            app:siRadius="10dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            app:siRadius="@dimen/_8sdp"/>
 
 
         <LinearLayout
@@ -49,8 +49,10 @@
                 android:text="@string/user_answer"
                 android:textColor="#F81A1A"
                 android:textStyle="italic"
-                android:textSize="18sp"
-                android:layout_marginStart="10dp"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/_13ssp"
+                android:layout_marginStart="@dimen/_7sdp"/>
 
             <TextView
                 android:id="@+id/user_wrong_answer"
@@ -58,10 +60,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/afraid_translate"
                 android:textColor="@color/black"
-                android:textStyle="italic"
-                android:textSize="30sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_7sdp"/>
 
         </LinearLayout>
 
@@ -69,15 +72,16 @@
 
         <Button
             android:id="@+id/wrong_book_image"
-            android:layout_width="30dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_21sdp"
+            android:layout_height="@dimen/_28sdp"
             android:background="@drawable/ic_baseline_bookmark_border_24"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_margin="@dimen/_7sdp"
             android:contentDescription="@string/todo" />
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -89,12 +93,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/correct_answer"
+                android:text="@string/correct_answers"
                 android:textColor="#5EFB3C"
                 android:textStyle="italic"
-                android:textSize="18sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:textSize="@dimen/_13ssp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"/>
 
             <TextView
                 android:id="@+id/txt_wrong_correct_answer"
@@ -102,12 +108,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/afraid_translate"
                 android:textColor="@color/black"
-                android:textStyle="italic"
-                android:textSize="30sp"
-                android:layout_marginEnd="10dp"/>
+                android:textSize="@dimen/_15ssp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_7sdp"/>
 
 
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 

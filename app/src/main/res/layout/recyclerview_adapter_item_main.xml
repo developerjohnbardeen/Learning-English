@@ -5,9 +5,9 @@
     android:id="@+id/main_adapter_card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="20dp"
-    android:layout_margin="3dp"
+    app:cardElevation="@dimen/_1sdp"
+    app:cardCornerRadius="@dimen/_15sdp"
+    android:layout_margin="@dimen/_2sdp"
     android:layout_gravity="center"
     android:clickable="true"
     android:focusable="true">
@@ -23,9 +23,9 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/main_adapter_image_view"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            app:riv_corner_radius="10dp"
+            android:layout_width="@dimen/_127sdp"
+            android:layout_height="@dimen/_127sdp"
+            app:riv_corner_radius="@dimen/_7sdp"
             android:scaleType="fitXY"
             android:src="@drawable/book_cover_2"
             android:contentDescription="@string/todo"/>
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="@dimen/_3sdp"
             android:gravity="center">
 
             <TextView
@@ -44,12 +44,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/remain_1"
-                android:textSize="20sp"
+                android:textSize="@dimen/_15ssp"
                 android:textColor="@color/black"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:fontFamily="@font/bamshad"
                 />
 

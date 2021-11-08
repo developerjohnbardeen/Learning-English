@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/hard_selected_book_item"
+        android:title="@string/hard_words_str"/>
+
+    <item
+        android:id="@+id/marked_selected_book_item"
+        android:title="@string/marked_word_str"/>
+
+    <item
+        android:id="@+id/settings_selected_book_item"
+        android:title="@string/settings_str"/>
+
+</menu>

@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.CorrectModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.SkippedModel;
@@ -17,54 +20,46 @@ import com.example.a4000essentialwordsbook1.QuizFile.QuizRezult.QuizResultFragme
 
 import java.util.ArrayList;
 
-public class QuizResultPagerAdapter extends FragmentPagerAdapter {
+public class QuizResultPagerAdapter extends FragmentStateAdapter {
     private final Context qrContext;
-    private int[] resultCounts = new int[3];
+    private final int[] resultCounts = new int[3];
     private final ArrayList<CorrectModel> correctList;
     private final ArrayList<WrongModel> wrongList;
     private final ArrayList<SkippedModel> skippedList;
+    private final int[] dbInfoList;
 
     public QuizResultPagerAdapter(Context context, ArrayList<CorrectModel> correctList,
-                                  ArrayList<WrongModel> wrongList, ArrayList<SkippedModel> skippedList,
-                                  FragmentManager fm, int behavior){
-        super(fm, behavior);
+                                  ArrayList<WrongModel> wrongList, ArrayList<SkippedModel> skippedList, int[] dbInfoList,
+                                  FragmentManager fm, Lifecycle lifecycle){
+        super(fm, lifecycle);
         this.qrContext = context;
         this.correctList = correctList;
         this.wrongList = wrongList;
         this.skippedList = skippedList;
+        this.dbInfoList = dbInfoList;
+
         resultCounts[0] = correctList.size();
         resultCounts[1] = wrongList.size();
         resultCounts[2] = skippedList.size();
     }
 
-    @Override
-    public CharSequence getPageTitle(int position){
-        if (position == 0)
-            return "";
-        else if (position == 1)
-            return "";
-        else if (position == 2)
-            return "";
-        return "";
-    }
-
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         if (position == 0){
-            return new QuizPieChartResultFragment(qrContext, resultCounts);
+            return new QuizPieChartResultFragment(qrContext, resultCounts, dbInfoList);
         }else if (position == 1){
-            return new CorrectAnswerFragment(qrContext, correctList);
+            return new CorrectAnswerFragment(qrContext, correctList, dbInfoList);
         }else if (position == 2){
-            return new WrongAnswerFragment(qrContext, wrongList);
+            return new WrongAnswerFragment(qrContext, wrongList, dbInfoList);
         }else {
-            return new SkippedAnswerFragment(qrContext, skippedList);
+            return new SkippedAnswerFragment(qrContext, skippedList, dbInfoList);
         }
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return 4;
     }
 }

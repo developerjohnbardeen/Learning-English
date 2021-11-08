@@ -29,7 +29,7 @@
                         android:layout_alignParentStart="true"
                         android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
                         android:scaleType="fitXY"
-                        android:layout_marginStart="-15dp"
+                        android:layout_marginStart="@dimen/mines13mdp"
                         android:padding="@dimen/search_icon_padding"
                         android:contentDescription="@string/todo"/>
 
@@ -42,8 +42,8 @@
                         android:singleLine="true"
                         android:scrollHorizontally="true"
                         android:allowUndo="true"
-                        android:layout_marginStart="-10dp"
-                        android:layout_marginEnd="-10dp"
+                        android:layout_marginStart="@dimen/mines10mdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_toEndOf="@+id/search_back_button"
                         android:layout_toStartOf="@+id/search_delete_all_words"
                         android:background="@color/fui_transparent"
@@ -57,7 +57,7 @@
                         android:src="@drawable/ic_baseline_clear_24"
                         android:scaleType="fitXY"
                         android:visibility="gone"
-                        android:padding="@dimen/search_icon_padding"
+                        android:padding="@dimen/_10sdp"
                         android:contentDescription="@string/todo"/>
 
                 </RelativeLayout>

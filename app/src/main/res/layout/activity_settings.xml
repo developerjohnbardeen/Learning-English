@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/application_category"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_auto_dark_mode_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/auto_dark_mode_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/night_mode_title"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="1dp"/>
+
+                <TextView
+                    android:id="@+id/auto_dark_mode_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/night_mode_summary"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/auto_dark_mode_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+
+
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/settings_auto_dark_mode_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:clickable="false"
+                    android:layout_margin="1dp"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_auto_play_audio_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/settings_auto_play_audio_title_text_View"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_play_words_title"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"/>
+
+                <TextView
+                    android:id="@+id/settings_auto_play_audio_summary_text_View"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_play_words_summary"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_below="@+id/settings_auto_play_audio_title_text_View"
+                    android:layout_toEndOf="@+id/settings_auto_play_check_box"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/settings_auto_play_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:clickable="false"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_play_word_audio_story_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/settings_play_word_audio_story_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/play_word_audio_story_title_str"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_1sdp"/>
+                <TextView
+                    android:id="@+id/settings_play_word_audio_story_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/play_word_audio_story_summary_str"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/settings_play_word_audio_story_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/settings_play_story_bold_words_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:clickable="false"/>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_display_translation_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/settings_display_translation_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/display_translation_title"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"/>
+
+                <TextView
+                    android:id="@+id/settings_display_translation_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/display_translation_summary"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_below="@+id/settings_display_translation_title_text_view"
+                    android:layout_toEndOf="@+id/settings_display_translation_check_box"/>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/settings_display_translation_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:layout_centerVertical="true"/>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@color/gary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_font_settings_str"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_texT_font_type_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/mines5mdp">
+
+                <TextView
+                    android:id="@+id/settings_texT_font_type_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_font_title"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_1sdp"/>
+                <TextView
+                    android:id="@+id/settings_texT_font_type_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_font_summary"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/settings_texT_font_type_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_texT_font_type_story_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/settings_texT_font_type_story_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_story_font_type_title_str"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_1sdp"/>
+                <TextView
+                    android:id="@+id/settings_texT_font_type_story_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_story_font_type_summary_str"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/settings_texT_font_type_story_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@color/gary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_size_settings_str"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+
+            <RelativeLayout
+                android:id="@+id/settings_text_size_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_gravity="top"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/mines5mdp">
+
+                <TextView
+                    android:id="@+id/settings_text_size_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_size_title"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_1sdp"/>
+
+                <TextView
+                    android:id="@+id/auto_text_size_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_size_summary"
+                    android:textSize="@dimen/_10sdp"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/settings_text_size_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_text_size_story_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/settings_text_size_story_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_story_size_title_str"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_1sdp"/>
+
+                <TextView
+                    android:id="@+id/auto_text_size_story_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_story_size_summary_str"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/settings_text_size_story_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@color/gary"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_others_settings_str"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_quiz_timer_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/settings_quiz_timer_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quiz_timer_duration_title"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/quiz_timer_duration_check_box"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_1sdp"/>
+
+                <TextView
+                    android:id="@+id/settings_quiz_timer_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quiz_timer_duration_summary"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/settings_quiz_timer_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/quiz_timer_duration_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:layout_margin="1dp"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/restore_settings_parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/restore_settings_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restore_settings_title_str"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_1sdp"/>
+                <TextView
+                    android:id="@+id/restore_settings_summary_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restore_settings_Summary_str"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/restore_settings_title_text_view"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+            </RelativeLayout>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

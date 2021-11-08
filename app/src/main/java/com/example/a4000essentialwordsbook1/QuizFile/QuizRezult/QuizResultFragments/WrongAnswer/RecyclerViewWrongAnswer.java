@@ -24,16 +24,18 @@ import java.util.ArrayList;
 public class RecyclerViewWrongAnswer extends RecyclerView.Adapter<RecyclerViewWrongAnswer.ViewHolder>{
     private final Context wrongContext;
     private final LayoutInflater inflater;
+    private final int[] dbInfoList; //first index is dbNumber, second is unitNum
     private final ArrayList<WrongModel> wrongList;
 
     private Intent intent;
 
 
 
-    public RecyclerViewWrongAnswer(Context context, ArrayList<WrongModel> list){
+    public RecyclerViewWrongAnswer(Context context, ArrayList<WrongModel> list, int[] dbInfoList){
         this.wrongContext = context;
         this.wrongList = list;
         this.inflater = LayoutInflater.from(context);
+        this.dbInfoList = dbInfoList;
     }
 
     @NonNull
@@ -62,7 +64,7 @@ public class RecyclerViewWrongAnswer extends RecyclerView.Adapter<RecyclerViewWr
         TextView tvWord;
         TextView wrongWord;
         TextView correctWord;
-        Button bookImg;
+        Button markedImg;
         Context mContext;
 
 
@@ -73,9 +75,8 @@ public class RecyclerViewWrongAnswer extends RecyclerView.Adapter<RecyclerViewWr
             tvWord = itemView.findViewById(R.id.wrong_tv_word);
             wrongWord = itemView.findViewById(R.id.user_wrong_answer);
             correctWord = itemView.findViewById(R.id.txt_wrong_correct_answer);
-            bookImg = itemView.findViewById(R.id.wrong_book_image);
+            markedImg = itemView.findViewById(R.id.wrong_book_image);
         }
-
     }
 
     private void viewValuesGetterAndSetter(ViewHolder holder, int position){
@@ -94,18 +95,18 @@ public class RecyclerViewWrongAnswer extends RecyclerView.Adapter<RecyclerViewWr
         String correctWord = wrongModel.getCorrectWord();
 
         viewValuesSetter(holder, image, columnId, word,
-                wrongWord, correctWord, hardFlag, wrongModel);
+                wrongWord, correctWord, wrongModel);
     }
 
     private void viewValuesSetter(ViewHolder holder,
                                   int image, int columnId, String word,
                                   String wrongWord, String correctWord,
-                                  int hardFlag, WrongModel model){
+                                   WrongModel model){
 
         if (model.getHardFlag() == 1){
-            holder.bookImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_24);
+            holder.markedImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_24);
         }else if (model.getHardFlag() == 0){
-            holder.bookImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_border_24);
+            holder.markedImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_border_24);
         }
 
         holder.tvImage.setImageResource(image);
@@ -113,33 +114,33 @@ public class RecyclerViewWrongAnswer extends RecyclerView.Adapter<RecyclerViewWr
         holder.wrongWord.setText(wrongWord);
         holder.correctWord.setText(correctWord);
 
-        viewOnClickListener(holder, columnId, hardFlag, model);
+        viewOnClickListener(holder, columnId, model);
     }
 
 
-    private void viewOnClickListener(ViewHolder holder, int columnId, int flag, WrongModel model){
+    private void viewOnClickListener(ViewHolder holder, int columnId, WrongModel model){
         holder.tvWord.setOnClickListener(v -> wrongContext.startActivity(intent));
         holder.tvImage.setOnClickListener(v -> wrongContext.startActivity(intent));
 
 
-        holder.bookImg.setOnClickListener(v -> {
+        holder.markedImg.setOnClickListener(v -> {
             if (model.getHardFlag() == 0){
-                bookWordFunction(columnId, 1);
-                holder.bookImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_24);
+                bookWordFunction(columnId, model, 1);
+                holder.markedImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_24);
                 model.setHardFlag(1);
-                holder.bookImg.setSelected(true);
+                holder.markedImg.setSelected(true);
             }else if (model.getHardFlag() == 1){
-                bookWordFunction(columnId, 0);
-                holder.bookImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_border_24);
+                bookWordFunction(columnId, model,0);
+                holder.markedImg.setBackgroundResource(R.drawable.ic_baseline_bookmark_border_24);
                 model.setHardFlag(0);
-                holder.bookImg.setSelected(false);
+                holder.markedImg.setSelected(false);
             }
         });
 
     }
 
-    private void bookWordFunction(int columnId, int value){
-        UpdateWordDatabase updateWordDatabase = new UpdateWordDatabase(wrongContext);
+    private void bookWordFunction(int columnId, WrongModel model, int value){
+        UpdateWordDatabase updateWordDatabase = new UpdateWordDatabase(wrongContext, dbInfoList);
         String flagColumn = DB_NOTES.HARD_FLAG;
         updateWordDatabase.wordDatabaseUpdate(flagColumn, columnId , value);
     }

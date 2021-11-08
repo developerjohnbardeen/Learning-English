@@ -1,48 +1,42 @@
 package com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.a4000essentialwordsbook1.Linsteners.TextProvider;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 
-import java.util.ArrayList;
 
-public class ReviewWordFragmentPagerAdapter extends FragmentPagerAdapter {
-    private final Context context;
-    private final ArrayList<WordModel> wordList;
+
+public class ReviewWordFragmentPagerAdapter extends FragmentStateAdapter {
     private final TextProvider mProvider;
     private long baseId = 0;
+    private static boolean[] shwFarsiFlags;
+    private static WordModel models;
 
-    public ReviewWordFragmentPagerAdapter(Context context, ArrayList<WordModel> models,
-                                          @NonNull FragmentManager fm, int behavior,
+    public ReviewWordFragmentPagerAdapter(Lifecycle lifecycle,
+                                          boolean[] shwFarsiFlags,
+                                          @NonNull FragmentManager fm,
                                           TextProvider mProvider) {
-        super(fm, behavior);
-        this.context = context;
-        this.wordList = models;
+        super(fm, lifecycle);
         this.mProvider = mProvider;
+        ReviewWordFragmentPagerAdapter.shwFarsiFlags = shwFarsiFlags;
     }
+
+
+    public static void listChanger(WordModel list){models = list;}
+    public static void shwFarsiFlagsList(boolean[] shwFlagsLists){
+        shwFarsiFlags = shwFlagsLists;
+    }
+
 
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
-        /*while (position < wordList.size()){
-            return new FragmentReviewWord(context, wordList.get(position));
-        }
-        return null;*/
-        return FragmentReviewWord.newInstance(context, mProvider.getWordModel(position));
-    }
-
-    //this is called when notifyDataSetChanged() is called
-    @Override
-    public int getItemPosition(@NonNull Object object) {
-        // refresh all fragments when data set changed
-        return POSITION_NONE;
+    public Fragment createFragment(int position) {
+        return FragmentReviewWord.newInstance(mProvider.getWordModel(models, position), shwFarsiFlags);
     }
 
     @Override
@@ -51,13 +45,31 @@ public class ReviewWordFragmentPagerAdapter extends FragmentPagerAdapter {
         return baseId + position;
     }
 
-    public void notifyChangeInPosition(int n) {
-        // shift the ID returned by getItemId outside the range of all previous fragments
-        baseId += getCount() + n;
-    }
-
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return mProvider.getCount();
     }
+
+    public void notifyChangeInPosition(int n) {
+        // shift the ID returned by getItemId outside the range of all previous fragments
+        baseId += getItemCount() + n;
+    }
+
+
 }
+/*    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+
+        return FragmentReviewWord.newInstance(context, mProvider.getWordModel(position));
+    }*/
+/*    //this is called when notifyDataSetChanged() is called
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        // refresh all fragments when data set changed
+        return POSITION_NONE;
+    }*/
+/*    @Override
+    public int getCount() {
+        return mProvider.getCount();
+    }*/

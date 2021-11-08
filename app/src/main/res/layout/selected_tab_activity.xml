@@ -23,24 +23,40 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
             <RelativeLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:id="@+id/layout">
+                android:layout_height="?attr/actionBarSize">
 
 
                 <ImageView
-                    android:id="@+id/selected_review_launcher"
-                    android:layout_width="20dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/selected_alternate_launcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginEnd="3dp"
-                    android:layout_marginBottom="3dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
                     android:contentDescription="@string/todo"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_baseline_bookmark_24" />
+                    android:src="@drawable/ic_baseline_bookmark_24"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+
+                <ImageView
+                    android:id="@+id/selected_search_launcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_11sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:contentDescription="@string/todo"
+                    android:layout_toStartOf="@+id/selected_alternate_launcher"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_baseline_search_24"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
 
 
                 <RelativeLayout
@@ -49,6 +65,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:clickable="true"
                     android:focusable="true"
+                    android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackgroundBorderless">
 
                     <ImageView
@@ -62,27 +79,28 @@
                         android:id="@+id/selected_book_tab_layout_txt_back_button"
                         android:layout_width="wrap_content"
                         android:layout_height="?attr/actionBarSize"
-                        android:layout_toEndOf="@+id/img_back_btn"
                         android:layout_alignBottom="@+id/img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/img_back_btn"
                         android:gravity="center"
                         android:text="@string/back"
-                        android:visibility="visible"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="17sp" />
+                        android:textSize="@dimen/_14ssp"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
                     android:gravity="center">
 
                     <TextView
@@ -91,40 +109,21 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/unit"
-                        android:textColor="?android:attr/textColorPrimary"/>
-
-                    <TextView
-                        android:id="@+id/unit_selected_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:layout_toEndOf="@+id/unit"
-                        android:layout_marginStart="2dp"
-                        android:gravity="center"/>
+                        android:textSize="@dimen/_12ssp" />
 
                     <TextView
-                        android:id="@+id/title_tab"
+                        android:id="@+id/unit_selected_tab_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/word_list"
-                        android:layout_toEndOf="@+id/unit_selected_number"/>
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_toEndOf="@+id/unit"
+                        android:gravity="center"
+                        android:text="@string/number"
+                        android:textColor="?android:attr/textColorPrimary" />
 
 
                 </RelativeLayout>
-
-                <ImageView
-                    android:id="@+id/tab_layout_crs_menu"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:visibility="invisible"
-                    android:src="@drawable/vertical_dot"
-                    android:contentDescription="@string/todo" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
@@ -149,27 +148,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:isScrollContainer="false"
-            android:scrollY="110dp"
-            android:scrollX="@dimen/cardview_compat_inset_shadow"/>
     </androidx.core.widget.NestedScrollView>
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/story_component_container"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/_45sdp"
         android:animateLayoutChanges="true"
-        app:cardCornerRadius="20dp"
-        android:layout_margin="10dp"
-        android:visibility="invisible"
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:layout_margin="@dimen/_15sdp"
+        android:visibility="visible"
         android:layout_gravity="bottom">
 
         <RelativeLayout
@@ -178,22 +174,23 @@
 
             <com.jackandphantom.circularimageview.RoundedImage
                 android:id="@+id/ply_img_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_margin="@dimen/_7sdp"
                 android:src="@drawable/mx_play_normal"
                 android:layout_centerVertical="true"/>
 
 
             <SeekBar
                 android:id="@+id/music_seek_bar"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.Widget.AppCompat.SeekBar"
                 android:layout_toEndOf="@+id/ply_img_btn"
+                android:layout_toStartOf="@+id/progress_time_text"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="-15dp"
+                android:layout_marginStart="@dimen/mines10mdp"
                 android:layout_centerInParent="true"/>
 
 
@@ -201,11 +198,12 @@
                 android:id="@+id/progress_time_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/music_seek_bar"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:text="@string/default_time"
-                android:gravity="center"/>
+                android:textSize="@dimen/_11ssp"
+                android:gravity="center"
+                android:layout_toStartOf="@+id/divider_text"/>
 
             <TextView
                 android:id="@+id/divider_text"
@@ -215,7 +213,8 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:text="@string/divide_1"
-                android:layout_toEndOf="@id/progress_time_text"/>
+                android:textSize="@dimen/_11ssp"
+                android:layout_toStartOf="@id/audio_total_time_text"/>
 
 
             <TextView
@@ -223,9 +222,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/default_time"
+                android:textSize="@dimen/_11ssp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/divider_text"
+                android:layout_toStartOf="@+id/click_button"
                 android:gravity="center"/>
 
 
@@ -235,17 +235,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_translate_24"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="7dp"/>
-
-
+                android:layout_margin="@dimen/_5ssp"
+                android:contentDescription="@string/todo" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
-
-
-    
-
-    
-    
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

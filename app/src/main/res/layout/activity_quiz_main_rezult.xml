@@ -55,65 +55,77 @@
                         android:layout_alignBottom="@+id/quiz_result_img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:gravity="center"
                         android:text="@string/back"
                         android:visibility="visible"
                         android:textColor="@color/colorWhite"
-                        android:textSize="17sp" />
+                        android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentTop="true"
                     android:gravity="center">
 
-                    <TextView
-                        android:id="@+id/quiz_result_unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/unit"
-                        android:textColor="@color/colorWhite"/>
 
-                    <TextView
-                        android:id="@+id/unit_selected_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number"
-                        android:layout_toEndOf="@+id/quiz_result_unit"
-                        android:layout_marginStart="2dp"
-                        android:gravity="center"/>
 
                     <TextView
                         android:id="@+id/quiz_result_title_tab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/word_list"
-                        android:layout_toEndOf="@+id/unit_selected_number"/>
+                        android:textSize="@dimen/_13ssp"
+                        android:visibility="visible"
+                        android:text="@string/word_list" />
 
 
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/quiz_result_tab_layout_crs_menu"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentTop="true"
-                    android:layout_margin="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <ImageView
+                    android:id="@+id/quiz_result_settings_img_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:visibility="invisible"
-                    android:src="@drawable/vertical_dot"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    app:srcCompat="@drawable/ic_quiz_result_settings_24"
                     android:contentDescription="@string/todo" />
+
+
+                <ImageView
+                    android:id="@+id/quiz_result_auto_play_img_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:layout_toStartOf="@+id/quiz_result_settings_img_view"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_quiz_result_play_circle_outline_24"
+                    android:contentDescription="@string/todo" />
+
             </RelativeLayout>
+
         </androidx.appcompat.widget.Toolbar>
 
 
@@ -134,14 +146,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/quiz_result_viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:isScrollContainer="true"/>
     </androidx.core.widget.NestedScrollView>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/quiz_result_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:isScrollContainer="true"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

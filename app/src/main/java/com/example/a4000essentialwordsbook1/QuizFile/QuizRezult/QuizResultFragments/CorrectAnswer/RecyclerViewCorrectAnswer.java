@@ -21,12 +21,15 @@ public class RecyclerViewCorrectAnswer extends RecyclerView.Adapter<RecyclerView
     private final Context caContext;
     private final LayoutInflater inflater;
     private final ArrayList<CorrectModel> correctList;
+    private final int dbNum, unitNum;
 
 
-    public RecyclerViewCorrectAnswer(Context context, ArrayList<CorrectModel> list){
+    public RecyclerViewCorrectAnswer(Context context, ArrayList<CorrectModel> list, int[] dbInfoList){
         this.caContext = context;
         this.inflater = LayoutInflater.from(context);
         this.correctList = list;
+        this.dbNum = dbInfoList[0];
+        this.unitNum = dbInfoList[1];
     }
 
 

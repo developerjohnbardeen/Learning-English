@@ -1,7 +1,7 @@
 package com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList;
 
 
-import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,27 +9,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookOne;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookSix;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookThree;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFour;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookOne;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookSix;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
+import com.example.a4000essentialwordsbook1.MarkedWords.MarkedWordActivity;
+import com.example.a4000essentialwordsbook1.Settings.SettingsPreferencesActivity;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
-import com.example.a4000essentialwordsbook1.DataBases.WordDatabaseOpenHelper;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import java.util.ArrayList;
@@ -37,16 +36,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class WordListFragment extends Fragment {
-    private final Context wordContext;
+public class WordListFragment extends Fragment{
+
     private ArrayList<WordModel> wordList;
     private int unitNum, dbNum;
     private RecyclerView wordRecyclerView;
 
-    public WordListFragment(Context context, int unitNum, int dbNumb){
-        this.wordContext = context;
+    public WordListFragment( int unitNum, int dbNumb){
         this.unitNum = unitNum;
         this.dbNum = dbNumb;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -59,56 +64,69 @@ public class WordListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        wordFragmentThread();
     }
+
+
+    private void viewFinderById(View view){
+        wordRecyclerView = view.findViewById(R.id.word_list_recyclerview);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.word_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case (R.id.item_0):
+                settingStartActivity();
+                return true;
+            case (R.id.item_1):
+                reviewMarkedWordStartActivity();
+                return true;
+            case (R.id.item_2):
+                Toast.makeText(requireActivity(), "Download Files is Under Process!", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void settingStartActivity(){
+        Intent settingIntent = new Intent(requireActivity(), SettingsPreferencesActivity.class);
+        startActivity(settingIntent);
+    }
+    private void reviewMarkedWordStartActivity(){
+        Intent reviewIntent = new Intent(requireActivity(), MarkedWordActivity.class);
+        startActivity(reviewIntent);
+    }
+
+
 
 
     @Override
     public void onResume() {
+        wordFragmentThread();
         super.onResume();
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-
-
-
     private void wordFragmentThread(){
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
             WordListDataReceiver();
+            WordListRecyclerView wordAdapter = new WordListRecyclerView(requireActivity(), wordList, unitNum, dbNum);
             handler.post(() -> {
-                WordListRecyclerView wordAdapter = new WordListRecyclerView(wordContext, wordList, unitNum, dbNum);
-                wordRecyclerView.setLayoutManager(new GridLayoutManager(wordContext, 2));
-                wordAdapter.notifyDataSetChanged();
+                wordRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
                 wordRecyclerView.setAdapter(wordAdapter);
             });
         });
     }
-
-
     private void WordListDataReceiver(){
-        //WordDatabaseOpenHelper wordDatabase = new WordDatabaseOpenHelper(wordContext);
         if (unitNum == 0){
             unitNum = 1;
         }
@@ -152,30 +170,44 @@ public class WordListFragment extends Fragment {
         cursor.close();
         db.close();
     }
-
     private SQLiteOpenHelper wordListDatabase(int databaseNum){
         if (databaseNum == 1){
-            return new WordDatabaseBookOne(wordContext);
+            return new WordDatabaseBookOne(requireActivity());
         }else if (databaseNum == 2){
-            return new WordDatabaseBookTwo(wordContext);
+            return new WordDatabaseBookTwo(requireActivity());
         }else if (databaseNum == 3){
-            return new WordDatabaseBookThree(wordContext);
+            return new WordDatabaseBookThree(requireActivity());
         }else if (databaseNum == 4){
-            return new WordDatabaseBookFour(wordContext);
+            return new WordDatabaseBookFour(requireActivity());
         }else if (databaseNum == 5){
-            return new WordDatabaseBookFive(wordContext);
+            return new WordDatabaseBookFive(requireActivity());
         }else {
-            return new WordDatabaseBookSix(wordContext);
+            return new WordDatabaseBookSix(requireActivity());
         }
     }
 
-
-    private void viewFinderById(View view){
-        wordRecyclerView = view.findViewById(R.id.word_list_recyclerview);
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
     @Override
     public void onDestroy(){
         super.onDestroy();
     }
+
 }

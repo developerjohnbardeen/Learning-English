@@ -20,12 +20,14 @@ import java.util.ArrayList;
 public class SkippedAnswerFragment extends Fragment {
     private final Context skpContext;
     private final ArrayList<SkippedModel> skippedList;
+    private final int[] dbInfoList;
     private RecyclerView skippedRecyclerView;
 
 
-    public SkippedAnswerFragment(Context context, ArrayList<SkippedModel> list){
+    public SkippedAnswerFragment(Context context, ArrayList<SkippedModel> list, int[] dbInfoList){
         this.skpContext = context;
         this.skippedList = list;
+        this.dbInfoList = dbInfoList;
     }
 
     @Nullable
@@ -43,7 +45,7 @@ public class SkippedAnswerFragment extends Fragment {
     }
 
     private void recyclerViewValuesFunction(View view){
-        RecyclerViewSkippedAnswer skippedAdapter = new RecyclerViewSkippedAnswer(skpContext, skippedList);
+        RecyclerViewSkippedAnswer skippedAdapter = new RecyclerViewSkippedAnswer(skpContext, skippedList, dbInfoList);
         skippedRecyclerView.setLayoutManager(new GridLayoutManager(skpContext, 1));
         skippedRecyclerView.setAdapter(skippedAdapter);
     }

@@ -5,9 +5,9 @@
     android:id="@+id/unit_card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="7dp"
+    android:layout_margin="@dimen/_2sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="@dimen/_2sdp"
     android:layout_gravity="center"
     android:clickable="true"
     android:focusable="true">
@@ -22,12 +22,13 @@
 
         <com.jackandphantom.circularimageview.RoundedImage
             android:id="@+id/unit_img"
-            android:layout_width="170dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/_170sdp"
+            android:layout_height="@dimen/_150sdp"
             android:scaleType="centerCrop"
-            android:padding="7dp"
+            app:rounded_radius="10"
+            android:padding="@dimen/_5sdp"
             android:layout_gravity="center"
-            android:layout_margin="3dp"
+            android:layout_margin="@dimen/_2sdp"
             android:src="@drawable/loadimg"/>
 
 
@@ -60,6 +61,59 @@
                 android:textColor="?android:attr/textColorSecondary"
                 android:layout_marginStart="3dp"
                 android:layout_toEndOf="@id/unit_text"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/story_tab_card_view"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentStart="true"
+                android:layout_alignStart="@+id/quiz_tab_card_view"
+                android:background="@drawable/search_boarder_background"
+                android:layout_margin="@dimen/_7sdp">
+
+
+                <Button
+                    android:id="@+id/story_tab_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/story"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/quiz_tab_card_view"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/search_boarder_background"
+                android:layout_margin="10dp">
+
+
+                <Button
+                    android:id="@+id/quiz_tab_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/quiz"
+                    android:textSize="15sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black"/>
+
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 

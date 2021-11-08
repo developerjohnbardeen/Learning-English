@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.a4000essentialwordsbook1"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         multiDexEnabled true
@@ -61,10 +61,10 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
     implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-analytics'
-
+    implementation 'com.github.MrNouri:DynamicSizes:1.0'
 
     implementation 'com.github.dimorinny:floating-text-button:0.0.4'
-    
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
@@ -96,10 +96,15 @@ dependencies {
     implementation 'com.devbrackets.android:exomedia:4.3.0'
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
 
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.14.2'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.14.2'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.14.2'
-    implementation 'com.google.android.exoplayer:exoplayer:2.14.2'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.15.1'
+
+    // dependancy for exoplayer
+
 
 
 
@@ -162,7 +167,11 @@ dependencies {
     //spannable
     implementation 'lt.neworld:spanner:1.1.0'
 
+    //textFiledBox
+    implementation 'com.github.HITGIF:TextFieldBoxes:1.4.5'
+
     implementation 'com.github.nirwannursabda:expandable-navigation:0.1.2'
+
 
     //rxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
@@ -173,3 +182,17 @@ dependencies {
     //SQL Brite
     implementation 'com.squareup.sqlbrite3:sqlbrite:3.2.0'
 }
+
+
+
+
+
+
+
+/*
+https://github.com/HITGIF/TextFieldBoxes
+https://github.com/thomhurst/ExpandableHintText
+https://github.com/SimformSolutionsPvtLtd/SSCustomEditTextOutLineBorder
+*/
+
+

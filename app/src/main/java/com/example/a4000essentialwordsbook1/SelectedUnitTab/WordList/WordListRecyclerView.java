@@ -2,29 +2,32 @@ package com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
-
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import java.util.ArrayList;
+
+
+
 
 public class WordListRecyclerView extends RecyclerView.Adapter<WordListRecyclerView.WordViewHolder>{
     private final Context wordContext;
     private final LayoutInflater inflater;
     private final ArrayList<WordModel> wordList;
     private final int unitNum, dbNum;
+    private final String strDbNumber = ExtraNotes.DB_NUMBER;
+    private final String strUnitNumber = ExtraNotes.UNIT_NUMBER;
+    private final String strWordId = ExtraNotes.WORD_ID;
 
     public  WordListRecyclerView(Context context, ArrayList<WordModel> wordList, int unitNum, int dbNum){
         this.wordContext = context;
@@ -61,9 +64,9 @@ public class WordListRecyclerView extends RecyclerView.Adapter<WordListRecyclerV
 
         holder.wordCardView.setOnClickListener(v -> {
             Intent wordDetailedIntent = new Intent(wordContext, WordSlideCardViewActivity.class);
-            wordDetailedIntent.putExtra("unitNumber", unitNum);
-            wordDetailedIntent.putExtra("dbNumber", dbNum);
-            wordDetailedIntent.putExtra("wordId", position);
+            wordDetailedIntent.putExtra(strDbNumber, dbNum);
+            wordDetailedIntent.putExtra(strUnitNumber, unitNum);
+            wordDetailedIntent.putExtra(strWordId, holder.getLayoutPosition());
             wordContext.startActivity(wordDetailedIntent);
         });
     }
@@ -92,54 +95,6 @@ public class WordListRecyclerView extends RecyclerView.Adapter<WordListRecyclerV
             translateWord = itemView.findViewById(R.id.translate_word_txt);
             wordCardView = itemView.findViewById(R.id.card_view_word);
 
-        }
-    }
-
-    private class RecyclerViewAsyncTask extends AsyncTask<Integer, WordModel, Void>{
-
-        private final WordViewHolder holder;
-
-        public RecyclerViewAsyncTask(WordViewHolder holder){
-            this.holder = holder;
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-
-        @Override
-        protected void onProgressUpdate(WordModel... model) {
-            super.onProgressUpdate(model);
-
-            Glide.with(wordContext)
-                    .load(model[0].getWordImage())
-                    .placeholder(R.drawable.loadimg)
-                    .error(R.drawable.loadimg)
-                    .into(holder.image);
-
-            holder.word.setText(model[0].getWord());
-            holder.phonetic.setText(model[0].getPhonetic());
-            holder.translateWord.setText(model[0].getTranslateWord());
-        }
-
-        @Override
-        protected Void doInBackground(Integer... position) {
-
-            WordModel model = wordList.get(position[0]);
-
-            publishProgress(model);
-
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
         }
     }
 }

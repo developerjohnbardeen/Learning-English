@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/settings_story_font_type_title_text_View"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_font_story_str"
+        android:textSize="@dimen/_19ssp"
+        android:textColor="@color/black"
+        android:gravity="start"
+        android:layout_margin="@dimen/_15sdp"/>
+
+    <RelativeLayout
+        android:id="@+id/settings_eng_and_per_radio_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settings_story_font_type_title_text_View">
+
+        <RelativeLayout
+            android:id="@+id/story_radio_buttons_lang_type_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/english_font_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_alignParentEnd="true"/>
+
+            <TextView
+                android:id="@+id/english_font_text_View_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/english_font_str"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_toStartOf="@+id/english_font_radio_button"
+                android:layout_alignTop="@+id/english_font_radio_button"
+                android:layout_alignBottom="@+id/english_font_radio_button"/>
+
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/persian_font_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/persian_font_text_View_title"
+                android:layout_alignTop="@+id/persian_font_text_View_title"
+                android:layout_alignBottom="@+id/persian_font_text_View_title"/>
+
+            <TextView
+                android:id="@+id/persian_font_text_View_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/persian_font_Str"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/english_font_radio_button"
+                android:layout_alignBottom="@+id/english_font_radio_button"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/story_txt_sample_font_type_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/eng_sample_story_text_str"
+            android:textSize="@dimen/_15ssp"
+            android:gravity="center"
+            android:layout_below="@+id/story_radio_buttons_lang_type_layout"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"/>
+
+        <Spinner
+            android:id="@+id/story_font_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/story_txt_sample_font_type_text_view"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/story_font_type_confirm_reject_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/reject_confirm_margin_top"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_below="@+id/settings_eng_and_per_radio_button_layout">
+
+        <TextView
+            android:id="@+id/story_font_type_confirmation_settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmation"
+            android:textColor="@color/black"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:padding="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_toEndOf="@+id/story_font_center_view"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <View
+            android:id="@+id/story_font_center_view"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/story_font_type_settings_reject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reject_str"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_toStartOf="@+id/story_font_center_view"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_alignParentStart="true"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </RelativeLayout>
+</RelativeLayout>

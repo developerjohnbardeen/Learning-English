@@ -1,56 +1,44 @@
 package com.example.a4000essentialwordsbook1.SelectedUnitTab;
 
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.QuizList.QuizListFragment;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.StoryList.StoryListFragment;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.WordListFragment;
 
-public class UnitSectionPagerAdapter extends FragmentPagerAdapter {
-    private final Context fContext;
+
+public class UnitSectionPagerAdapter extends FragmentStateAdapter {
     private final int unitNum;
     private final int dbNum;
 
 
-    public UnitSectionPagerAdapter(int unitNum, int dbNum, Context context, FragmentManager fm){
-        super(fm);
-        this.fContext = context;
+    public UnitSectionPagerAdapter(int unitNum, int dbNum,
+                                   FragmentManager fm, Lifecycle lifecycle){
+        super(fm, lifecycle);
         this.unitNum = unitNum;
         this.dbNum = dbNum;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position){
-        if (position == 0)
-            return "";
-        else if (position == 1)
-            return "";
-        else
-            return "";
-    }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
-
+    public Fragment createFragment(int position) {
         if (position == 0)
-            return new WordListFragment(fContext, unitNum, dbNum);
+            return new WordListFragment(unitNum, dbNum);
         else if (position == 1) {
-            return new StoryListFragment(fContext, unitNum, dbNum);
+            //return new StoryListFragment(dbNum, unitNum);
+            return StoryListFragment.newInstance(dbNum, unitNum);
         }
         else
-            return new QuizListFragment(fContext, unitNum, dbNum);
+            return new QuizListFragment(unitNum, dbNum);
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return 3;
     }
-
-
 }

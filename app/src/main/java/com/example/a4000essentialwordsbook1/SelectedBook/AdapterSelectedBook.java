@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -17,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a4000essentialwordsbook1.Models.UnitModel;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.ActivitySelectedTab;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,9 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
     private int itemPosition;
     private int unitAudio;
     private final int dbNUm;
+    private final String sDbNumber = ExtraNotes.DB_NUMBER;
+    private final String sUnitNumber = ExtraNotes.UNIT_NUMBER;
+    private final String sWordId = ExtraNotes.WORD_ID;
 
     public AdapterSelectedBook(Context context, ArrayList<UnitModel> list, int dbNum){
         this.unitContext = context;
@@ -46,9 +51,10 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
 
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterSelectedBook.ViewHolder holder, int position) {
-        UnitModel model = unitList.get(position);
-        itemPosition = position;
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        UnitModel model = unitList.get(holder.getLayoutPosition());
+        itemPosition = holder.getLayoutPosition();
+
 
         Glide.with(unitContext)
                 .load(model.getUnitImg())
@@ -71,13 +77,14 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
         return unitList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         ImageView unitImg;
         TextView unitTtl;
         TextView unitNum;
-        CardView cardUnit;
+        CardView cardUnit, storyBtn;
         Context context;
         Intent unitIntent;
+        boolean flag = false;
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -86,28 +93,39 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
             unitTtl = itemView.findViewById(R.id.unit_title);
             unitNum = itemView.findViewById(R.id.unit_num);
             cardUnit = itemView.findViewById(R.id.unit_card_view);
-
+            storyBtn = itemView.findViewById(R.id.story_tab_card_view);
             componentsClickListener();
         }
 
         public void componentsClickListener(){
             cardUnit.setOnClickListener(this);
+            storyBtn.setOnClickListener(this);
+            storyBtn.setOnLongClickListener(this);
         }
 
 
         @Override
         public void onClick(View v) {
-            //position = getBindingAdapterPosition() + 1;
-            unitIntent = new Intent(this.context, ActivitySelectedTab.class);
-            unitIntent.putExtra("unitNumber", position());
-            unitIntent.putExtra("dbNumber", dbNUm);
-            context.startActivity(unitIntent);
+            switch (v.getId()){
+                case (R.id.unit_card_view):
+                    int position = getBindingAdapterPosition() + 1;
+                    unitIntent = new Intent(this.context, ActivitySelectedTab.class);
+                    unitIntent.putExtra(sDbNumber, dbNUm);
+                    unitIntent.putExtra(sUnitNumber, position);
+                    context.startActivity(unitIntent);
+                    break;
+                case (R.id.story_tab_card_view):
+                    Toast.makeText(context, "story Section !", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
         }
 
-        public int position(){
-            return (getPosition() + 1);
+        @Override
+        public boolean onLongClick(View v) {
+            Toast.makeText(context, "you son of a bitch!", Toast.LENGTH_SHORT).show();
+
+            return true;
         }
-
-
     }
 }

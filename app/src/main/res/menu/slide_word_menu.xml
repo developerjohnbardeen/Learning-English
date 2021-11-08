@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/slide_word_settings_menu"
+        android:title="@string/settings_str"
+        />
+
+    <item
+        android:id="@+id/slide_word_edit_word_menu"
+        android:title="@string/edit_word_str"/>
+
+    <item
+        android:id="@+id/slide_word_add_note_menu"
+        android:title="@string/add_note_str"/>
+
+    <item
+        android:id="@+id/slide_word_share_word_menu"
+        android:title="@string/word_share_str"/>
+
+    <item
+        android:id="@+id/slide_word_review_menu"
+        android:title="@string/review_str"/>
+
+</menu>

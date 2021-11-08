@@ -13,6 +13,14 @@
             android:id="@+id/saved_words"
             android:icon="@drawable/ic_baseline_bookmark_24"
             android:title="@string/saved_words"/>
+
+        <item
+            android:id="@+id/nav_review_words"
+            android:icon="@drawable/ic_study_hard_word_icon_24"
+            android:title="@string/study_hard_words_str"
+            />
+
+
         <item
             android:id="@+id/statics"
             android:icon="@drawable/ic_baseline_pie_chart_24"

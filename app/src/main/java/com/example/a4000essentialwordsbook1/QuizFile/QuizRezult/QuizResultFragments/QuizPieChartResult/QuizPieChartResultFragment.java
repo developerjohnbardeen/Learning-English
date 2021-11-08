@@ -27,13 +27,14 @@ public class QuizPieChartResultFragment extends Fragment {
     private TextView tvCorrect, tvWrong, tvSkipped;
     private PieChartView pieChart;
     private int correctCount, wrongCount, skippedCount;
-    private final int[] answerCount;
+    private final int[] answerCount, dbInfoList;
     private final ArrayList quizResult = new ArrayList<>();
     private String correctTxt, wrongTxt, skippedTxt;
 
-    public QuizPieChartResultFragment(Context context, int[] count){
+    public QuizPieChartResultFragment(Context context, int[] count, int[] dbInfoList){
         this.context = context;
         this.answerCount = count;
+        this.dbInfoList = dbInfoList;
     }
 
 

@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a4000essentialwordsbook1.NavigationClasses.SubNavigationDrawer.NavRecyclerView.SubNavModel;
 import com.example.a4000essentialwordsbook1.SelectedBook.SelectedBookActivity;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
+
 import java.util.ArrayList;
 
 
@@ -22,6 +24,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     private final Context navContext;
     private final ArrayList<SubNavModel> navList;
     private final LayoutInflater inflater;
+    private final String sDbNumber = ExtraNotes.DB_NUMBER;
+    private final String sUnitNumber = ExtraNotes.UNIT_NUMBER;
+    private final String sWordId = ExtraNotes.WORD_ID;
 
     public MainRecyclerViewAdapter(Context context, ArrayList<SubNavModel> list){
         this.navContext = context;
@@ -57,7 +62,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         return navList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView img;
         TextView txt;
         CardView cardView;
@@ -79,7 +84,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, SelectedBookActivity.class);
-            intent.putExtra("databaseNum", (getBindingAdapterPosition() + 1));
+            intent.putExtra(sDbNumber, (getBindingAdapterPosition() + 1));
             context.startActivity(intent);
         }
 

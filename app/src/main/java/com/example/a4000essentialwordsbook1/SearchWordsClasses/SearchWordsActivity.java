@@ -3,6 +3,7 @@ package com.example.a4000essentialwordsbook1.SearchWordsClasses;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,10 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFour;
+import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookOne;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookSix;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
-import com.example.a4000essentialwordsbook1.DataBases.WordDatabaseOpenHelper;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
@@ -108,13 +109,13 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void callingDataBaseBookOneForSearching(String searchWord){
-        WordDatabaseOpenHelper database = new WordDatabaseOpenHelper(this);
-        SQLiteDatabase db = database.getReadableDatabase();
+        WordDatabaseBookOne databaseBookOne = new WordDatabaseBookOne(this);
+        SQLiteDatabase db = databaseBookOne.getReadableDatabase();
         Cursor searchCursor = null;
         boolean isWordExists;
 
         for (int i = 1 ; i <= 30 ; i++){
-            searchCursor = db.query("UNIT_" +i,
+            searchCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE +i,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.WORD_IMG,
                             DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
                             DB_NOTES.EASY_FLAG, DB_NOTES.HARD_FLAG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER},
@@ -137,6 +138,23 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         searchCursor.close();
         db.close();
     }
+
+    private SQLiteOpenHelper wordListDatabase(int databaseNum){
+        if (databaseNum == 1){
+            return new WordDatabaseBookOne(this);
+        }else if (databaseNum == 2){
+            return new WordDatabaseBookTwo(this);
+        }else if (databaseNum == 3){
+            return new WordDatabaseBookThree(this);
+        }else if (databaseNum == 4){
+            return new WordDatabaseBookFour(this);
+        }else if (databaseNum == 5){
+            return new WordDatabaseBookFive(this);
+        }else {
+            return new WordDatabaseBookSix(this);
+        }
+    }
+
     private void callingDataBaseBookTwoForSearching(String searchWord){
         WordDatabaseBookTwo database = new WordDatabaseBookTwo(this);
         SQLiteDatabase db = database.getReadableDatabase();

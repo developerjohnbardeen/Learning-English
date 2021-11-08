@@ -19,4 +19,10 @@
 
     <dimen name="appbar_title_size">15sp</dimen>
 
+    //Display Translation dialog
+    <dimen name="dis_trnsl_title_margin">10dp</dimen>
+    <dimen name="dis_trnsl_title_title_size">20sp</dimen>
+    <dimen name="dis_trnsl_option_margin">10dp</dimen>
+    <dimen name="dis_trnsl_option_text_size">15sp</dimen>
+
 </resources>

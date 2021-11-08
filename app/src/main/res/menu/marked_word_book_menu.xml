@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_book_all"
+        android:title="@string/str_all_book"/>
+
+    <item
+        android:id="@+id/menu_book_first"
+        android:title="@string/str_first_book"/>
+
+    <item
+        android:id="@+id/menu_book_second"
+        android:title="@string/str_second_book"/>
+
+    <item
+        android:id="@+id/menu_book_third"
+        android:title="@string/str_third_book"/>
+
+    <item
+        android:id="@+id/menu_book_fourth"
+        android:title="@string/str_fourth_book"/>
+
+    <item
+        android:id="@+id/menu_book_fifth"
+        android:title="@string/str_fifth_book"/>
+
+    <item
+        android:id="@+id/menu_book_sixth"
+        android:title="@string/str_sixth_book"/>
+
+</menu>

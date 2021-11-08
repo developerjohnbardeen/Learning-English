@@ -18,7 +18,8 @@ public class UnitDatabaseBookThree extends SQLiteOpenHelper {
     private static final String UNIT_TITLE = DB_NOTES.UNIT_TITLE;
     private static final String UNIT_AUDIO = DB_NOTES.UNIT_AUDIO;
     private static final String UNIT_COMPLETE_WORD_AUDIO = DB_NOTES.UNIT_COMPLETE_WORD_AUDIO;
-    private static final String UNIT_STORY = DB_NOTES.UNIT_STORY;
+    private static final String UNIT_ENG_STORY = DB_NOTES.UNIT_ENG_STORY;
+    private static final String UNIT_PERSIAN_STORY = DB_NOTES.UNIT_PERSIAN_STORY;
     private final Context uContext;
 
     private static final String SQLITE_UNIT_TABLE = "CREATE TABLE " + UNIT_TABLE + " (" +
@@ -26,8 +27,9 @@ public class UnitDatabaseBookThree extends SQLiteOpenHelper {
             UNIT_IMG + " INTEGER, " +
             UNIT_AUDIO + " INTEGER, " +
             UNIT_COMPLETE_WORD_AUDIO + " INTEGER, " +
-            UNIT_STORY + " TEXT, " +
-            UNIT_TITLE + " TEXT);";
+            UNIT_TITLE + " TEXT, " +
+            UNIT_ENG_STORY + " TEXT, " +
+            UNIT_PERSIAN_STORY + " TEXT);";
 
 
 
@@ -52,7 +54,7 @@ public class UnitDatabaseBookThree extends SQLiteOpenHelper {
     private void unitUpdateDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
         db.execSQL(SQLITE_UNIT_TABLE);
 
-        insertUnitData(db, R.drawable.lionandrabit, R.raw.lionandrabit, R.raw. lion_complete_word_audio, "The Lion and the Rabbit", uContext.getString(R.string.story_unit_1));
+        /*insertUnitData(db, R.drawable.lionandrabit, R.raw.lionandrabit, R.raw. lion_complete_word_audio, "The Lion and the Rabbit", uContext.getString(R.string.story_unit_1));
         insertUnitData(db, R.drawable.laboratory, R.raw.laboratory, R.raw.laboratory_complete_word_audio,  "The Laboratory", uContext.getString(R.string.story_unit_2));
         insertUnitData(db, R.drawable.report, R.raw.report, R.raw.report_complete_word_audio,  "The Report", uContext.getString(R.string.story_unit_3));
         insertUnitData(db, R.drawable.dogbell, R.raw.dogbell, R.raw.dogbell_complete_word_audio,  "The Dog's Bell", uContext.getString(R.string.story_unit_4));
@@ -66,19 +68,20 @@ public class UnitDatabaseBookThree extends SQLiteOpenHelper {
         insertUnitData(db, R.drawable.artist, R.raw.crazyartist, R.raw.crazyartist_complete_word_audio,  "the Crazy Artist", uContext.getString(R.string.story_unit_12));
         insertUnitData(db, R.drawable.cats, R.raw.farmercats, R.raw.farmercats_complete_word_audio,  "the Farmer and the Cats", uContext.getString(R.string.story_unit_13));
         insertUnitData(db, R.drawable.magicalbook, R.raw.magicalbook, R.raw.magicalbook_complete_word_audio, "A Magical Book", uContext.getString(R.string.story_unit_14));
-        insertUnitData(db, R.drawable.bigrace, R.raw. bigrace, R.raw.bigrace_complete_word_audio,  "The Big Race", uContext.getString(R.string.story_unit_15));
+        insertUnitData(db, R.drawable.bigrace, R.raw. bigrace, R.raw.bigrace_complete_word_audio,  "The Big Race", uContext.getString(R.string.story_unit_15));*/
     }
 
     private void insertUnitData(SQLiteDatabase db, int unitImg,
                                 int unitAudio, int completeWordAudio,
-                                String unitTitle, String unitStory){
+                                String unitTitle, String unitEngStory, String unitPersianStory){
 
         ContentValues unitValues = new ContentValues();
         unitValues.put(UNIT_IMG, unitImg);
         unitValues.put(UNIT_AUDIO, unitAudio);
         unitValues.put(UNIT_COMPLETE_WORD_AUDIO, completeWordAudio);
-        unitValues.put(UNIT_STORY, unitStory);
         unitValues.put(UNIT_TITLE, unitTitle);
+        unitValues.put(UNIT_ENG_STORY, unitEngStory);
+        unitValues.put(UNIT_PERSIAN_STORY, unitPersianStory);
         db.insert(UNIT_TABLE, null, unitValues);
     }
 }

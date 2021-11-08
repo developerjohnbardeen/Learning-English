@@ -16,13 +16,14 @@ public class WordModel implements Parcelable {
     private String word, phonetic, translateWord;
     private String definition, translateDef;
     private String example, translateExmpl;
+    private String addNote;
 
 
 
 
     public WordModel(int id, int wordImage, String word, String phonetic,
                      String translateWord, String definition,
-                     String example, String translateExmpl, int hardFlag, int easyFlag,
+                     String example, String translateExmpl, String addNote, int hardFlag, int easyFlag,
                      int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEnd,
                      int bookNum, int unitNum){
         this.id = id;
@@ -33,6 +34,7 @@ public class WordModel implements Parcelable {
         this.definition = definition;
         this.example = example;
         this.translateExmpl = translateExmpl;
+        this.addNote = addNote;
         this.hardFlag = hardFlag;
         this.easyFlag = easyFlag;
         this.wrdStart = wrdStart;
@@ -69,6 +71,7 @@ public class WordModel implements Parcelable {
         translateDef = in.readString();
         example = in.readString();
         translateExmpl = in.readString();
+        addNote = in.readString();
     }
 
     public static final Creator<WordModel> CREATOR = new Creator<WordModel>() {
@@ -83,6 +86,9 @@ public class WordModel implements Parcelable {
         }
     };
 
+    public String getAddNote() {
+        return addNote;
+    }
     public int getId() {
         return id;
     }
@@ -231,6 +237,11 @@ public class WordModel implements Parcelable {
         this.exmplEnd = exmplEnd;
     }
 
+
+    public void setAddNote(String addNote) {
+        this.addNote = addNote;
+    }
+
     public void setMarkedClickedImg(int markedClickedImg) {
         this.markedClickedImg = markedClickedImg;
     }
@@ -275,5 +286,6 @@ public class WordModel implements Parcelable {
         dest.writeString(translateDef);
         dest.writeString(example);
         dest.writeString(translateExmpl);
+        dest.writeString(addNote);
     }
 }

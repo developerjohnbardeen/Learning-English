@@ -3,9 +3,15 @@ package com.example.a4000essentialwordsbook1.QuizFile.QuizDataGenerator;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFive;
+import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFour;
+import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookOne;
+import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookSix;
+import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
+import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
-import com.example.a4000essentialwordsbook1.DataBases.WordDatabaseOpenHelper;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,23 +27,26 @@ public class GenerateQuizData {
 
 
     private final String[] wordsOptionList = new String[4];
-    private WordDatabaseOpenHelper wordSQLiteDatabase;
+    private final int dbNumber;
+    private final int unitNumb;
 
-    public GenerateQuizData(Context context, int columnId){
+    public GenerateQuizData(Context context, int columnId, int dbNumber, int unitNumb){
         this.columnId = columnId;
         this.context = context;
+        this.dbNumber = dbNumber;
+        this.unitNumb = unitNumb;
     }
 
     public void quizDataGenerator(String tvWord, String optionWord){
 
 
 
-        wordSQLiteDatabase = new WordDatabaseOpenHelper(context);
-        SQLiteDatabase db = wordSQLiteDatabase.getReadableDatabase();
+        //wordSQLiteDatabase = new WordDatabaseOpenHelper(context);
+        SQLiteDatabase db = wordListDatabase(dbNumber).getReadableDatabase();
 
-        Cursor uCursor = db.query(DB_NOTES.WORD_TABLE,
+        Cursor uCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitNumb,
                 new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.WORD_IMG, DB_NOTES.HARD_FLAG},
-                DB_NOTES.WORD_ID + " = ?", new String[]{Integer.toString(columnId)},
+                DB_NOTES.WORD_ID + " = ? ", new String[]{Integer.toString(columnId)},
                 null, null, null);
 
         if (uCursor != null && uCursor.getCount() != 0) {
@@ -82,16 +91,17 @@ public class GenerateQuizData {
     }
 
     private void dumWordGenerator(int[] list, String optionWord){
-        wordSQLiteDatabase = new WordDatabaseOpenHelper(context);
-        SQLiteDatabase db = wordSQLiteDatabase.getReadableDatabase();
+        //wordSQLiteDatabase = new WordDatabaseOpenHelper(context);
+        SQLiteDatabase db = wordListDatabase(dbNumber).getReadableDatabase();
         Cursor dumCursor = null;
 
         for (int i = 0 ; i < 3 ; i ++) {
             int id = list[i];
-            dumCursor = db.query(DB_NOTES.WORD_TABLE,
+            dumCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitNumb,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.TRANSLATE_WORD}
-                    , DB_NOTES.WORD_ID + " = ? ", new String[]{Integer.toString(id)},
+                    ,DB_NOTES.WORD_ID + " = ? ", new String[]{Integer.toString(id)},
                     null, null, null);
+
             if (dumCursor != null && dumCursor.getCount() != 0) {
                 while (dumCursor.moveToNext()) {
                     dWord = dumCursor.getString(dumCursor.getColumnIndex(optionWord));
@@ -99,9 +109,24 @@ public class GenerateQuizData {
                 }
             }
         }
+        assert dumCursor != null;
         dumCursor.close();
         db.close();
-
+    }
+    private SQLiteOpenHelper wordListDatabase(int databaseNum){
+        if (databaseNum == 1){
+            return new WordDatabaseBookOne(context);
+        }else if (databaseNum == 2){
+            return new WordDatabaseBookTwo(context);
+        }else if (databaseNum == 3){
+            return new WordDatabaseBookThree(context);
+        }else if (databaseNum == 4){
+            return new WordDatabaseBookFour(context);
+        }else if (databaseNum == 5){
+            return new WordDatabaseBookFive(context);
+        }else {
+            return new WordDatabaseBookSix(context);
+        }
     }
 
     public String getMainWord() {

@@ -27,6 +27,7 @@ public class DB_NOTES {
     public static final String DEF_END = "DEFINITION_END";
     public static final String EXMPL_START = "EXAMPLE_START";
     public static final String EXMPL_END = "EXAMPLE_END";
+    public static final String EXTRA_NOTE = "EXTRA_NOTE";
 
 
     public static final String WORD_TABLE_1 = "UNIT_1";
@@ -69,9 +70,11 @@ public class DB_NOTES {
     public static final String UNIT_ID = "_id"; //use it is UNIT_NUMBER as well
     public static final String UNIT_IMG = "UNIT_IMG";
     public static final String UNIT_TITLE = "UNIT";
+    public static final String FARSI_UNIT_TITLE = "FARSI_UNIT_TITLE";
     public static final String UNIT_AUDIO = "UNIT_AUDIO";
     public static final String UNIT_COMPLETE_WORD_AUDIO = "COMPLETE_WORD_AUDIO";
-    public static final String UNIT_STORY = "UNIT_STORY";
+    public static final String UNIT_ENG_STORY = "UNIT_ENG_STORY";
+    public static final String UNIT_PERSIAN_STORY = "UNIT_PERSIAN_STORY";
 
 
 }

@@ -20,12 +20,14 @@ import java.util.ArrayList;
 public class WrongAnswerFragment extends Fragment {
     private final Context wngContext;
     private final ArrayList<WrongModel> wrongList;
+    private final int[] dbInfoList;
     private RecyclerView wrongRecyclerView;
 
 
-    public WrongAnswerFragment(Context context, ArrayList<WrongModel> list){
+    public WrongAnswerFragment(Context context, ArrayList<WrongModel> list, int[] dbInfoList){
         this.wngContext = context;
         this.wrongList = list;
+        this.dbInfoList = dbInfoList;
     }
 
     @Nullable
@@ -43,7 +45,7 @@ public class WrongAnswerFragment extends Fragment {
     }
 
     private void recyclerViewFunctions(View view){
-        RecyclerViewWrongAnswer wrongAnswerAdapter = new RecyclerViewWrongAnswer(wngContext, wrongList);
+        RecyclerViewWrongAnswer wrongAnswerAdapter = new RecyclerViewWrongAnswer(wngContext, wrongList, dbInfoList);
         wrongRecyclerView.setLayoutManager(new GridLayoutManager(wngContext, 1));
         wrongRecyclerView.setAdapter(wrongAnswerAdapter);
     }

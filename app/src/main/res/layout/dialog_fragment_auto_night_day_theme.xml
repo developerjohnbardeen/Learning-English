@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/auto_night_mode_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_auto_night_mode_str"
+        android:textSize="@dimen/_19ssp"
+        android:textColor="@color/black"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp" />
+
+    <RelativeLayout
+        android:id="@+id/auto_night_mode_default_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_below="@+id/auto_night_mode_title_text_view">
+
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/auto_night_mode_default_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:checked="true"/>
+        <TextView
+            android:id="@+id/auto_night_mode_device_default_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_default_night_mode_str"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/black"
+            android:gravity="start|center"
+            android:layout_toStartOf="@+id/auto_night_mode_default_radio_button"
+            android:layout_alignTop="@+id/auto_night_mode_default_radio_button"
+            android:layout_alignBottom="@+id/auto_night_mode_default_radio_button"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/settings_night_mode_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_below="@+id/auto_night_mode_default_layout">
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/night_mode_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:checked="false"
+            android:clickable="true"
+            android:focusable="true" />
+        <TextView
+            android:id="@+id/auto_night_mode_night_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/night_mode_str"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/black"
+            android:gravity="start|center"
+            android:layout_toStartOf="@+id/night_mode_radio_button"
+            android:layout_alignTop="@+id/night_mode_radio_button"
+            android:layout_alignBottom="@+id/night_mode_radio_button"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/day_mode_radio_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_below="@+id/settings_night_mode_layout">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/day_mode_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:layout_alignParentEnd="true"/>
+        <TextView
+            android:id="@+id/day_mode_title_text_View"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/day_mode_str"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/black"
+            android:gravity="start|center"
+            android:layout_toStartOf="@+id/day_mode_radio_button"
+            android:layout_alignTop="@+id/day_mode_radio_button"
+            android:layout_alignBottom="@+id/day_mode_radio_button"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/auto_night_mode_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/day_mode_radio_button_layout"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/auto_night_mode_settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmation"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/auto_night_center_view"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <View
+            android:id="@+id/auto_night_center_view"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/auto_night_mode_reject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reject_str"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/auto_night_center_view"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

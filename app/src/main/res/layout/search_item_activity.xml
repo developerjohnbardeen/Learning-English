@@ -3,25 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
+    android:layout_margin="@dimen/_7sdp"
     android:layout_gravity="center"
-    app:cardCornerRadius="10dp"
-    android:elevation="10dp">
+    app:cardCornerRadius="@dimen/_7sdp"
+    android:elevation="@dimen/_7sdp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="@dimen/_75sdp">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/search_item_image_view"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
             android:src="@drawable/moonmade"
             android:scaleType="fitXY"
-            app:riv_corner_radius="10dp"/>
+            app:riv_corner_radius="@dimen/_7sdp"/>
 
 
 
@@ -37,10 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/short_sample"
-                android:textSize="20sp"
+                android:textSize="@dimen/_14ssp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_7sdp"
                 android:textColor="@color/black"/>
 
             <RelativeLayout
@@ -54,10 +54,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/short_sample"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_13ssp"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginStart="@dimen/_7sdp"
                     android:textColor="@color/black"/>
 
                 <TextView
@@ -65,25 +65,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/short_sample"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/_9ssp"
                     android:textColor="#DAE10D"
                     android:layout_toEndOf="@+id/search_item_book"
                     android:layout_toStartOf="@+id/search_item_unit"
                     android:gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_3sdp"/>
 
                 <TextView
                     android:id="@+id/search_item_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/short_sample"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_13ssp"
                     android:textColor="@color/black"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"/>
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"/>
 
             </RelativeLayout>
 

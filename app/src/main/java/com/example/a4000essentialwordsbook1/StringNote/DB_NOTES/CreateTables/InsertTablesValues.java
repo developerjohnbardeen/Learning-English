@@ -281,7 +281,7 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
-        db.insert(WORD_TABLE_7, null, unitOneValue);
+        db.insert(WORD_TABLE_8, null, unitOneValue);
     }
 
     public void insertAllWordTables_9(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
@@ -309,7 +309,7 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
-        db.insert(WORD_TABLE_8, null, unitOneValue);
+        db.insert(WORD_TABLE_9, null, unitOneValue);
     }
 
     public void insertAllWordTables_10(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
@@ -337,7 +337,7 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
-        db.insert(WORD_TABLE_9, null, unitOneValue);
+        db.insert(WORD_TABLE_10, null, unitOneValue);
     }
 
     public void insertAllWordTables_11(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
@@ -589,7 +589,7 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
-        db.insert(WORD_TABLE_18, null, unitOneValue);
+        db.insert(WORD_TABLE_19, null, unitOneValue);
     }
 
     public void insertAllWordTables_20(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
@@ -617,7 +617,7 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
-        db.insert(WORD_TABLE_19, null, unitOneValue);
+        db.insert(WORD_TABLE_20, null, unitOneValue);
     }
 
     public void insertAllWordTables_21(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
@@ -877,27 +877,27 @@ public class InsertTablesValues {
                                        String word, String phonetic, String wordTranslate,
                                        String definition, String definitionTranslate, String example, String exmplTranslate) {
 
-        ContentValues unitOneValue = new ContentValues();
-        unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
-        unitOneValue.put(HARD_FLAG, hardFlag);
-        unitOneValue.put(EASY_FLAG, easyFlag);
-        unitOneValue.put(BOOK_NUMBER, bookNum);
-        unitOneValue.put(UNIT_NUMBER, unitNum);
-        unitOneValue.put(WORD_START, wrdStart);
-        unitOneValue.put(WORD_END, wrdEnd);
-        unitOneValue.put(DEF_START, defStart);
-        unitOneValue.put(DEF_END, defEnd);
-        unitOneValue.put(EXMPL_START, exmplStart);
-        unitOneValue.put(EXMPL_END, exmplEndl);
-        unitOneValue.put(WORD, word);
-        unitOneValue.put(PHONETIC_WORD, phonetic);
-        unitOneValue.put(TRANSLATE_WORD, wordTranslate);
-        unitOneValue.put(DEFINITION_WORD, definition);
-        unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
-        unitOneValue.put(EXAMPLE_WORD, example);
-        unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
-        db.insert(WORD_TABLE_30, null, unitOneValue);
+        ContentValues unitThirtyValue = new ContentValues();
+        unitThirtyValue.put(WORD_IMG, imgWord);
+        unitThirtyValue.put(AUDIO_WORD, audio);
+        unitThirtyValue.put(HARD_FLAG, hardFlag);
+        unitThirtyValue.put(EASY_FLAG, easyFlag);
+        unitThirtyValue.put(BOOK_NUMBER, bookNum);
+        unitThirtyValue.put(UNIT_NUMBER, unitNum);
+        unitThirtyValue.put(WORD_START, wrdStart);
+        unitThirtyValue.put(WORD_END, wrdEnd);
+        unitThirtyValue.put(DEF_START, defStart);
+        unitThirtyValue.put(DEF_END, defEnd);
+        unitThirtyValue.put(EXMPL_START, exmplStart);
+        unitThirtyValue.put(EXMPL_END, exmplEndl);
+        unitThirtyValue.put(WORD, word);
+        unitThirtyValue.put(PHONETIC_WORD, phonetic);
+        unitThirtyValue.put(TRANSLATE_WORD, wordTranslate);
+        unitThirtyValue.put(DEFINITION_WORD, definition);
+        unitThirtyValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
+        unitThirtyValue.put(EXAMPLE_WORD, example);
+        unitThirtyValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        db.insert(WORD_TABLE_30, null, unitThirtyValue);
     }
 
 }

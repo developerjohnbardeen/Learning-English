@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_225sdp"
+    android:layout_height="@dimen/_225sdp"
+    android:layout_gravity="center">
+
+
+    <TextView
+        android:id="@+id/display_translation_settings_txt_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dis_tran_title"
+        android:layout_alignParentEnd="true"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/display_all_translation_text_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/display_all_translation"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/display_translation_settings_txt_View"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"/>
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/display_all_translation_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:checked="true"
+        android:layout_alignTop="@+id/display_all_translation_text_View"
+        android:layout_alignBottom="@+id/display_all_translation_text_View"
+        android:layout_alignParentStart="true"/>
+
+
+
+    <TextView
+        android:id="@+id/display_word_translation_txt_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/display_word_translation"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/display_all_translation_text_View"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"/>
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/display_word_translation_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:checked="true"
+        android:layout_alignTop="@+id/display_word_translation_txt_View"
+        android:layout_alignBottom="@+id/display_word_translation_txt_View"
+        android:layout_alignParentStart="true"/>
+
+
+    <TextView
+        android:id="@+id/display_definition_translation_txt_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/display_definition_translation"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/display_word_translation_txt_View"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"/>
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/display_definition_translation_ceck_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:checked="true"
+        android:layout_alignTop="@+id/display_definition_translation_txt_View"
+        android:layout_alignBottom="@+id/display_definition_translation_txt_View"
+        android:layout_alignParentStart="true"/>
+
+
+    <TextView
+        android:id="@+id/display_example_translation_txt_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/display_example_translation"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/display_definition_translation_txt_View"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"/>
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/display_example_translation_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:checked="true"
+        android:layout_alignTop="@+id/display_example_translation_txt_View"
+        android:layout_alignBottom="@+id/display_example_translation_txt_View"
+        android:layout_alignParentStart="true"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp">
+
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/display_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_str"
+            android:layout_alignParentEnd="true"/>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/display_reject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reject_str"
+            android:layout_alignParentStart="true"/>
+
+
+    </RelativeLayout>
+</RelativeLayout>

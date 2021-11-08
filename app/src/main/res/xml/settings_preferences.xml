@@ -6,20 +6,28 @@
     <PreferenceCategory
         android:title="@string/application_category"
         app:iconSpaceReserved="false"
-        android:layoutDirection="rtl">
+        android:layoutDirection="ltr">
 
         <CheckBoxPreference
             android:key="@string/key_auto_night_mode"
             android:defaultValue="false"
+            android:selectable="true"
             android:title="@string/night_mode_title"
             android:summary="@string/night_mode_summary"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"/>
 
         <CheckBoxPreference
             android:key="@string/key_auto_play_audio_word"
             android:defaultValue="true"
             android:title="@string/auto_play_words_title"
             android:summary="@string/auto_play_words_summary"
+            app:iconSpaceReserved="false" />
+
+        <CheckBoxPreference
+            android:key="@string/key_display_translation"
+            android:title="@string/display_translation_title"
+            android:summary="@string/display_translation_summary"
+            android:defaultValue="true"
             app:iconSpaceReserved="false" />
 
         <Preference
@@ -35,11 +43,12 @@
             app:iconSpaceReserved="false"/>
 
 
-        <CheckBoxPreference
-            android:key="@string/key_display_translation"
-            android:title="@string/display_translation_title"
-            android:summary="@string/display_translation_summary"
-            android:defaultValue="true"
-            app:iconSpaceReserved="false" />
+        <Preference
+            android:key="@string/key_quiz_timer_duration"
+            android:title="@string/quiz_timer_duration_title"
+            android:summary="@string/quiz_timer_duration_summary"
+            app:iconSpaceReserved="false"/>
+
+
     </PreferenceCategory>
 </PreferenceScreen>

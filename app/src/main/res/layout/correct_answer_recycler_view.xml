@@ -2,12 +2,12 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="@dimen/_150sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    android:layout_margin="3dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp">
+    android:layout_margin="@dimen/_2sdp"
+    app:cardCornerRadius="@dimen/_7sdp"
+    app:cardElevation="@dimen/_7sdp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,15 +20,15 @@
             android:text="@string/afraid"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="40sp"
+            android:textSize="@dimen/_30ssp"
             android:layout_centerHorizontal="true" />
 
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/correct_tv_image_view"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="@dimen/_75sdp"
             android:src="@drawable/peacock"
-            app:siRadius="10dp"
+            app:siRadius="@dimen/_7sdp"
             android:visibility="invisible"
             android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"/>
@@ -40,10 +40,10 @@
             android:text="@string/afraid_translate"
             android:textColor="#68F137"
             android:textStyle="italic"
-            android:textSize="30sp"
+            android:textSize="@dimen/_22ssp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="@dimen/_15sdp"/>
 
     </RelativeLayout>
 

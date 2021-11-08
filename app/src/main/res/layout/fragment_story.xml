@@ -1,74 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:fillViewport="true">
 
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/image_Story_fragment"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:scaleType="centerCrop"
-                    android:background="@color/fui_transparent"
-                    android:src="@drawable/loadimg"/>
 
-                <RelativeLayout
+
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="start"
-                    tools:ignore="UselessParent">
+                    android:orientation="vertical"
+                    android:gravity="center">
 
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/image_Story_fragment"
+                            android:layout_width="@dimen/_112sdp"
+                            android:layout_height="@dimen/_112sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:scaleType="centerCrop"
+                            android:background="@color/fui_transparent"
+                            android:src="@drawable/loadimg"/>
 
-                        <ScrollView
-                            android:id="@+id/story_text_scrollview"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="80dp"
-                            android:fillViewport="true">
+                            android:layout_height="match_parent"
+                            android:gravity="start"
+                            tools:ignore="UselessParent">
 
-                                <RelativeLayout
-                                    android:id="@+id/text_layout"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
+                                <ScrollView
+                                    android:id="@+id/story_text_scrollview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="80dp"
+                                    android:fillViewport="true">
 
-
-                                        <TextView
-                                            android:id="@+id/title_story"
+                                        <RelativeLayout
+                                            android:id="@+id/text_layout"
                                             android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="@string/app_name"
-                                            android:textColor="@color/black"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_alignParentStart="true"
-                                            android:layout_alignParentEnd="true"
-                                            android:gravity="center"/>
+                                            android:layout_height="wrap_content">
 
-                                        <TextView
-                                            android:id="@+id/text_view_content_story"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:text="@string/story_content"
-                                            android:lineSpacingExtra="-3sp"
-                                            android:lineSpacingMultiplier="1"
-                                            android:textSize="18sp"
-                                            android:layout_below="@+id/title_story"
-                                            android:layout_marginTop="15dp"
-                                            android:layout_marginStart="7dp"
-                                            android:gravity="start|center"
-                                            android:layout_marginEnd="7dp"/>
-                                </RelativeLayout>
-                        </ScrollView>
-                </RelativeLayout>
-        </LinearLayout>
-</androidx.core.widget.NestedScrollView>
 
+                                                <TextView
+                                                    android:id="@+id/title_story"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/app_name"
+                                                    android:textColor="@color/black"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_alignParentStart="true"
+                                                    android:layout_alignParentEnd="true"
+                                                    android:gravity="center"/>
+
+
+                                                <TextView
+                                                    android:id="@+id/persian_title_story"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/app_name"
+                                                    android:textColor="@color/black"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_alignParentStart="true"
+                                                    android:layout_alignParentEnd="true"
+                                                    android:layout_below="@+id/title_story"
+                                                    android:gravity="center"/>
+
+
+                                                <TextView
+                                                    android:id="@+id/text_view_content_story"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/story_content"
+                                                    android:lineSpacingExtra="-3sp"
+                                                    android:lineSpacingMultiplier="1"
+                                                    android:textSize="18sp"
+                                                    android:layout_below="@+id/persian_title_story"
+                                                    android:layout_marginTop="15dp"
+                                                    android:layout_marginStart="7dp"
+                                                    android:gravity="start|center"
+                                                    android:layout_marginEnd="7dp"/>
+                                        </RelativeLayout>
+                                </ScrollView>
+                        </RelativeLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

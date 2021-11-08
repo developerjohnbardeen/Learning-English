@@ -5,4 +5,11 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="edit_box_mgn_top">10dp</dimen>
+
+    <dimen name="reject_confirm_margin_top">20dp</dimen>
+
+
+
 </resources>

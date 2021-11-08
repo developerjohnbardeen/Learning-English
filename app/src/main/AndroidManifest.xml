@@ -33,8 +33,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
 
-        <activity
-            android:name=".SelectedUnitTab.ActivitySelectedTab"
+        <activity android:name=".SelectedUnitTab.ActivitySelectedTab"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
         <activity
@@ -57,9 +56,6 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
-        <activity android:name=".NavigationClasses.MainNavigationActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
         <activity android:name=".SearchWordsClasses.SearchWordsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>

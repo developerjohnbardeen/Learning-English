@@ -5,14 +5,14 @@
     android:id="@+id/main_adapter_card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_2sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
     app:cardElevation="@dimen/_2sdp"
-    app:cardCornerRadius="@dimen/_20sdp"
-    android:layout_margin="@dimen/_3sdp"
     android:layout_gravity="center"
     android:clickable="true"
     android:focusable="true">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main_adapter_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,12 +25,11 @@
             android:id="@+id/main_adapter_image_view"
             android:layout_width="@dimen/_170sdp"
             android:layout_height="@dimen/_170sdp"
-            app:riv_corner_radius="@dimen/_10sdp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/book_cover_2"
+            android:src="@drawable/book_cover_1"
             android:contentDescription="@string/todo"/>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/main_adapter_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,6 +51,6 @@
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:fontFamily="@font/bamshad"/>
 
-        </LinearLayout>
-    </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>

@@ -1,61 +1,57 @@
 package com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-
-import com.example.a4000essentialwordsbook1.Linsteners.DefinitionPlayListener;
-import com.example.a4000essentialwordsbook1.Linsteners.ExamplePlayListener;
-import com.example.a4000essentialwordsbook1.Linsteners.PlaySingleTrackInterface;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.a4000essentialwordsbook1.Linsteners.TextProvider;
-import com.example.a4000essentialwordsbook1.Linsteners.WordPlayListener;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
+import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.DisplayTranslationInterface;
 
 import java.util.ArrayList;
 
-public class WordSlideFragmentPagerAdapter extends FragmentPagerAdapter {
+
+
+
+public class WordSlideFragmentPagerAdapter extends FragmentStateAdapter {
 
     private final Context context;
-    private final ArrayList<WordModel> models;
-    private final ArrayList<Integer> flagList;
+    private static ArrayList<WordModel> models;
+    private final ArrayList<Integer> markedFlagList;
     private final TextProvider mProvider;
+    private static boolean[] shwFarsiFlags;
     private int newPosition = 0;
 
-    private final WordPlayListener wordListener;
-    private final DefinitionPlayListener definitionListener;
-    private final ExamplePlayListener exampleListener;
+
 
 
     public WordSlideFragmentPagerAdapter(Context context, ArrayList<WordModel> models,
-                                         ArrayList<Integer> flagList,
-                                         @NonNull FragmentManager fm, int behavior,
-                                         TextProvider tProvider,
-                                         WordPlayListener wordListener, DefinitionPlayListener definitionListener, ExamplePlayListener exampleListener) {
-        super(fm, behavior);
+                                         ArrayList<Integer> markedFlagList, boolean[] shwFarsiFlags,
+                                         @NonNull FragmentManager fm, Lifecycle lifecycle,
+                                         TextProvider tProvider) {
+        super(fm, lifecycle);
         this.context = context;
-        this.models = models;
-        this.flagList = flagList;
+        WordSlideFragmentPagerAdapter.models = models;
+        WordSlideFragmentPagerAdapter.shwFarsiFlags = shwFarsiFlags;
+        this.markedFlagList = markedFlagList;
         this.mProvider = tProvider;
-        this.wordListener = wordListener ;
-        this.definitionListener = definitionListener ;
-        this.exampleListener = exampleListener ;
-
     }
+
+
+
+    public static void listChanger(ArrayList<WordModel> list){models = list;}
+    public static void shwFarsiFlagsList(boolean[] shwFlagsLists){shwFarsiFlags = shwFlagsLists;}
 
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         /*while (position < models.size()){
             return new SlideWordFragment(context, models.get(position));
         }*/
-        return SlideWordFragment.newInstance(context, models.get(position),
-                wordListener,
-                definitionListener,
-                exampleListener);
+        return SlideWordFragment.newInstance(models.get(position), markedFlagList,  shwFarsiFlags, position);
     }
 
     @Override
@@ -63,19 +59,8 @@ public class WordSlideFragmentPagerAdapter extends FragmentPagerAdapter {
         return position + newPosition;
     }
 
-    public void notifyChangeInPosition(int n) {
-        // shift the ID returned by getItemId outside the range of all previous fragments
-        newPosition += getCount() + n;
-    }
-
     @Override
-    public int getItemPosition(@NonNull Object object) {
-        // refresh all fragments when data set changed
-        return POSITION_NONE;
-    }
-
-    @Override
-    public int getCount() {
+    public int getItemCount() {
         return mProvider.getCount();
     }
 }

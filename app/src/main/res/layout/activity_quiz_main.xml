@@ -51,7 +51,7 @@
                         android:layout_alignBottom="@+id/img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_17sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:gravity="center"
@@ -100,13 +100,16 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_35sdp">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardview_quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/Media.Player.CardView.Theme"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            app:strokeColor="?android:colorAccent"
+            app:strokeWidth="@dimen/_2sdp"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardUseCompatPadding="false">
 
@@ -115,7 +118,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@drawable/quiz_question_outline_effect"
                 android:layout_gravity="center">
 
                 <TextView
@@ -134,7 +136,7 @@
 
 
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <com.github.siyamed.shapeimageview.DiamondImageView
@@ -143,7 +145,7 @@
             android:layout_height="@dimen/_150sdp"
             app:siBorderWidth="@dimen/_5sdp"
             app:siBorderType="fill"
-            app:siBorderColor="#0AF416"
+            app:siBorderColor="?android:colorAccent"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:src="@drawable/agree"
@@ -155,20 +157,22 @@
 
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_answer_counter_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_95sdp"
             android:layout_marginStart="@dimen/_30sdp"
             app:cardCornerRadius="@dimen/_10sdp"
-            android:backgroundTint="#EDE7E7">
+            android:backgroundTint="#EDE7E7"
+            app:strokeColor="?android:colorAccent"
+            app:strokeWidth="@dimen/_1sdp"
+            android:theme="@style/Media.Player.CardView.Theme">
 
             <LinearLayout
                 android:id="@+id/layout_answer_counter"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/quiz_question_outline_effect">
+                android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:id="@+id/answer_counter_layout"
@@ -259,7 +263,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <RelativeLayout
             android:id="@+id/time_counter_layout"
@@ -278,6 +282,7 @@
                 android:minHeight="0dp"
                 android:indeterminate="false"
                 android:max="100"
+                android:progressBackgroundTint="#000"
                 android:elevation="@dimen/_8sdp"
                 android:progressDrawable="@drawable/circular"
                 android:backgroundTint="@color/gary"
@@ -314,18 +319,22 @@
             android:orientation="vertical"
             android:layout_margin="@dimen/_5sdp">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view_quiz_option_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="@dimen/quiz_card_elevation"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:cardCornerRadius="@dimen/_5sdp">
+                app:cardCornerRadius="@dimen/_5sdp"
+                android:theme="@style/Media.Player.CardView.Theme"
+                app:strokeColor="?android:colorAccent"
+                app:rippleColor="?android:colorControlHighlight"
+                app:strokeWidth="@dimen/_1sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ripple_effect_outline"
+
                     android:layout_gravity="center"
                     android:gravity="center">
 
@@ -339,19 +348,22 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view_quiz_option_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:cardElevation="@dimen/quiz_card_elevation"
-                app:cardCornerRadius="@dimen/_5sdp">
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:strokeColor="?android:colorAccent"
+                app:rippleColor="?android:colorControlHighlight"
+                app:strokeWidth="@dimen/_1sdp"
+                android:theme="@style/Media.Player.CardView.Theme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ripple_effect_outline"
                     android:layout_gravity="center"
                     android:gravity="center">
 
@@ -365,19 +377,22 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view_quiz_option_three"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="@dimen/quiz_card_elevation"
                 android:layout_marginTop="@dimen/_5sdp"
-                app:cardCornerRadius="@dimen/_5sdp">
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:strokeColor="?android:colorAccent"
+                app:rippleColor="?android:colorControlHighlight"
+                app:strokeWidth="@dimen/_1sdp"
+                android:theme="@style/Media.Player.CardView.Theme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ripple_effect_outline"
                     android:layout_gravity="center"
                     android:gravity="center">
 
@@ -392,21 +407,24 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view_quiz_option_four"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="@dimen/quiz_card_elevation"
                 app:cardCornerRadius="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp">
+                android:layout_marginTop="@dimen/_5sdp"
+                app:strokeColor="?android:colorAccent"
+                app:rippleColor="?android:colorControlHighlight"
+                app:strokeWidth="@dimen/_1sdp"
+                android:theme="@style/Media.Player.CardView.Theme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@drawable/ripple_effect_outline">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/txt_quiz_option_four"
@@ -418,20 +436,23 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view_quiz_option_quiz_skip_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="@dimen/quiz_card_elevation"
                 app:cardCornerRadius="@dimen/_5sdp"
                 android:visibility="gone"
-                android:layout_margin="@dimen/_5sdp">
+                android:layout_margin="@dimen/_5sdp"
+                app:strokeColor="?android:colorAccent"
+                app:rippleColor="?android:colorControlHighlight"
+                app:strokeWidth="@dimen/_1sdp"
+                android:theme="@style/Media.Player.CardView.Theme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ripple_effect_outline"
                     android:layout_gravity="center"
                     android:gravity="center">
 
@@ -446,7 +467,7 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 

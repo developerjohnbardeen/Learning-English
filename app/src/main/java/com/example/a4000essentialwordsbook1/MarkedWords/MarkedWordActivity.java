@@ -2,12 +2,17 @@ package com.example.a4000essentialwordsbook1.MarkedWords;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -18,18 +23,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
+import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
+import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookOne;
+import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookSix;
+import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookThree;
+import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFour;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookOne;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookSix;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
+import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AutoPlayDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsPreferencesActivity;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
@@ -37,6 +52,8 @@ import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,6 +72,8 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
     private ImageView settingIcon, autoPlayIcon;
     private RecyclerViewMarkedWords markedWordAdapter;
     private Toolbar markedWordToolbar;
+    private final int timeMines = 100;
+    private MediaPlayer singleMediaPlayer;
     private final static String markedWordActivity = AutoPlayNotes.MARKED_WORD_ACTIVITY;
 
     @Override
@@ -64,6 +83,8 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
         viewsFinderById();
         extrasGetter();
     }
+
+
 
 
     @Override
@@ -113,6 +134,117 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
         ExecutorService thread = Executors.newSingleThreadExecutor();
         thread.execute(() -> removingItem(dbId ,unitId ,wordId));
         Toast.makeText(this, "Item Has Been Removed!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void audioPlayer(int position) {
+        ExecutorService audioThread = Executors.newSingleThreadExecutor();
+        audioThread.execute(() ->{
+            singleMediaPlayDestroyer();
+            audioPlayerCreator(wordAudioReceiver(dbNum, unitNum));
+            singleMediaPlayHandler.post(wordNormalRunnable(position));
+        });
+    }
+    private void singleMediaPlayDestroyer(){
+        try {
+            if (singleMediaPlayer.isPlaying() && (singleMediaPlayer != null)) {
+                singleMediaPlayer.pause();
+                singleMediaPlayer.stop();
+                singleMediaPlayer.reset();
+                singleMediaPlayer.release();
+
+                singleMediaPlayHandler.removeCallbacks(singleAudioThread);
+
+            }
+        }catch (Exception e){
+            Log.e("MarkedAudioError", "" + e);
+        }
+    }
+
+
+    private Runnable wordNormalRunnable(int position){
+        return () -> singlePlayAudio(wrdStart(position), wrdDuration(position));
+    }
+    private int wrdStart(int position){
+        final int size = markedList.size();
+        return markedList.get(position).getWrdStart();
+    }
+    private int wrdDuration(int position){return markedList.get(position).getWrdEnd() - wrdStart(position);}
+
+
+    private void singlePlayAudio(int start, int end) {
+
+        final boolean isPlaying = singleMediaPlayer.isPlaying();
+        if (isPlaying) {
+            singleMediaPlayHandler.removeCallbacks(singleAudioThread);
+            singleMediaPlayer.pause();
+            singleMediaPlayer.seekTo(start);
+        }
+        singleAudioThread = () -> {
+            singleMediaPlayer.pause();
+            singleMediaPlayer.seekTo(start);
+        };
+        singleMediaPlayer.seekTo(start);
+        singleMediaPlayer.start();
+
+        singleMediaPlayHandler.postDelayed(singleAudioThread, end);
+    }
+    private final Handler singleMediaPlayHandler = new Handler(Looper.getMainLooper());
+    private  Runnable singleAudioThread;
+
+    @SuppressLint("Range")
+    private String wordAudioReceiver(int dbNum, int unitNum){
+        String audioAddress ="";
+
+        SQLiteDatabase db = unitDatabase(dbNum).getReadableDatabase();
+
+        Cursor cursor = db.query(DB_NOTES.UNIT_TABLE,
+                new String[]{DB_NOTES.UNIT_COMPLETE_WORD_AUDIO},
+                DB_NOTES.UNIT_ID + " = ? ", new String[]{Integer.toString(unitNum)},
+                null, null, null);
+
+
+        if (cursor != null && cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                audioAddress = cursor.getString(cursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
+            }
+        }
+
+
+        assert cursor != null;
+        cursor.close();
+        db.close();
+
+        return audioAddress;
+    }
+    private SQLiteOpenHelper unitDatabase(int dbNumber){
+        if (dbNumber == 1){
+            return new UnitDatabaseBookOne(MarkedWordActivity.this);
+        }else if (dbNumber == 2){
+            return new UnitDatabaseBookTwo(MarkedWordActivity.this);
+        }else if (dbNumber == 3){
+            return new UnitDatabaseBookThree(MarkedWordActivity.this);
+        }else if (dbNumber == 4){
+            return new UnitDatabaseBookFour(MarkedWordActivity.this);
+        }else if (dbNumber == 5){
+            return new UnitDatabaseBookFive(MarkedWordActivity.this);
+        }else {
+            return new UnitDatabaseBookSix(MarkedWordActivity.this);
+        }
+    }
+
+    private void audioPlayerCreator(String plyAudio){
+        final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File audioMainPath = new File("Audio Files");
+        final File audioWordPath = new File(audioMainPath, File.separator + "Word Audios");
+
+
+        final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbNum);
+        final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(plyAudio).getName());
+
+        final String plyPath = Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
+        singleMediaPlayer = MediaPlayer.create(MarkedWordActivity.this, Uri.parse(plyPath));
     }
 
 
@@ -192,6 +324,7 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
             spcHandler.post(this::recyclerViewMarkedLogicCode);
         });
     }
+    @SuppressLint("Range")
     private void allMarkedWordReceiver(){
         Cursor cursor = null;
         SQLiteDatabase db = null;
@@ -201,10 +334,12 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
             for (int unitId = 1; unitId <= 30; unitId++) {
 
                 cursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitId,
-                        new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.WORD, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER,
-                                DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
-                                DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.HARD_FLAG,
-                                DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END},
+                        new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.WORD, DB_NOTES.BOOK_NUMBER,
+                                DB_NOTES.UNIT_NUMBER, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
+                                DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD,
+                                DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.HARD_FLAG,
+                                DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END,
+                                DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END, DB_NOTES.EXTRA_NOTE},
                         DB_NOTES.HARD_FLAG + " > ?", new String[]{Integer.toString(0)}, null, null, null);
 
 
@@ -212,36 +347,38 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
                     while (cursor.moveToNext()) {
 
                         WordModel listModel = new WordModel();
-                        int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                        int img = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                        int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-                        int databaseNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                        int tableNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                        int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                        int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                        int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                        int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                        int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                        int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                        String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                        String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                        String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                        String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                        String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                        String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                        String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+
+                        final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                        final String img = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                        final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                        final int databaseNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                        final int tableNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                        final int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                        final int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                        final int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                        final int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                        final int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                        final int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                        final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                        final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                        final String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                        final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                        final String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                        final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                        final String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                        final String usetNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
 
                         listModel.setId(id);
-                        listModel.setWordImage(img);
+                        listModel.setImgUri(img);
                         listModel.setHardFlag(hardFlag);
                         listModel.setBookNum(databaseNum);
                         listModel.setUnitNum(tableNum);
-                        listModel.setWrdStart(wordStat - 500);
-                        listModel.setWrdEnd(wordEnd - 500);
-                        listModel.setDefStart(defStart - 500);
-                        listModel.setDefEnd(defEnd - 500);
-                        listModel.setExmplStart(exmplStart - 500);
-                        listModel.setExmplEnd(exmplEnd - 500);
+                        listModel.setWrdStart(wordStat - timeMines);
+                        listModel.setWrdEnd(wordEnd - timeMines);
+                        listModel.setDefStart(defStart - timeMines);
+                        listModel.setDefEnd(defEnd - timeMines);
+                        listModel.setExmplStart(exmplStart - timeMines);
+                        listModel.setExmplEnd(exmplEnd - timeMines);
                         listModel.setWord(word);
                         listModel.setPhonetic(phonetic);
                         listModel.setTranslateWord(translate_word);
@@ -249,7 +386,7 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
                         listModel.setTranslateDef(translateDef);
                         listModel.setExample(example);
                         listModel.setTranslateExmpl(translate_example);
-
+                        listModel.setAddNote(usetNote);
                         markedList.add(listModel);
                     }
                 }
@@ -260,6 +397,7 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
         db.close();
 
     }
+    @SuppressLint("Range")
     private void specificMarkedWordReceiver(int dbId){
         Cursor cursor = null;
         markedList = new ArrayList<>();
@@ -269,9 +407,10 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
 
             cursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitId,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.WORD, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER,
-                            DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
-                            DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.HARD_FLAG,
-                            DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END,},
+                            DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.DEFINITION_WORD,
+                            DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
+                            DB_NOTES.HARD_FLAG, DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START,
+                            DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END, DB_NOTES.EXTRA_NOTE},
                     DB_NOTES.HARD_FLAG + " > ?", new String[]{Integer.toString(0)}, null, null, null);
 
 
@@ -279,36 +418,38 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
                 while (cursor.moveToNext()) {
 
                     WordModel listModel = new WordModel();
-                    int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                    int img = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                    int databaseId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                    int tableId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                    int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-                    int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                    int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                    int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                    int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                    int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                    int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                    String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                    String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                    String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                    String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                    String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                    String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                    String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+
+                    final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                    final String img = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                    final int databaseId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                    final int tableId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                    final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                    final int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                    final int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                    final int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                    final int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                    final int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                    final int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                    final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                    final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                    final String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                    final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                    final String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                    final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                    final String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                    final String usetNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
 
                     listModel.setId(id);
-                    listModel.setWordImage(img);
+                    listModel.setImgUri(img);
                     listModel.setBookNum(databaseId);
                     listModel.setUnitNum(tableId);
                     listModel.setHardFlag(hardFlag);
-                    listModel.setWrdStart(wordStat);
-                    listModel.setWrdEnd(wordEnd);
-                    listModel.setDefStart(defStart);
-                    listModel.setDefEnd(defEnd);
-                    listModel.setExmplStart(exmplStart);
-                    listModel.setExmplEnd(exmplEnd);
+                    listModel.setWrdStart(wordStat - timeMines);
+                    listModel.setWrdEnd(wordEnd - timeMines);
+                    listModel.setDefStart(defStart - timeMines);
+                    listModel.setDefEnd(defEnd - timeMines);
+                    listModel.setExmplStart(exmplStart - timeMines);
+                    listModel.setExmplEnd(exmplEnd - timeMines);
                     listModel.setWord(word);
                     listModel.setPhonetic(phonetic);
                     listModel.setTranslateWord(translate_word);
@@ -316,7 +457,7 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
                     listModel.setTranslateDef(translateDef);
                     listModel.setExample(example);
                     listModel.setTranslateExmpl(translate_example);
-
+                    listModel.setAddNote(usetNote);
                     markedList.add(listModel);
                 }
             }
@@ -325,8 +466,8 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
         assert cursor != null;
         cursor.close();
         db.close();
-
     }
+
     private SQLiteOpenHelper wordListDatabase(int databaseNum){
         if (databaseNum == 1){
             return new WordDatabaseBookOne(this);
@@ -351,6 +492,15 @@ public class MarkedWordActivity extends AppCompatActivity implements View.OnClic
         //mrkRecyclerView.scrollToPosition(itemPosition(rclItemPosition));
 
     }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        final int orientation = newConfig.orientation;
+        Toast.makeText(this, "" + orientation, Toast.LENGTH_LONG).show();
+    }
+
     private int itemPosition(int rclItemPosition){
         if (rclItemPosition > 0){
             return (rclItemPosition - 1);

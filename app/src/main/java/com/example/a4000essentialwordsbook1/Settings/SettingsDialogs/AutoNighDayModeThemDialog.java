@@ -1,6 +1,8 @@
 package com.example.a4000essentialwordsbook1.Settings.SettingsDialogs;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -8,26 +10,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.fragment.app.DialogFragment;
 import com.example.a4000essentialwordsbook1.R;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.ReSetSettingsInterface;
+import com.example.a4000essentialwordsbook1.Settings.SettingsPreferencesActivity;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
 
 public class AutoNighDayModeThemDialog extends DialogFragment implements View.OnClickListener{
     private AppCompatRadioButton dftRadioBtn, nightRadioBtn, dayRadioBtn;
-    private final boolean trueFlag = true;
-    private final boolean falseFlag = false;
+    //private boolean nighFlag, dayFlag;
     private TextView rejectBtn, confirmBtn;
+    private boolean dayModeFlag, nighModeFlag;
 
     private SharedPreferences autoNighModePreference;
-    private SharedPreferences.Editor prefEditMode;
     private final String autoNightPreferenceName = SettingsPreferencesNotes.SETTINGS_AUTO_NIGH_PREFERENCES;
     private final String autoNightModeKey = SettingsPreferencesNotes.AUTO_NIGHT_MODE_KEY;
     private final String lightModeKey = SettingsPreferencesNotes.LIGHT_MODE_KEY;
     private final String nightModeKey = SettingsPreferencesNotes.NIGHT_MODE_KEY;
+
+    private ReSetSettingsInterface reStartSettingsInterFace;
 
 
     public static AutoNighDayModeThemDialog newInstance(){
@@ -56,6 +63,7 @@ public class AutoNighDayModeThemDialog extends DialogFragment implements View.On
     public void onClick(View v) {
         switch (v.getId()){
             case (R.id.auto_night_mode_default_radio_button):
+                dftDeviceModeChecker();
                 dftDeviceNightModeFun();
                 break;
             case (R.id.night_mode_radio_button):
@@ -64,13 +72,10 @@ public class AutoNighDayModeThemDialog extends DialogFragment implements View.On
             case (R.id.day_mode_radio_button):
                 dayModeFun();
                 break;
-            case(R.id.auto_night_mode_settings_button):
-                try {
-                    prefEditMode.apply();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+            case(R.id.auto_night_mode_confirm_settings_button):
+                reStartSettingActivity();
                 dismiss();
+                //reStartSettingsInterFace.reStart();
                 break;
             case (R.id.auto_night_mode_reject_button):
                 dismiss();
@@ -78,21 +83,44 @@ public class AutoNighDayModeThemDialog extends DialogFragment implements View.On
         }
     }
 
-
-
-    private void preferencesValueSetter(boolean dftFlag, boolean nightFlag, boolean dayFlag){
-        autoNighModePreference = requireActivity().getSharedPreferences(autoNightPreferenceName, Context.MODE_PRIVATE);
-        prefEditMode = autoNighModePreference.edit();
-        prefEditMode.putBoolean(autoNightModeKey, dftFlag);
-        prefEditMode.putBoolean(nightModeKey, nightFlag);
-        prefEditMode.putBoolean(lightModeKey, dayFlag);
+    private void reStartSettingActivity(){
+        preferencesValueSetter();
+        themeMode();
+        Intent intent = new Intent(requireActivity(), SettingsPreferencesActivity.class);
+        startActivity(intent);
+        requireActivity().finish();
     }
 
+    private void themeMode(){
+        if (isNighBoxChecked()){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+    private boolean isDarkMode(){
+        autoNighModePreference = requireActivity().getSharedPreferences(autoNightPreferenceName, Context.MODE_PRIVATE);
+        return autoNighModePreference.getBoolean(nightModeKey, false);
+    }
+
+
+    private void preferencesValueSetter(){
+        autoNighModePreference = requireActivity().getSharedPreferences(autoNightPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditMode = autoNighModePreference.edit();
+        prefEditMode.putBoolean(autoNightModeKey, isDefBoxChecked());
+        prefEditMode.putBoolean(nightModeKey, isNighBoxChecked());
+        prefEditMode.putBoolean(lightModeKey, isDayBoxChecked());
+        prefEditMode.apply();
+    }
+
+    private boolean isDefBoxChecked(){return dftRadioBtn.isChecked();}
+    private boolean isNighBoxChecked(){return nightRadioBtn.isChecked();}
+    private boolean isDayBoxChecked(){return dayRadioBtn.isChecked();}
+
     private void dftDeviceNightModeFun(){
-        dftRadioBtn.setChecked(trueFlag);
-        nightRadioBtn.setChecked(falseFlag);
-        dayRadioBtn.setChecked(falseFlag);
-        preferencesValueSetter(trueFlag, falseFlag, falseFlag);
+        dftRadioBtn.setChecked(true);
+        nightRadioBtn.setChecked(false);
+        dayRadioBtn.setChecked(false);
     }
     private void dftDeviceModeChecker(){
         int nightModeFlags =
@@ -100,37 +128,42 @@ public class AutoNighDayModeThemDialog extends DialogFragment implements View.On
                         Configuration.UI_MODE_NIGHT_MASK;
         switch (nightModeFlags) {
             case Configuration.UI_MODE_NIGHT_YES:
-                preferencesValueSetter(trueFlag, falseFlag, falseFlag);
+                Toast.makeText(requireActivity(), "UI_MODE_NIGHT_YES", Toast.LENGTH_SHORT).show();
+                //preferencesValueSetter(true, true, false);
                 break;
             case Configuration.UI_MODE_NIGHT_NO:
             case Configuration.UI_MODE_NIGHT_UNDEFINED:
-                preferencesValueSetter(falseFlag, falseFlag, trueFlag);
+                Toast.makeText(requireActivity(), "UI_MODE_NIGHT_UNDEFINED_No", Toast.LENGTH_SHORT).show();
+                //preferencesValueSetter(false, false, true);
                 break;
         }
     }
 
 
     private void nightModeFun(){
-        dftRadioBtn.setChecked(falseFlag);
-        nightRadioBtn.setChecked(trueFlag);
-        dayRadioBtn.setChecked(falseFlag);
-        preferencesValueSetter(falseFlag, trueFlag, falseFlag);
+        dftRadioBtn.setChecked(false);
+        nightRadioBtn.setChecked(true);
+        dayRadioBtn.setChecked(false);
     }
     private void dayModeFun(){
-        dftRadioBtn.setChecked(falseFlag);
-        nightRadioBtn.setChecked(falseFlag);
-        dayRadioBtn.setChecked(trueFlag);
-        preferencesValueSetter(falseFlag, falseFlag, trueFlag);
+        dftRadioBtn.setChecked(false);
+        nightRadioBtn.setChecked(false);
+        dayRadioBtn.setChecked(true);
     }
 
 
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        Activity activity = (Activity) context;
+        reStartSettingsInterFace = (ReSetSettingsInterface) activity;
+        super.onAttach(context);
+    }
 
     private void dialogFindViewById(View view){
         dftRadioBtn = view.findViewById(R.id.auto_night_mode_default_radio_button);
         nightRadioBtn = view.findViewById(R.id.night_mode_radio_button);
         dayRadioBtn = view.findViewById(R.id.day_mode_radio_button);
-        rejectBtn = view.findViewById(R.id.auto_night_mode_settings_button);
+        rejectBtn = view.findViewById(R.id.auto_night_mode_confirm_settings_button);
         confirmBtn = view.findViewById(R.id.auto_night_mode_reject_button);
         radioButtonInitialize();
         thisDialogOnClickListener();
@@ -143,15 +176,15 @@ public class AutoNighDayModeThemDialog extends DialogFragment implements View.On
     }
     private boolean isDftFlag(){
         autoNighModePreference = requireActivity().getSharedPreferences(autoNightPreferenceName, Context.MODE_PRIVATE);
-        return autoNighModePreference.getBoolean(autoNightModeKey, trueFlag);
+        return autoNighModePreference.getBoolean(autoNightModeKey, true);
     }
     private boolean isNightFlag(){
         autoNighModePreference = requireActivity().getSharedPreferences(autoNightPreferenceName, Context.MODE_PRIVATE);
-        return autoNighModePreference.getBoolean(nightModeKey, falseFlag);
+        return autoNighModePreference.getBoolean(nightModeKey, false);
     }
     private boolean isDayFlag(){
         autoNighModePreference = requireActivity().getSharedPreferences(autoNightPreferenceName, Context.MODE_PRIVATE);
-        return autoNighModePreference.getBoolean(lightModeKey, falseFlag);
+        return autoNighModePreference.getBoolean(lightModeKey, false);
     }
 
     private void thisDialogOnClickListener(){
@@ -161,6 +194,4 @@ public class AutoNighDayModeThemDialog extends DialogFragment implements View.On
         rejectBtn.setOnClickListener(this);
         confirmBtn.setOnClickListener(this);
     }
-
-
 }

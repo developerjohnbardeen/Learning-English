@@ -10,6 +10,8 @@
     <string name="enter_1">Enter</string>
     <string name="unit_text">Unit  </string>
     <string name="word_list">List</string>
+    <string name="unit_eng_str">Unit</string>
+    <string name="quiz_result_eng_str">Quiz Result</string>
 
 
     //word detailed strings
@@ -40,6 +42,9 @@
     <string name="example_edit">ترجمه مثال</string>
     <string name="add_noteedit">یادداشت</string>
 
+    //add note
+    <string name="add_note_edit">افزودن یاداشت</string>
+
 
     //dum String
     <string name="percent">1</string>
@@ -56,6 +61,8 @@
     <string name="translate_definition">ترجمه تعریف</string>
     <string name="translate_example">ترجمه مثال</string>
     <string name="translate_story">ترجمه داستان</string>
+
+    <string name="auto_play_speed_str">سرعت پخش خودکار : </string>
 
     //quiz fragment text
     <string name="eng_to_per_quiz">English To Persian Quiz</string>
@@ -82,7 +89,7 @@
     <string name="studied">Studied :</string>
     <string name="search_word">جست و جوی لغت</string>
     <string name="continuestudying">Resume Your Study</string>
-    <string name="search_hint">لغت مورد نظر رو تایپ کنید</string>
+    <string name="search_hint">لغت مورد نظر را تایپ کنید</string>
     <string name="resume_study">ادامه یادگیری لغات</string>
     <string name="resume_book">کتاب</string>
     <string name="resume_unit">درس</string>
@@ -145,6 +152,9 @@
     <string name="key_display_translation">keyDisplayTranslation</string>
     <string name="key_quiz_timer_duration">keyTimerQuizDuration</string>
 
+    <string name="eng_text_bolder_str">برچسته کردن متن انگلیسی</string>
+    <string name="per_text_bolder_str">برجسته کردن متن فارسی</string>
+
     <string name="application_category">تنظیمات برنامه</string>
     <string name="night_mode_title">حالت شب خودکار برنامه</string>
     <string name="night_mode_summary">حالت شب برنامه بر اساس تنظیمات پیش فرض دستگاه</string>
@@ -163,6 +173,8 @@
     <string name="quiz_timer_duration_title">مدت زمان سنج کوییز</string>
     <string name="quiz_timer_duration_summary">انتخاب مدت زمان برای هرسوال در کوییز </string>
     <string name="restore_settings_title_str">بازنشانی تنظیمات</string>
+    <string name="download_file_title_str">دانلود فایل ها</string>
+    <string name="download_file_summary_str">دانلود فایل های صوتی و تصویری</string>
     <string name="restore_settings_Summary_str">بازنشانی تنظیمات برنامه به حالت اولیه</string>
     <string name="play_word_audio_story_title_str">پخش لغت داستان</string>
     <string name="play_word_audio_story_summary_str">پخش لغت های برجسته شده در داستان هر درس</string>
@@ -199,6 +211,8 @@
     <string name="text_font_settings_str">تنظیمات فونت</string>
     <string name="text_size_settings_str">تنظیمات اندازه متن</string>
     <string name="txt_others_settings_str">سایر</string>
+    <string name="restore_settings_str">آیا مطمئن به بازنشانی تنظیمات برنامه هستین؟\n
+        با این کار تمامی تنظیمات به حالت پیش فرض بازنشانی خواهند شد!</string>
 
 
 
@@ -232,6 +246,12 @@
     <string name="str_fifth_book">کتاب پنجم</string>
     <string name="str_sixth_book">کتاب ششم</string>
 
+    //download files Strings
+    <string name="sounds_str">صوت</string>
+    <string name="slash_divider_Str">/</string>
+    <string name="images_str">تصویر</string>
+
+
     //menu main marked word
     <string name="str_edit_word">ویرایش متن</string>
     <string name="str_add_note">افزودن یاداشت</string>
@@ -242,8 +262,8 @@
 
     //quiz result fragments title
     <string name="pie_chart_result">Pie Chart Result</string>
-    <string name="correct_answers">Correct Answers</string>
-    <string name="wrong_answers">Wrong Answers</string>
+    <string name="correct_answers">Correct Answer</string>
+    <string name="wrong_answers">Wrong Answer</string>
     <string name="skipped_answers">Skipped Answers</string>
 
 
@@ -652,6 +672,27 @@
     <string name="toolbar_title">Notes App</string>
     <string name="saved_words">مرور لغات</string>
     <string name="study_status">وضعیت مطالعه</string>
+
+    //download total size
+    <string name="ttl_audio_one">161 MB</string>
+    <string name="ttl_img_one">13.8 MB</string>
+    <string name="ttl_audio_two">150 MB</string>
+    <string name="ttl_img_two">15.5 MB</string>
+    <string name="ttl_audio_three">152 MB</string>
+    <string name="ttl_img_three">15.4 MB</string>
+    <string name="ttl_audio_four">166 MB</string>
+    <string name="ttl_img_four">15.7 MB</string>
+    <string name="ttl_audio_five">171 MB</string>
+    <string name="ttl_img_five">15.6 MB</string>
+    <string name="ttl_audio_six">165 MB</string>
+    <string name="ttl_img_six">15.9 MB</string>
+
+    //speed meter
+    <string name="speed_normal_str">معمولی</string>
+    <string name="speed_too_slow_str">بسیار آهسته</string>
+    <string name="speed_slow_str">آهسته</string>
+    <string name="speed_fast_str">تند</string>
+    <string name="speed_too_fast_str">بسیار تند</string>
 
 
 </resources>

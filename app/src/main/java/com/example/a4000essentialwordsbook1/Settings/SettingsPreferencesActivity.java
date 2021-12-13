@@ -2,40 +2,50 @@ package com.example.a4000essentialwordsbook1.Settings;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.a4000essentialwordsbook1.DownloadClasses.DownloadFilesActivity;
 import com.example.a4000essentialwordsbook1.R;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.ReSetSettingsInterface;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AutoNighDayModeThemDialog;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.DisplayTranslationDialog;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.PlayWordsAudioStoryFragment;
+import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.ReStoreSettingsDialogAlert;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsAutoPlayDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsQuizTimeDurationDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsStoryTextSizeDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsTextFontTypeDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsTextSizeDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.StoryTextFontTypeDialogFragment;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.PreferencesNotes.SharedPreferencesNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.exoplayer2.offline.Download;
 
-public class SettingsPreferencesActivity extends AppCompatActivity implements View.OnClickListener{
-    private RelativeLayout autoNightModeLayout, autoPlayLayout, displayTranslationLayout;
+import java.security.PrivilegedAction;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class SettingsPreferencesActivity extends AppCompatActivity implements View.OnClickListener, ReSetSettingsInterface {
+    private RelativeLayout autoNightModeLayout, autoPlayLayout, displayTranslationLayout, restoreSettingsLayout;
     private RelativeLayout txtSizeLayout, fontTypeLayout, quizTimerLayout, storyTxtSizeLayout;
-    private RelativeLayout plyAudioStoryWordLayout;
+    private RelativeLayout plyAudioStoryWordLayout, downloadFilesLayout;
     private AppCompatCheckBox autoNightCheckBox, autoPlayCheckBox, shwTrnslCheckBox, quzTimerCheckBox;
     private RelativeLayout storyFontLayout;
-    private final String autoNightPreference = SettingsPreferencesNotes.SETTINGS_AUTO_NIGH_PREFERENCES;
-    private final String autoNightModeKey = SettingsPreferencesNotes.AUTO_NIGHT_MODE_KEY;
-    private final String lightModeKey = SettingsPreferencesNotes.LIGHT_MODE_KEY;
-    private final String nightModeKey = SettingsPreferencesNotes.NIGHT_MODE_KEY;
 
     private final String plyAudioPreferencesName = SettingsPreferencesNotes.SETTINGS_AUTO_PLAY_AUDIO_PREFERENCES;
     private final String plyAllKey = SettingsPreferencesNotes.AUTO_PLAY_ALL_KEY;
@@ -61,8 +71,10 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
 
 
 
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        //setTheme(android.R.style.ThemeOverlay_Material_Dark);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         activityFindViews();
@@ -98,8 +110,25 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
             case (R.id.settings_quiz_timer_parent_layout):
                 quizTimerFunctions();
                 break;
+            case (R.id.restore_settings_parent_layout):
+                restoreSettingsDialog();
+                break;
+            case (R.id.download_settings_parent_layout):
+                downloadActivityStarter();
+                break;
         }
     }
+
+    private void restoreSettingsDialog(){
+        ReStoreSettingsDialogAlert restoreSettingsDialog = ReStoreSettingsDialogAlert.newInstance();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("restoreSettingsDialog");
+        if (prev != null){
+            ft.remove(prev);
+        }
+        restoreSettingsDialog.show(ft, "restoreSettingsDialog");
+    }
+
 
 
     private void autoNighModeDialog(){
@@ -111,8 +140,6 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
         }
         modeThemDialogFragment.show(ft, "autoNighModeDialog");
     }
-
-
 
     private void autoPlaySettingsDialogFragment(){
         SettingsAutoPlayDialogFragment autoPlayDialogFragment = SettingsAutoPlayDialogFragment.newInstance();
@@ -196,6 +223,11 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
         dialogFragment.show(ft, "playWordAudioStoryDialog");
     }
 
+    private void downloadActivityStarter(){
+        Intent downloadIntent = new Intent(this, DownloadFilesActivity.class);
+        startActivity(downloadIntent);
+    }
+
 
 
 
@@ -211,6 +243,8 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
         quizTimerLayout = findViewById(R.id.settings_quiz_timer_parent_layout);
         storyFontLayout = findViewById(R.id.settings_texT_font_type_story_parent_layout);
         plyAudioStoryWordLayout = findViewById(R.id.settings_play_word_audio_story_parent_layout);
+        restoreSettingsLayout = findViewById(R.id.restore_settings_parent_layout);
+        downloadFilesLayout = findViewById(R.id.download_settings_parent_layout);
 
         quzTimerCheckBox = findViewById(R.id.quiz_timer_duration_check_box);
         autoNightCheckBox = findViewById(R.id.settings_auto_dark_mode_check_box);
@@ -227,6 +261,8 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
         storyTxtSizeLayout.setOnClickListener(this);
         displayTranslationLayout.setOnClickListener(this);
         plyAudioStoryWordLayout.setOnClickListener(this);
+        restoreSettingsLayout.setOnClickListener(this);
+        downloadFilesLayout.setOnClickListener(this);
         txtSizeLayout.setOnClickListener(this);
         fontTypeLayout.setOnClickListener(this);
         quizTimerLayout.setOnClickListener(this);
@@ -276,174 +312,11 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void reStart() {
+        Intent intent = new Intent(SettingsPreferencesActivity.this, SettingsPreferencesActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
-
-
-        /*Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(android.R.id.content, new SettingPreferenceFragment()).commitNow();*/
-        /*public static class SettingPreferenceFragment extends PreferenceFragmentCompat {
-            private PreferenceScreen screen;
-            private PreferenceCategory category;
-
-            @Override
-            public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-                setPreferencesFromResource(R.xml.settings_preferences, rootKey);
-                Preference pref = findPreference(nightModeKey());
-                if (pref != null) {
-                    pref.setOnPreferenceClickListener(preference -> {
-                        Toast.makeText(requireActivity(), "this is dialog sample!", Toast.LENGTH_SHORT).show();
-                        return true;
-                    });
-                }
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            private String nightModeKey(){
-                return requireActivity().getResources().getString(R.string.key_auto_night_mode);
-            }
-            private String nighModeTitle(){
-                return requireActivity().getResources().getString(R.string.night_mode_title);
-            }
-            private String nightModeSummary(){
-                return requireActivity().getResources().getString(R.string.night_mode_summary);
-            }
-
-
-
-            private String autoPlayKey(){
-                return requireActivity().getResources().getString(R.string.key_auto_play_audio_word);
-            }
-            private String autoPlayAudioTitle(){
-                return requireActivity().getResources().getString(R.string.auto_play_words_title);
-            }
-            private String autoPlayAudioSummary() {
-                return requireActivity().getResources().getString(R.string.auto_play_words_summary);
-            }
-
-
-            private String translationKey(){
-                return requireActivity().getResources().getString(R.string.key_display_translation);
-            }
-            private String translationTitle(){
-                return requireActivity().getResources().getString(R.string.display_translation_title);
-            }
-            private String translationSummary(){
-                return requireActivity().getResources().getString(R.string.display_translation_summary);
-            }
-
-
-            private String txtKey(){
-                return requireActivity().getResources().getString(R.string.key_text_size);
-            }
-            private String txtTitle(){
-                return requireActivity().getResources().getString(R.string.text_view_size_title);
-            }
-            private String txtSummary(){
-                return requireActivity().getResources().getString(R.string.text_view_size_summary);
-            }
-
-
-            private String fontTypeKey(){
-                return requireActivity().getResources().getString(R.string.key_text_font);
-            }
-            private String fontTypeTitle(){
-                return requireActivity().getResources().getString(R.string.text_view_font_title);
-            }
-            private String fontTypeSummary(){
-                return requireActivity().getResources().getString(R.string.text_view_font_summary);
-            }
-
-            @Override
-            public void onDisplayPreferenceDialog(Preference preference) {
-                super.onDisplayPreferenceDialog(preference);
-
-            }
-
-            private void displayFragmentPreference(){
-
-
-
-
-                new OnPreferenceDisplayDialogCallback() {
-                    @Override
-                    public boolean onPreferenceDisplayDialog(@NonNull PreferenceFragmentCompat caller, Preference pref) {
-                        return false;
-                    }
-                };
-            }
-
-
-
-        }*/
-/*private void autoNightModeFunction(){
-        CheckBoxPreference autoNightBoxPref = new CheckBoxPreference(requireActivity());
-        autoNightBoxPref.setKey(nightModeKey());
-        autoNightBoxPref.setTitle(nighModeTitle());
-        autoNightBoxPref.setSummary(nightModeSummary());
-        autoNightBoxPref.setIconSpaceReserved(false);
-        screen.addPreference(autoNightBoxPref);
-    }
-    private void autoPlayAudioFunction(){
-        CheckBoxPreference autoPlayAudioCheckBox = new CheckBoxPreference(requireActivity());
-        autoPlayAudioCheckBox.setKey(autoPlayKey());
-        autoPlayAudioCheckBox.setTitle(autoPlayAudioTitle());
-        autoPlayAudioCheckBox.setSummary(autoPlayAudioSummary());
-        autoPlayAudioCheckBox.setIconSpaceReserved(false);
-        screen.addPreference(autoPlayAudioCheckBox);
-    }
-    private void displayTranslationsFunctions(){
-        CheckBoxPreference translationCheckBox = new CheckBoxPreference(requireActivity());
-        translationCheckBox.setKey(translationKey());
-        translationCheckBox.setTitle(translationTitle());
-        translationCheckBox.setSummary(translationSummary());
-        translationCheckBox.setIconSpaceReserved(false);
-        screen.addPreference(translationCheckBox);
-    }
-    private void textSizePreference(){
-        Preference textSizePref = new Preference(requireActivity());
-        textSizePref.setKey(txtKey());
-        textSizePref.setTitle(txtTitle());
-        textSizePref.setSummary(txtSummary());
-        textSizePref.setIconSpaceReserved(false);
-        screen.addPreference(textSizePref);
-    }
-    private void fontTypePreference(){
-        Preference fontPref = new Preference(requireActivity());
-        fontPref.setKey(fontTypeKey());
-        fontPref.setTitle(fontTypeTitle());
-        fontPref.setSummary(fontTypeSummary());
-        fontPref.setIconSpaceReserved(false);
-        screen.addPreference(fontPref);
-    }*/
-/*        private void preferenceCategory(){
-            category = new PreferenceCategory(requireActivity());
-            category.setTitle(categoryTitle());
-            category.setIconSpaceReserved(false);
-            screen.addPreference(category);
-        }
-        private String categoryTitle(){
-            return requireActivity().getResources().getString(R.string.application_category);
-        }*/

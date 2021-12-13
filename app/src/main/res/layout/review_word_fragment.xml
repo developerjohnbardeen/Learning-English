@@ -19,7 +19,7 @@
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/main_review_img_and_word_Card_View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,8 @@
                 android:layout_margin="@dimen/_7sdp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:foreground="?attr/selectableItemBackground"
+                android:theme="@style/Media.Player.CardView.Theme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -83,15 +84,17 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/todo"
+                                android:textColor="?android:textColorPrimary"
                                 android:gravity="center"/>
 
                             <TextView
                                 android:id="@+id/word_review_detailed_phonetic"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="@string/todo"
+                                android:textColor="?android:textColorPrimary"
                                 android:layout_toEndOf="@id/word_review_detailed_name"
-                                android:layout_marginStart="@dimen/_10sdp"
-                                android:text="@string/todo"/>
+                                android:layout_marginStart="@dimen/_10sdp"/>
 
                         </RelativeLayout>
 
@@ -101,13 +104,14 @@
                             android:id="@+id/word_review_translate_detailed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@string/todo"
+                            android:textColor="?android:textColorPrimary"
                             android:gravity="center"
                             android:layout_centerInParent="true"
                             android:layout_centerHorizontal="true"
                             android:visibility="invisible"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:layout_marginBottom="@dimen/_20sdp"
-                            android:text="@string/todo"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
                             android:focusable="true"/>
@@ -132,7 +136,7 @@
 
 
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -185,7 +189,7 @@
                     android:layout_gravity="center"
                     android:gravity="center|top">
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/example_main_review_card_View"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -194,7 +198,8 @@
                         android:layout_margin="@dimen/_7sdp"
                         android:clickable="true"
                         android:focusable="true"
-                        android:padding="@dimen/_10sdp">
+                        android:padding="@dimen/_10sdp"
+                        android:theme="@style/Media.Player.CardView.Theme">
 
                         <RelativeLayout
                             android:id="@+id/word_review_definition_layout"
@@ -213,6 +218,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/word_text_definition"
+                                android:textColor="?android:textColorPrimary"
                                 android:clickable="true"
                                 android:focusable="true"/>
 
@@ -221,6 +227,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/word_divider"
+                                android:textColor="?android:textColorPrimary"
                                 android:layout_toEndOf="@+id/word_review_detailed_de"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
@@ -232,6 +239,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/app_name"
+                                android:textColor="?android:textColorPrimary"
                                 android:layout_toEndOf="@+id/word_review_detailed_def_divider"
                                 android:clickable="true"
                                 android:focusable="true"/>
@@ -241,6 +249,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/app_name"
+                                android:textColor="?android:textColorPrimary"
                                 android:gravity="center"
                                 android:visibility="gone"
                                 android:paddingTop="@dimen/_10sdp"
@@ -255,17 +264,20 @@
 
                         </RelativeLayout>
 
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/definition_main_review_card_View"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardElevation="@dimen/_2sdp"
                         app:cardCornerRadius="@dimen/_10sdp"
                         android:layout_margin="@dimen/_7sdp"
-                        android:layout_below="@+id/example_main_review_card_View">
+                        android:layout_below="@+id/example_main_review_card_View"
+                        android:theme="@style/Media.Player.CardView.Theme"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <RelativeLayout
                             android:id="@+id/word_review_example_layout"
@@ -284,6 +296,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/word_text_example"
+                                android:textColor="?android:textColorPrimary"
                                 android:clickable="true"
                                 android:focusable="true"/>
 
@@ -292,6 +305,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/word_divider"
+                                android:textColor="?android:textColorPrimary"
                                 android:layout_toEndOf="@+id/word_review_detailed_ex"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
@@ -305,6 +319,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@+id/word_review_detailed_ex_divider"
                                 android:text="@string/app_name"
+                                android:textColor="?android:textColorPrimary"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:clickable="true"
                                 android:focusable="true"/>
@@ -314,6 +329,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/app_name"
+                                android:textColor="?android:textColorPrimary"
                                 android:gravity="center"
                                 android:layout_toEndOf="@+id/word_review_detailed_example"
                                 android:layout_alignStart="@+id/word_review_detailed_example"
@@ -325,20 +341,22 @@
 
 
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/main_review_note_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardElevation="@dimen/_2sdp"
                         app:cardCornerRadius="@dimen/_10sdp"
                         android:layout_margin="@dimen/_10sdp"
-                        android:visibility="invisible"
-                        android:layout_below="@+id/definition_main_review_card_View">
+                        android:visibility="gone"
+                        app:rippleColor="?rippleColor"
+                        android:layout_below="@+id/definition_main_review_card_View"
+                        android:theme="@style/Media.Player.CardView.Theme">
 
                         <RelativeLayout
-                            android:id="@+id/note_detailed_detailed_layout"
+                            android:id="@+id/main_review_note_detailed_detailed_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingTop="@dimen/_10sdp"
@@ -347,16 +365,17 @@
                             android:paddingBottom="@dimen/_10sdp">
 
                             <TextView
-                                android:id="@+id/note_detailed_ex"
+                                android:id="@+id/main_review_note_detailed_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="@string/word_text_example"
+                                android:textColor="?android:textColorPrimary"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentStart="true"
-                                android:gravity="center"
-                                android:text="@string/word_text_example"/>
+                                android:gravity="center"/>
 
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </RelativeLayout>
             </ScrollView>
 

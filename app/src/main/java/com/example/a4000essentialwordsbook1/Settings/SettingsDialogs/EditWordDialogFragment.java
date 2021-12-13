@@ -4,21 +4,28 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFour;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookOne;
@@ -28,7 +35,10 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.SaveEditsInterface;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,6 +47,8 @@ import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
 public class EditWordDialogFragment extends DialogFragment implements View.OnClickListener{
     private TextFieldBoxes wordTxtField, defTxtFieldBox, exmplTxtFieldBox;
+    private ImageView imageTv;
+    private String imgVal;
     private TextView wordTxt, phtcTxt;
     private TextView saveBtn, rejectBtn;
     private ExtendedEditText wrdEditTxt, defEditTxt, exmplEditText;
@@ -45,11 +57,27 @@ public class EditWordDialogFragment extends DialogFragment implements View.OnCli
     private SaveEditsInterface savedEditsInterface;
 
 
-    public static EditWordDialogFragment newInstance(String[] editTxtValue, int[] dbInfoList){
+    private final int[] perFontList = GlobalFonts.perFontList;
+    private final int[] engFontList = GlobalFonts.engFontList;
+
+    private SharedPreferences fontTypePreferences;
+    private SharedPreferences textSizePreferences;
+    private final String fontTypePreferencesName = SettingsPreferencesNotes.SETTINGS_TEXT_FONT_TYPE_PREFERENCES;
+    private final String textViewSizePreferencesName = SettingsPreferencesNotes.SETTINGS_TEXT_VIEW_SIZE_PREFERENCES;
+    private final String engListPositionKey = SettingsPreferencesNotes.ENGLISH_LIST_POSITION_KEY;
+    private final String perListPositionKey = SettingsPreferencesNotes.PERSIAN_LIST_POSITION_KEY;
+    private final String txtViewSizeKey = SettingsPreferencesNotes.PERSIAN_TEXT_VIEW_SIZE_KEY;
+    private final String engTxtViewSizeKey = SettingsPreferencesNotes.ENGLISH_TEXT_VIEW_SIZE_KEY;
+    private final String engTxtBolderKey = SettingsPreferencesNotes.ENGLISH_TEXT_BOLDER_KEY;
+    private final String perTxtBolderKey = SettingsPreferencesNotes.PERSIAN_TEXT_BOLDER_KEY;
+
+
+    public static EditWordDialogFragment newInstance(String[] editTxtValue,String imgVal, int[] dbInfoList){
         EditWordDialogFragment fragment = new EditWordDialogFragment();
         Bundle wordBundle = new Bundle();
         wordBundle.putIntArray("dbInfoList", dbInfoList);
         wordBundle.putStringArray("editTxtValue", editTxtValue);
+        wordBundle.putString("imgVal", imgVal);
         fragment.setArguments(wordBundle);
         return fragment;
     }
@@ -62,6 +90,7 @@ public class EditWordDialogFragment extends DialogFragment implements View.OnCli
         assert getArguments() != null;
         editTxtValue = getArguments().getStringArray("editTxtValue");
         dbInfoLists = getArguments().getIntArray("dbInfoList");
+        imgVal = getArguments().getString("imgVal");
     }
 
     @NonNull
@@ -194,21 +223,126 @@ public class EditWordDialogFragment extends DialogFragment implements View.OnCli
     }
 
     private void findDialogFragmentView(View view){
+
+        imageTv = view.findViewById(R.id.dialog_fragment_roundImageView);
+        //imageTv.setImageResource(imgVal);
+        setImageResources();
+
+        wordTxt = view.findViewById(R.id.dialog_fragment_word_text_view);
+        phtcTxt = view.findViewById(R.id.dialog_fragment_phonetic_text_view);
+
         wordTxtField = view.findViewById(R.id.dialog_fragment_word_text_field_box);
         defTxtFieldBox = view.findViewById(R.id.dialog_fragment_definition_text_field_box);
         exmplTxtFieldBox = view.findViewById(R.id.dialog_fragment_example_text_field_box);
-        wordTxt = view.findViewById(R.id.dialog_fragment_word_text_view);
-        phtcTxt = view.findViewById(R.id.dialog_fragment_phonetic_text_view);
+
         saveBtn = view.findViewById(R.id.dialog_fragment_save_btn);
         rejectBtn = view.findViewById(R.id.dialog_fragment_reject_btn);
 
         wrdEditTxt = view.findViewById(R.id.dialog_fragment_word_extend_edit_text);
         defEditTxt = view.findViewById(R.id.dialog_fragment_definition_extend_edit_text);
         exmplEditText = view.findViewById(R.id.dialog_fragment_example_extend_edit_text);
+
+
+        textViewAttributeSetter();
         thisOnClickListener();
 
-        wordTxtField.setPrimaryColor(R.color.black);
+/*        wordTxtField.setPrimaryColor(R.color.textColor);
+        defTxtFieldBox.setPrimaryColor(R.color.textColor);
+        exmplTxtFieldBox.setPrimaryColor(R.color.textColor);*/
 
+    }
+
+
+    private void textViewAttributeSetter(){
+        englishTextViewTypeFaceSetter();
+        persianTextViewTypeFaceSetter();
+
+    }
+
+    private void englishTextViewTypeFaceSetter(){
+        wordTxt.setTypeface(engTypeFace(), engTextStyle());
+        phtcTxt.setTypeface(engTypeFace(), engTextStyle());
+    }
+    private void persianTextViewTypeFaceSetter(){
+        wrdEditTxt.setTypeface(perTypeFace(), perTextStyle());
+        defEditTxt.setTypeface(perTypeFace(), perTextStyle());
+        exmplEditText.setTypeface(perTypeFace(), perTextStyle());
+    }
+
+    private Typeface perTypeFace(){
+        return ResourcesCompat.getFont(requireActivity(), perFontFace());
+    }
+    private int perFontFace(){
+        return perFontList[perFontVal()];
+    }
+    private int perTextStyle(){
+        if (getPerBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
+    }
+    private boolean getPerBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(perTxtBolderKey, false);
+    }
+    private int perFontVal(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getInt(perListPositionKey, 1);
+    }
+
+    private Typeface engTypeFace(){
+        return ResourcesCompat.getFont(requireActivity(), engFontFace());
+    }
+    private int engFontFace(){
+            return engFontList[engFontVal()];
+    }
+    private int engTextStyle(){
+        if (getEngBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
+    }
+    private boolean getEngBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(engTxtBolderKey, false);
+    }
+    private int engFontVal(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getInt(engListPositionKey, 1);
+    }
+
+
+    private void setImageResources(){
+        final String appPath = requireActivity().getApplicationInfo().dataDir;
+
+        final File imgMainPath = new File("Image Files");
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+
+        final File wordImgPath = new File(imgMainPath, File.separator + "Word Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + dbInfoLists[0]);
+        final File wordUnitImgBookPath = new File(wordImgBookPath, File.separator + "Unit_" + dbInfoLists[1]);
+
+        final File imgName = new File(wordUnitImgBookPath, File.separator + "." + new File(imgVal).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+            Glide.with(requireActivity())
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(imageTv);
+        }else {
+            Glide.with(requireActivity())
+                    .load(imgVal)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(imageTv);
+        }
     }
     private void thisOnClickListener(){
         saveBtn.setOnClickListener(this);

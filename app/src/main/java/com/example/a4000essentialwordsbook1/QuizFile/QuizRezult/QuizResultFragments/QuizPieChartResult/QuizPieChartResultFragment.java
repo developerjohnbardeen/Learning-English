@@ -23,7 +23,6 @@ import lecho.lib.hellocharts.view.PieChartView;
 
 
 public class QuizPieChartResultFragment extends Fragment {
-    private final Context context;
     private TextView tvCorrect, tvWrong, tvSkipped;
     private PieChartView pieChart;
     private int correctCount, wrongCount, skippedCount;
@@ -31,8 +30,7 @@ public class QuizPieChartResultFragment extends Fragment {
     private final ArrayList quizResult = new ArrayList<>();
     private String correctTxt, wrongTxt, skippedTxt;
 
-    public QuizPieChartResultFragment(Context context, int[] count, int[] dbInfoList){
-        this.context = context;
+    public QuizPieChartResultFragment(int[] count, int[] dbInfoList){
         this.answerCount = count;
         this.dbInfoList = dbInfoList;
     }
@@ -60,11 +58,11 @@ public class QuizPieChartResultFragment extends Fragment {
         answerCounterGetter();
         setPieChartCountString();
         ArrayList<SliceValue>  pieData = new ArrayList<>();
-        pieData.add(new SliceValue((correctCount * 5), ContextCompat.getColor(context, R.color.correctColor)).setLabel((correctCount * 5) + "%"));
+        pieData.add(new SliceValue((correctCount * 5), ContextCompat.getColor(requireActivity(), R.color.correctColor)).setLabel((correctCount * 5) + "%"));
         if (skippedCount != 0) {
-            pieData.add(new SliceValue((skippedCount * 5), ContextCompat.getColor(context,R.color.skippedColor)).setLabel((skippedCount * 5) + "%"));
+            pieData.add(new SliceValue((skippedCount * 5), ContextCompat.getColor(requireActivity(),R.color.skippedColor)).setLabel((skippedCount * 5) + "%"));
         }
-        pieData.add(new SliceValue((wrongCount * 5), ContextCompat.getColor(context,R.color.wrongColor)).setLabel((wrongCount * 5) + "%"));
+        pieData.add(new SliceValue((wrongCount * 5), ContextCompat.getColor(requireActivity(),R.color.wrongColor)).setLabel((wrongCount * 5) + "%"));
 
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true).setValueLabelTextSize(12);

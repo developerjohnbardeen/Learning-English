@@ -12,22 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.SkippedModel;
 import com.example.a4000essentialwordsbook1.R;
 
 import java.util.ArrayList;
 
 public class SkippedAnswerFragment extends Fragment {
-    private final Context skpContext;
-    private final ArrayList<SkippedModel> skippedList;
+    private final ArrayList<WordModel> skippedList;
     private final int[] dbInfoList;
     private RecyclerView skippedRecyclerView;
+    private final String quizType;
 
 
-    public SkippedAnswerFragment(Context context, ArrayList<SkippedModel> list, int[] dbInfoList){
-        this.skpContext = context;
+    public SkippedAnswerFragment(String quizType, ArrayList<WordModel> list, int[] dbInfoList){
         this.skippedList = list;
         this.dbInfoList = dbInfoList;
+        this.quizType = quizType;
     }
 
     @Nullable
@@ -45,8 +46,8 @@ public class SkippedAnswerFragment extends Fragment {
     }
 
     private void recyclerViewValuesFunction(View view){
-        RecyclerViewSkippedAnswer skippedAdapter = new RecyclerViewSkippedAnswer(skpContext, skippedList, dbInfoList);
-        skippedRecyclerView.setLayoutManager(new GridLayoutManager(skpContext, 1));
+        RecyclerViewSkippedAnswer skippedAdapter = new RecyclerViewSkippedAnswer(requireActivity(), quizType, skippedList, dbInfoList);
+        skippedRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 1));
         skippedRecyclerView.setAdapter(skippedAdapter);
     }
 

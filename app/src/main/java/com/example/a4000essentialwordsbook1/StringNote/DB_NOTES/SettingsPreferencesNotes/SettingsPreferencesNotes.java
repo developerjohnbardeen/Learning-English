@@ -36,6 +36,8 @@ public class SettingsPreferencesNotes {
     public final static String PERSIAN_NAME_TEXT_FONT_KEY = "PERSIAN_NAME_TEXT_FONT_KEY";
     public final static String PERSIAN_LIST_POSITION_KEY = "PERSIAN_LIST_POSITION_KEY";
     public final static String ENGLISH_LIST_POSITION_KEY = "ENGLISH_LIST_POSITION_KEY";
+    public final static String PERSIAN_TEXT_BOLDER_KEY = "PERSIAN_TEXT_BOLDER_KEY";
+    public final static String ENGLISH_TEXT_BOLDER_KEY = "ENGLISH_TEXT_BOLDER_KEY";
     public final static String TEXT_FONT_TYPE_KEY = "KEY_TEXT_FONT_TYPE";
 
 
@@ -45,6 +47,7 @@ public class SettingsPreferencesNotes {
     public final static String STORY_ENG_OR_PER_RADIO_BUTTON_KEY = "STORY_ENG_OR_PER_RADIO_BUTTON_KEY";
     public final static String STORY_ENG_PICKER_FONT_VALUE_KEY = "STORY_ENG_PICKER_FONT_VALUE_KEY";
     public final static String STORY_PER_PICKER_FONT_VALUE_KEY = "STORY_PER_PICKER_FONT_VALUE_KEY";
+    public final static String STORY_TEXT_BOLDER_KEY = "STORY_TEXT_BOLDER_KEY";
 
 
 
@@ -58,6 +61,7 @@ public class SettingsPreferencesNotes {
     public final static String PLAY_DETAILED_EXAMPLE_WORD_KEY = "PLAY_DETAILED_EXAMPLE_WORD_KEY";
     public final static String PLAY_AGAIN_AT_END_KEY = "PLAY_AGAIN_AT_END_KEY";
     public final static String PLAY_NEXT_UNIT_KEY = "PLAY_NEXT_UNIT_KEY";
+    public final static String SPEED_PLAY_KEY = "SPEED_PLAY_KEY";
     public final static String PLAY_DISPLAY_TRANSLATIONS_KEY = "PLAY_DISPLAY_TRANSLATIONS_KEY";
     public final static String PLAY_DISPLAY_WORD_KEY = "PLAY_DISPLAY_WORD_KEY";
     public final static String PLAY_DISPLAY_DEFINITION_KEY = "PLAY_DISPLAY_DEFINITION_KEY";
@@ -71,27 +75,6 @@ public class SettingsPreferencesNotes {
     public final static String PLY_WORD_AUDIO_STORY_KEY = "PLY_WORD_AUDIO_STORY_KEY";
     public final static String PLY_DEFINITION_AUDIO_STORY_KEY = "PLY_DEFINITION_AUDIO_STORY_KEY";
     public final static String PLY_EXAMPLE_AUDIO_STORY_KEY = "PLY_EXAMPLE_AUDIO_STORY_KEY";
-
-
-
-/*    public final static String;
-    public final static String;
-    public final static String ;
-    public final static String;
-    public final static String;
-    public final static String;
-    public final static String;
-    public final static String;
-    public final static String ;
-    public final static String;
-    public final static String;
-    public final static String;
-    public final static String;
-    public final static String;
-    public final static String ;
-    public final static String;
-    public final static String;
-    public final static String;*/
 
 
 }

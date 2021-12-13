@@ -25,8 +25,6 @@
             android:layout_margin="@dimen/_7sdp"
             android:contentDescription="@string/todo"/>
 
-
-
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/word_image_pop_up"
             android:layout_width="@dimen/_70sdp"
@@ -39,9 +37,6 @@
             android:layout_alignParentTop="true"
             android:background="@color/fui_transparent"
             android:src="@drawable/peacock"/>
-
-
-
 
         <RelativeLayout
             android:id="@+id/pop_up_main_word_layout"
@@ -66,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/todo"
+                    android:textColor="?android:textColorPrimary"
                     android:textSize="@dimen/_8ssp"/>
                 <TextView
                     android:id="@+id/word_pop_up_phonetic"
@@ -75,6 +71,7 @@
                     android:gravity="start"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:text="@string/todo"
+                    android:textColor="?android:textColorPrimary"
                     android:textSize="@dimen/_8ssp"/>
 
 
@@ -84,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sample"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"
                 android:gravity="center"
                 android:visibility="invisible"
@@ -91,9 +89,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/pop_up_second_main_layout"/>
         </RelativeLayout>
-
-
-
 
         <RelativeLayout
             android:id="@+id/pop_up_image_views_layout"
@@ -138,6 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/word_text_definition"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"/>
 
             <TextView
@@ -148,6 +144,7 @@
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:layout_toEndOf="@+id/word_pop_up_def"
                 android:text="@string/word_divider"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"/>
 
             <TextView
@@ -156,6 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/word_pop_up_def_divider"
                 android:text="@string/app_name"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"/>
 
             <TextView
@@ -168,6 +166,7 @@
                 android:layout_toEndOf="@+id/word_pop_up_def_divider"
                 android:gravity="center"
                 android:text="@string/app_name"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"
                 android:visibility="gone" />
         </RelativeLayout>
@@ -176,6 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
             android:paddingStart="@dimen/_21sdp"
             android:paddingEnd="@dimen/_7sdp"
             android:layout_below="@+id/word_pop_up_definition_layout">
@@ -185,12 +185,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/word_text_example"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"/>
             <TextView
                 android:id="@+id/word_pop_up_ex_divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/word_divider"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"
                 android:layout_toEndOf="@+id/word_pop_up_ex"
                 android:layout_marginStart="@dimen/_4sdp"
@@ -201,6 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/word_pop_up_ex_divider"
                 android:text="@string/app_name"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"/>
 
             <TextView
@@ -211,6 +214,7 @@
                 android:layout_toEndOf="@+id/word_pop_up_ex_divider"
                 android:layout_below="@+id/word_pop_up_example"
                 android:text="@string/app_name"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_8ssp"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/_7sdp"

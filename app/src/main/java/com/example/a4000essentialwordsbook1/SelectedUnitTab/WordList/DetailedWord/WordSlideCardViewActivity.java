@@ -1,18 +1,29 @@
 package com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord;
 
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
+import android.provider.MediaStore;
+import android.renderscript.Sampler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,6 +34,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,11 +57,12 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.Linsteners.AudioPlayerListener;
 import com.example.a4000essentialwordsbook1.Linsteners.TextProvider;
-import com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords.MainReviewMarkedWordActivity;
 import com.example.a4000essentialwordsbook1.SearchWordsClasses.SearchWordsActivity;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.DisplayTranslationInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.EditedTranslationInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.SaveEditsInterface;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AddNoteInterFace;
+import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AddNoteDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AutoPlayDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AutoPlayInterface;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.EditWordDialogFragment;
@@ -66,17 +80,22 @@ import com.example.a4000essentialwordsbook1.UpdateDatabases.CheckWordDatabase;
 import com.example.a4000essentialwordsbook1.UpdateDatabases.UpdateWordDatabase;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.io.File;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 public class WordSlideCardViewActivity extends AppCompatActivity implements View.OnClickListener,
-        TextProvider, SaveEditsInterface, AutoPlayInterface, AudioPlayerListener {
+        TextProvider, SaveEditsInterface, AutoPlayInterface, AudioPlayerListener, AddNoteInterFace {
     private ViewPager2 wordViewPager;
 
     //CardView Container Components
     private MediaPlayer singleMediaPlayer, twoMediaPlayer, mainPlayer;
+    private float autoPlayerSpeedVal = 1.0f;
+    private RelativeLayout easyHardLayout, speedMeterLayout;
     private TimeUtil timeUtil;
     private long ttlMediaTime, timeElapsed;
     private ArrayList<Integer> markedFlagList;
@@ -86,17 +105,24 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     private TextView vpTxtDuration, vpTxtTotalTime, sample;
     private TextView numDeterminer;
 
+    private ImageView vrySlwImageView, slwImageView, normalImageView, fstImageView, vryFstImageView;
+    private ImageView speedMeterImgView;
+    private TextView vrySlwTextView, slwTextView, normalTextView, fstTextView, vryFstTextView;
+    private float speedMeter = 1.0f;
+
     private Handler autoPlayHandler;
     private int unitNum, dbNum;
-    private int plyAudio, mediaPosition;
+    private int mediaPosition;
+    private String plyAudio;
     private Button hardBtn, easyBtn;
-    private ImageButton  translateBtn;
+    private CardView marked_and_speedMetter;
     private TabLayout tabIndicator;
     private final String strDbNumber = ExtraNotes.DB_NUMBER;
     private final String strUnitNumber = ExtraNotes.UNIT_NUMBER;
     private final String strWordId = ExtraNotes.WORD_ID;
     private final String autoPlayFlagListKey = ExtraNotes.AUTO_PLAY_BOOLEAN_LIST;
     private final String autoPlayFlagKey = ExtraNotes.AUTO_PLAY_FLAG_KEY;
+    private final String speedMeterKey = ExtraNotes.SPEED_METER_KEY;
     private final String detailedWordSlideActivity = AutoPlayNotes.WORD_SLIDE_CARD_VIEW_ACTIVITY;
     private final String wrdStartNote = AutoPlayTypeNote.WRD_START;
     private final String wrdDuraionNote = AutoPlayTypeNote.WORD_DURATION;
@@ -112,8 +138,6 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     //public SendFlagInterface sendFlagInterface;
     private WordSlideFragmentPagerAdapter sectionAdapter;
     private RelativeLayout backPressLayout;
-    private int strtWord, endWord, strtDef, endDef, strtExmpl, endExmpl;
-    private int wrdDuration, defDuration, exmplDuration;
     private final int tmLineMines = 500;
     private int vpCurrentItem;
     private WordModel wordModel;
@@ -122,6 +146,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     private TabLayoutMediator layoutMediator;
     private FragmentManager manager;
     private EditedTranslationInterface editorInterFace;
+    private AddNoteInterFace addNoteInterFace;
     private DisplayTranslationInterface displayTranslation;
 
     private SharedPreferences plyAudioPreferences;
@@ -129,6 +154,11 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     private final String wordPlyKey = SettingsPreferencesNotes.WORD_PLAY_KEY;
     private final String definitionPlyKey = SettingsPreferencesNotes.DEFINITION_PLAY_KEY;
     private final String examplePlyKey = SettingsPreferencesNotes.EXAMPLE_PLAY_KEY;
+
+
+    private SharedPreferences autoPlayAudioPreferences;
+    private final String autoPlayAudioPreferencesName = SettingsPreferencesNotes.AUTO_PLAY_AUDIO_DETAILED_WORD_PREFERENCES;
+    private final String plySpeedKey = SettingsPreferencesNotes.SPEED_PLAY_KEY;
 
 
 
@@ -158,12 +188,23 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         threadsRunners();
     }
 
-    private void allAudioPlayers(int plyAudio){
-        mainPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, plyAudio);
+    private void allAudioPlayers(String plyAudio){
+        final String appPath = this.getApplicationInfo().dataDir;
+        final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File audioMainPath = new File("Audio Files");
+        final File audioWordPath = new File(audioMainPath, File.separator + "Word Audios");
+
+
+        final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbNum);
+        final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(plyAudio).getName());
+
+        final String plyPath = Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
+        mainPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(plyPath));
         mainPlayer.start();
         mainPlayer.pause();
-        twoMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, plyAudio);
-        singleMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, plyAudio);
+        twoMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(plyPath));
+        singleMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(plyPath));
         mainMediaPlayer();
     }
 
@@ -186,8 +227,10 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
+                    endSeekBarHandler.removeCallbacks(endSeekBarThread);
                     mediaPosition = seekBar.getProgress();
                     mainPlayer.seekTo(mediaPosition);
+                    endSeekBarHandler.postDelayed(endSeekBarThread,(int) (mainPlayer.getDuration() / speedMeter));
                 }
             });
 
@@ -203,6 +246,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
     private void singlePlayAudio(int start, int end) {
         pauseMainPlayer();
+        twoMediaPlayersPause();
 
         final boolean isPlaying = singleMediaPlayer.isPlaying();
         if (isPlaying) {
@@ -216,9 +260,11 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
             autoViewPagerScroller();
         };
         singleMediaPlayer.seekTo(start);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            singleMediaPlayer.setPlaybackParams(autoPlayBackParams());
+        }
         singleMediaPlayer.start();
-
-        singleMediaPlayHandler.postDelayed(singleAudioThread, end);
+        singleMediaPlayHandler.postDelayed(singleAudioThread, (int) (end / autoPlayerSpeedVal));
     }
     private final Handler singleMediaPlayHandler = new Handler(Looper.getMainLooper());
     private  Runnable singleAudioThread;
@@ -227,6 +273,9 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     /**********************************************************************************************/
 
     private void twoMediaAutoPlay(int firstStart, int firstEnd, int secondStart, int secondEnd) {
+        pauseMainPlayer();
+        singleMediaPlayerPause();
+
         if (twoMediaPlayer.isPlaying()){
             twoMediaPlayHandler.removeCallbacks(twoAudioOneThread);
             twoMediaPlayHandler.removeCallbacks(twoAudioTwoThread);
@@ -237,8 +286,12 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         twoAudioOneThread = () -> {
             twoMediaPlayer.pause();
             twoMediaPlayer.seekTo(secondStart);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                twoMediaPlayer.setPlaybackParams(autoPlayBackParams());
+            }
             twoMediaPlayer.start();
-            twoMediaPlayHandler.postDelayed(twoAudioTwoThread, secondEnd);
+            twoMediaPlayHandler.postDelayed(twoAudioTwoThread, (int) (secondEnd / autoPlayerSpeedVal));
+            Log.d("secondEnd", "" + secondEnd);
         };
         twoAudioTwoThread = () -> {
             twoMediaPlayer.pause();
@@ -246,8 +299,12 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
             autoViewPagerScroller();
         };
         twoMediaPlayer.seekTo(firstStart);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            twoMediaPlayer.setPlaybackParams(autoPlayBackParams());
+        }
         twoMediaPlayer.start();
-        twoMediaPlayHandler.postDelayed(twoAudioOneThread, firstEnd);
+        twoMediaPlayHandler.postDelayed(twoAudioOneThread, (int) (firstEnd / autoPlayerSpeedVal));
+        Log.d("firstEnd", "" + firstEnd);
     }
     private final Handler twoMediaPlayHandler = new Handler(Looper.getMainLooper());
     private  Runnable twoAudioOneThread;
@@ -255,7 +312,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
     private void autoViewPagerScroller(){
         if (plyAgainFlag) {
-            int newPosition = (plusOneItem() == lstSize()) ? 0 : plusOneItem();
+            final int newPosition = (plusOneItem() == lstSize()) ? 0 : plusOneItem();
             this.wordViewPager.setCurrentItem(newPosition, true);
         }else if (autoPlayFlag){
             this.wordViewPager.setCurrentItem(currentItem() + 1, true);
@@ -275,13 +332,15 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 dialogFragmentAutoPlayWord();
                 break;
             case (R.id.slide_word_hard_button):
-                updateWordDatabaseThread(1);
+                updateWordDatabaseThread(DB_NOTES.HARD_FLAG,1);
+                updateWordDatabaseThread(DB_NOTES.EASY_FLAG, 0);
                 break;
             case (R.id.slide_word_easy_button):
-                updateWordDatabaseThread(0);
+                updateWordDatabaseThread(DB_NOTES.HARD_FLAG,0);
+                updateWordDatabaseThread(DB_NOTES.EASY_FLAG, 1);
                 break;
-            case (R.id.slide_word_detail_all_translate_btn):
-                Toast.makeText(this, "Display All Translations Is Under Process!", Toast.LENGTH_SHORT).show();
+            case (R.id.slide_word_detail_marked_and_speed_meter):
+                hardEasyCardViewAnimationDeterminer();
                 break;
             case (R.id.slide_word_card_view_tab_layout_bck_bttn_layout):
                 onBackPressed();
@@ -291,6 +350,50 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 break;
         }
     }
+    private void hardEasyCardViewAnimationDeterminer(){
+        if (hardEasyFlag){
+            cardViewGetDownAnimation();
+        }else {
+            if (speedMeterFlag){
+                downAnimationSpeedMeterCardView();
+                new Handler(Looper.getMainLooper()).postDelayed(this::cardViewGetUpAnimation, 350);
+            }else {
+                cardViewGetUpAnimation();
+            }
+        }
+    }
+
+    private boolean hardEasyFlag;
+    private boolean speedMeterFlag;
+
+
+    private void cardViewGetUpAnimation(){
+        ValueAnimator animator = ValueAnimator.ofFloat(500f, 0f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            final float progress = (float) animation.getAnimatedValue();
+            easyHardLayout.setVisibility(View.VISIBLE);
+            easyHardLayout.setTranslationY(progress);
+        });
+        animator.start();
+        hardEasyFlag = true;
+    }
+    private void cardViewGetDownAnimation(){
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 500f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            final float progress = (float) animation.getAnimatedValue();
+            easyHardLayout.setTranslationY(progress);
+        });
+        animator.start();
+        hardEasyFlag = false;
+    }
+
+
 
     private void dialogFragmentAutoPlayWord() {
         AutoPlayDialogFragment playDialogFragment = AutoPlayDialogFragment.newInstance(detailedWordSlideActivity, dbInfoList());
@@ -326,6 +429,9 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         vpSeekBar.setProgress((int) timeElapsed);
         durationHandler.postDelayed(updateVpSeekBar, 100);
         vpPlyImg.setImageResource(R.drawable.mx_pause_normal);
+
+        final int endPlayerDelay = (int) (mainPlayer.getDuration() / speedMeter);
+        endSeekBarHandler.postDelayed(endSeekBarThread, endPlayerDelay);
     }
     private void pauseMainPlayer(){
         new Handler(Looper.getMainLooper()).post(() ->{
@@ -333,6 +439,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 if (mainPlayer != null) {
                     mainPlayer.pause();
                     durationHandler.removeCallbacks(updateVpSeekBar);
+                    endSeekBarHandler.removeCallbacks(endSeekBarThread);
                     vpPlyImg.setImageResource(R.drawable.mx_play_normal);
                 }
             }catch (Exception e){
@@ -354,8 +461,18 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         }
     };
     private final Handler durationHandler = new Handler(Looper.getMainLooper());
-
-
+    private final Handler endSeekBarHandler = new Handler(Looper.getMainLooper());
+    private final Runnable endSeekBarThread = () -> {
+        if (mainPlayer != null){
+            final String newLeftTime = "0:00";
+            vpTxtDuration.setText(newLeftTime);
+            vpPlyImg.setImageResource(R.drawable.mx_play_normal);
+            mainPlayer.pause();
+            mainPlayer.seekTo(0);
+            vpSeekBar.setProgress(0);
+            this.durationHandler.removeCallbacks(this.updateVpSeekBar);
+        }
+    };
 
 
     private void markedWordActivity(){
@@ -367,17 +484,16 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     }
 
 
-    private void updateWordDatabaseThread(int value){
+    private void updateWordDatabaseThread(String columnName, int value){
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() ->updateWordDatabase(value));
+        executor.execute(() ->updateWordDatabase(columnName, value));
         executor.shutdown();
     }
-    public void updateWordDatabase(int valFlag){
+    public void updateWordDatabase(String columnName, int valFlag){
         int position = (currentItem() + 1);
         int[] dbInfoNum = {dbNum, unitNum};
-        String flagColumn = DB_NOTES.HARD_FLAG;
         UpdateWordDatabase updateWordDB = new UpdateWordDatabase(this, dbInfoNum);
-        updateWordDB.wordDatabaseUpdate(flagColumn, position, valFlag);
+        updateWordDB.wordDatabaseUpdate(columnName, position, valFlag);
 
         String word = listWordModel.get(currentItem()).getWord();
         fillResumeStudyPreferences(word);
@@ -439,7 +555,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
             });
         });
     }
-
+    @SuppressLint("Range")
     private void wordAudioReceiver(int dbId, int unitId){
         SQLiteDatabase db = unitListDatabase(dbId).getReadableDatabase();
 
@@ -450,8 +566,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
         if (awCursor.getCount() != 0){
             while (awCursor.moveToNext()){
-                plyAudio = awCursor.getInt(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
-
+                plyAudio = awCursor.getString(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
             }
             allAudioPlayers(plyAudio);
         }
@@ -482,10 +597,10 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
             handler.post(this::viewPagerSetter);
         });
     }
+    @SuppressLint("Range")
     private void wordDatabaseReceiver(){
-        if (unitNum == 0) {
-            unitNum = 1;
-        }
+        unitNum = (unitNum == 0) ? 1 : unitNum;
+
         SQLiteDatabase database = wordListDatabase(dbNum).getReadableDatabase();
         listWordModel = new ArrayList<>();
 
@@ -493,7 +608,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
                         DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END,
                         DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.AUDIO_WORD,
-                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG},
+                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG, DB_NOTES.EXTRA_NOTE},
                 null, null, null, null, null);
 
         if (cursor != null && cursor.getCount() != 0){
@@ -501,33 +616,32 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
             while (cursor.moveToNext()){
                 wordModel = new WordModel();
 
-                int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                int imgWord = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
-                int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-                int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
-                int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                final String imgWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                final int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                final int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                final int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
+                final int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                final int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                final int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                final int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                final int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                final int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                final String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                final String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                final String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final String userNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
 
 
                 wordModel.setId(id);
-                wordModel.setWordImage(imgWord);
+                wordModel.setImgUri(imgWord);
                 wordModel.setBookNum(bookIdNum);
                 wordModel.setUnitNum(unitIdNum);
-                wordModel.setAudio(audio);
                 wordModel.setHardFlag(hardFlag);
                 wordModel.setEasyFlag(easyFlag);
                 wordModel.setWrdStart(wrdStart - tmLineMines);
@@ -544,6 +658,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 wordModel.setTranslateDef(translateDefinition);
                 wordModel.setExample(example);
                 wordModel.setTranslateExmpl(translateExample);
+                wordModel.setAddNote(userNote);
                 listWordModel.add(wordModel);
                 pBookNum = dbNum;
                 pUnitNum = unitNum;
@@ -576,6 +691,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         manager.addFragmentOnAttachListener((fragmentManager, fragment) -> {
             try {
                 editorInterFace = (SlideWordFragment) fragment;
+                addNoteInterFace = (SlideWordFragment) fragment;
                 displayTranslation = (SlideWordFragment) fragment;
             }catch (Exception e){
                 e.printStackTrace();
@@ -586,13 +702,13 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 manager , getLifecycle(), this);
 
         wordViewPager.setAdapter(sectionAdapter);
-        /*new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            wordViewPager.setCurrentItem(vpCurrentItem, true);
-        }, 100);*/
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            wordViewPager.setCurrentItem(vpCurrentItem, false);
+        }, 100);
 
 
         viewPagerOnClickListenerSetter();
-        wordViewPager.setCurrentItem(vpCurrentItem, true);
+        wordViewPager.setCurrentItem(vpCurrentItem, false);
         tabLayoutFun();
     }
     private void viewPagerOnClickListenerSetter() {
@@ -606,7 +722,10 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 onPageSelectedFunctions();
-
+                if (hardEasyFlag){
+                    cardViewGetDownAnimation();
+                }
+                downAnimationSpeedMeterCardView();
             }
 
             @Override
@@ -637,64 +756,65 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     }
 
 
-
     @Override
-    public void editsSaved(String wordTranslation, String defTranslation, String exmplTranslation) {
-        reSetterViewPager(wordTranslation, defTranslation, exmplTranslation);
+    public void addNote(String note) {
+        addNoteValueReSetter(note);
     }
-    private void reSetterViewPager(String word, String def, String exmpl){
-        ExecutorService reThread = Executors.newSingleThreadExecutor();
-        Handler reHandler = new Handler(Looper.getMainLooper());
-        reThread.execute(() ->{
+    private void addNoteValueReSetter(String note){
+        ExecutorService thread = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
 
+        thread.execute(() ->{
             final int newWordId = listWordModel.get(currentItem()).getId();
-            reReceiverWordDatabase(newWordId);
-            reHandler.post(() ->{
+            databaseReReceiverForAddedNote(newWordId);
+            handler.post(() ->{
                 WordSlideFragmentPagerAdapter.listChanger(listWordModel);
-                editorInterFace.translationEditor(word, def, exmpl);
+                addNoteInterFace.addNote(note);
             });
         });
+
     }
-    private void reReceiverWordDatabase(int newWordId){
-        if (unitNum == 0) {
-            unitNum = 1;
-        }
+    @SuppressLint("Range")
+    private void databaseReReceiverForAddedNote(int newWordId){
+        unitNum = (unitNum == 0) ? 1 : unitNum;
+
         SQLiteDatabase database = wordListDatabase(dbNum).getReadableDatabase();
         Cursor cursor = database.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitNum,
                 new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
                         DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END,
                         DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.AUDIO_WORD,
-                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG},
+                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG, DB_NOTES.EXTRA_NOTE},
                 DB_NOTES.WORD_ID + " = ? ", new String[]{Integer.toString(newWordId)}, null, null, null);
         if (cursor != null && cursor.getCount() != 0){
 
             while (cursor.moveToNext()){
                 wordModel = new WordModel();
 
-                int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                int imgWord = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
-                int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-                int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
-                int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                final String imgWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                final int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                final int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                final int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
+                final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                final int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
+                final int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                final int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                final int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                final int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                final int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                final int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                final String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                final String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                final String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final String usetNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
 
 
                 wordModel.setId(id);
-                wordModel.setWordImage(imgWord);
+                wordModel.setImgUri(imgWord);
                 wordModel.setAudio(audio);
                 wordModel.setBookNum(bookIdNum);
                 wordModel.setUnitNum(unitIdNum);
@@ -713,6 +833,94 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 wordModel.setTranslateDef(translateDefinition);
                 wordModel.setExample(example);
                 wordModel.setTranslateExmpl(translateExample);
+                wordModel.setAddNote(usetNote);
+                listWordModel.set(currentItem(), wordModel);
+                pBookNum = dbNum;
+                pUnitNum = unitNum;
+            }
+            database.close();
+            cursor.close();
+        }
+    }
+
+
+    @Override
+    public void editsSaved(String wordTranslation, String defTranslation, String exmplTranslation) {
+        reSetterViewPager(wordTranslation, defTranslation, exmplTranslation);
+    }
+    private void reSetterViewPager(String word, String def, String exmpl){
+        ExecutorService reThread = Executors.newSingleThreadExecutor();
+        Handler reHandler = new Handler(Looper.getMainLooper());
+        reThread.execute(() ->{
+
+            final int newWordId = listWordModel.get(currentItem()).getId();
+            reReceiverWordDatabase(newWordId);
+            reHandler.post(() ->{
+                WordSlideFragmentPagerAdapter.listChanger(listWordModel);
+                editorInterFace.translationEditor(word, def, exmpl);
+            });
+        });
+    }
+    @SuppressLint("Range")
+    private void reReceiverWordDatabase(int newWordId){
+        unitNum = (unitNum == 0) ? 1 : unitNum;
+
+        SQLiteDatabase database = wordListDatabase(dbNum).getReadableDatabase();
+        Cursor cursor = database.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitNum,
+                new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
+                        DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END,
+                        DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.AUDIO_WORD,
+                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG, DB_NOTES.EXTRA_NOTE},
+                DB_NOTES.WORD_ID + " = ? ", new String[]{Integer.toString(newWordId)}, null, null, null);
+        if (cursor != null && cursor.getCount() != 0){
+
+            while (cursor.moveToNext()){
+                wordModel = new WordModel();
+
+                final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                final String imgWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                final int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                final int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                final int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
+                final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                final int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
+                final int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                final int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                final int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                final int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                final int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                final int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                final String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                final String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                final String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final String userNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
+
+
+                wordModel.setId(id);
+                wordModel.setImgUri(imgWord);
+                wordModel.setAudio(audio);
+                wordModel.setBookNum(bookIdNum);
+                wordModel.setUnitNum(unitIdNum);
+                wordModel.setHardFlag(hardFlag);
+                wordModel.setEasyFlag(easyFlag);
+                wordModel.setWrdStart(wrdStart - tmLineMines);
+                wordModel.setWrdEnd(wrdEnd- tmLineMines);
+                wordModel.setDefStart(defStart- tmLineMines);
+                wordModel.setDefEnd(defEnd- tmLineMines);
+                wordModel.setExmplStart(exmStart- tmLineMines);
+                wordModel.setExmplEnd(exmEnd- tmLineMines);
+                wordModel.setWord(word);
+                wordModel.setPhonetic(phonetic);
+                wordModel.setTranslateWord(translateWord);
+                wordModel.setDefinition(definition);
+                wordModel.setTranslateDef(translateDefinition);
+                wordModel.setExample(example);
+                wordModel.setTranslateExmpl(translateExample);
+                wordModel.setAddNote(userNote);
                 listWordModel.set(currentItem(), wordModel);
                 pBookNum = dbNum;
                 pUnitNum = unitNum;
@@ -728,10 +936,11 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     /***********************************************************************************************/
 
     @Override
-    public void autoPlayer(boolean[] autoPlayFlagList) {
+    public void autoPlayer(boolean[] autoPlayFlagList, float mediaSpeed) {
 
         autoPlayDeterminer(autoPlayFlagList);
         autoPlayFlag = !plyAgainFlag;
+        autoPlayerSpeedVal = mediaSpeed;
         autoMediaPlayer();
     }
     private void autoMediaPlayer(){
@@ -744,7 +953,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         } else if (isExmplPlayedOnly()) {
             examplePlayerOnceOrAgainDeterminer();
         }else if (isWordAndDef()) {
-            autoTwoPlayOnceOrAgainDeterminer(autoPlyWordAndDefList());
+            autoTwoPlayOnceOrAgainDeterminer(autoPlyWordAndDefList());// ?? 4
         } else if (isWordAndExmpl()) {
             autoTwoPlayOnceOrAgainDeterminer(autoPlyWordAndExmplList());
         }else if (isDefAndExmpl()) {
@@ -797,16 +1006,16 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         if (plyAgainFlag){
             autoPlayAgainTwoAudio(valStr[0], valStr[1], valStr[2], valStr[3]);
         }else {
-            autoPlayTwoAudio(valStr[0], valStr[1], valStr[2], valStr[3]);
+            autoPlayTwoAudio(valStr[0], valStr[1], valStr[2], valStr[3]);// ?? 5
         }
     }
 
     private void autoPlayTwoAudio(String startFirst, String durationFirst, String startSecond, String durationSecond){
-        playTwoAudios(currentItem(), startFirst, durationFirst, startSecond, durationSecond);
+        playTwoAudios(currentItem(), startFirst, durationFirst, startSecond, durationSecond);// ?? 6
     }
     private void playTwoAudios(int finalIndex, String startFirst, String durationFirst, String startSecond, String durationSecond){
         shwTranslationsInAutoPlay();
-        final int startOne = startAudio(startFirst, finalIndex);
+        final int startOne = startAudio(startFirst, finalIndex);//?? 7
         final int endOne = durationAudio(durationFirst, finalIndex);
         final int startTwo = startAudio(startSecond, finalIndex);
         final int endTwo = durationAudio(durationSecond, finalIndex);
@@ -822,7 +1031,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
     private int startAudio(String type, int index){
         if (type.equalsIgnoreCase(wrdStartNote)){
-            return wordStart(index);
+            return wordStart(index);//?? 8
         }else if (type.equalsIgnoreCase(defStartNote)){
             return defStart(index);
         }else {
@@ -1003,13 +1212,10 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
 
 
-    private int wordDuration(int index){
-        return (wordEnd(index) - wordStart(index));
-    }
-    private int wordStart(int index){return listWordModel.get(index).getWrdStart();}
-    private int wordEnd(int index){
-        return listWordModel.get(index).getWrdEnd();
-    }
+
+    private int wordDuration(int index){return (wordEnd(index) - wordStart(index));}
+    private int wordStart(int index){return listWordModel.get(index).getWrdStart();}// ?? 9
+    private int wordEnd(int index){return listWordModel.get(index).getWrdEnd();}
 
 
     private int defDuration(int index){
@@ -1068,7 +1274,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         }
     }
     private void singleMediaPlayerPause(){
-        if (singleMediaPlayer != null){
+        if ((singleMediaPlayer != null) && singleMediaPlayer.isPlaying()){
             singleMediaPlayer.pause();
             singleMediaPlayHandler.removeCallbacks(singleAudioThread);
         }
@@ -1099,7 +1305,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         }
     }
     private void twoMediaPlayDestroyer(){
-        if (twoMediaPlayer.isPlaying()){
+        if ((twoMediaPlayer != null) && twoMediaPlayer.isPlaying()){
             twoMediaPlayer.pause();
             twoMediaPlayer.reset();
             twoMediaPlayer.stop();
@@ -1157,10 +1363,12 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
                 Toast.makeText(this, "Edit Word Is Under Process", Toast.LENGTH_SHORT).show();
                 return true;
             case (R.id.slide_word_add_note_menu):
+                addNoteDialog();
                 Toast.makeText(this, "Add Note Is Under Process", Toast.LENGTH_SHORT).show();
                 return true;
             case (R.id.slide_word_share_word_menu):
-                Toast.makeText(this, "Sharing Word Is Under Process", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Sharing Word Is Under Process", Toast.LENGTH_SHORT).show();
+                shareIconChanger();
                 return true;
             case (R.id.slide_word_review_menu):
                 markedWordActivity();
@@ -1170,16 +1378,55 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         }
     }
 
+    private void shareIconChanger(){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareContentValue());
+        sendIntent.setType("text/plain");
+        Intent shareIntent = Intent.createChooser(sendIntent, "لغت را با دوستان خود به اشتراک بزار..");
+        startActivity(shareIntent);
+    }
+    private String shareContentValue(){
+        final String word = " لغت : " + "\"" + listWordModel.get(currentItem()).getWord() + "  ";
+        final String phonetic =  listWordModel.get(currentItem()).getPhonetic() + " \" " + "\n" ;
+        final String wordTranslate = " ترجمه لغت : " + "\"" + listWordModel.get(currentItem()).getTranslateWord() + " \" " + "\n";
+        final String Definition = " تعریف : \n" + "\"" + listWordModel.get(currentItem()).getDefinition() + " \" " + "\n" ;
+        final String definitionTranslation = " معنی تعریف : \n" + "\"" + listWordModel.get(currentItem()).getTranslateDef() + " \" " + "\n";
+        final String example = " مثال : \n" + "\"" + listWordModel.get(currentItem()).getExample() + " \" " + "\n" ;
+        final String exampleTranslation = " معنی مثال : \n" + "\"" + listWordModel.get(currentItem()).getTranslateExmpl() + " \" " + "\n";
+
+        return word + phonetic + wordTranslate +
+                Definition + definitionTranslation +
+                example + exampleTranslation;
+    }
+
+
     private void editWordDialog(){
         EditWordDialogFragment ewDialogFragment =
-                EditWordDialogFragment.newInstance(editTextValuesExtractor(), dbInfoList());
+                EditWordDialogFragment.newInstance(editTextValuesExtractor(), imgUrlVal(), dbInfoList());
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("editDialog");
         if (prev != null){
             ft.remove(prev);
         }
-        ewDialogFragment.show(ft, "dialog");
+        ewDialogFragment.show(ft, "editDialog");
     }
+    private String imgUrlVal(){
+        return listWordModel.get(currentItem()).getImgUri();
+    }
+
+    private void addNoteDialog(){
+        AddNoteDialogFragment addNoteDialogFragment =
+                AddNoteDialogFragment.newInstance(editTextValuesExtractor(), dbInfoList());
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("addNoteDialog");
+        if (prev != null){
+            ft.remove(prev);
+        }
+        addNoteDialogFragment.show(ft, "addNoteDialog");
+    }
+
     private String[] editTextValuesExtractor(){
         String[] edtTxtValues = new String[5];
         edtTxtValues[0] = listWordModel.get(currentItem()).getTranslateWord();
@@ -1196,28 +1443,6 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         dbInfoList[2] = listWordModel.get(currentItem()).getId();
         return dbInfoList;
     }
-
-
-
-    private void viewPagerConditionInAutoPlay(){
-        //viewPagerOnClickListenerSetter();
-        final int newPosition = currentItem();
-        layoutMediator.detach();
-        wordViewPager.setCurrentItem(0, false);
-        wordViewPager.setCurrentItem(newPosition, false);
-        layoutMediator.attach();
-    }
-    private void viewPagerScroller(Handler handler, int index){
-        handler.postDelayed(() -> wordViewPager.setCurrentItem(index, true), 100);
-    }
-    private void threadSleep(int duration){
-        try {
-            Thread.sleep(duration);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
 
 
@@ -1240,21 +1465,39 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         vpPlyImg = findViewById(R.id.slide_word_detailed_card_ply_image);
         backPressLayout = findViewById(R.id.slide_word_card_view_tab_layout_bck_bttn_layout);
         reviewImg = findViewById(R.id.slide_word_auto_play);
-        translateBtn = findViewById(R.id.slide_word_detail_all_translate_btn);
+        marked_and_speedMetter = findViewById(R.id.slide_word_detail_marked_and_speed_meter);
         wordViewPager = findViewById(R.id.slide_word_card_view_viewpager);
         tabIndicator = findViewById(R.id.slide_word_indicator_view_pager);
         sample = findViewById(R.id.slide_word_card_view_unit);
         searchImgView = findViewById(R.id.slide_word_search_launcher);
         numDeterminer = findViewById(R.id.slide_word_card_view_unit_selected_number);
+        easyHardLayout = findViewById(R.id.easy_or_har_buttons_layout);
+        speedMeterLayout = findViewById(R.id.speed_meter_main_layout);
         Toolbar slideWordToolBar = findViewById(R.id.slide_word_card_view_toolbar);
 
-        if (autoPlayFlag){autoMediaPlayer();}
+        //peedImageView
+        speedMeterImgView = findViewById(R.id.speed_meter_image_view);
+        vrySlwImageView = findViewById(R.id.speed_very_slow_image_view);
+        slwImageView = findViewById(R.id.speed_slow_image_view);
+        normalImageView = findViewById(R.id.speed_normal_image_view);
+        fstImageView = findViewById(R.id.speed_fast_image_view);
+        vryFstImageView = findViewById(R.id.speed_too_fast_image_view);
+
+        //speedTextView
+        vrySlwTextView = findViewById(R.id.speed_very_slow_text_view);
+        slwTextView = findViewById(R.id.speed_slow_text_view);
+        normalTextView = findViewById(R.id.speed_normal_text_view);
+        fstTextView = findViewById(R.id.speed_fast_text_view);
+        vryFstTextView = findViewById(R.id.speed_too_fast_text_view);
+
+        //if (autoPlayFlag){autoMediaPlayer();}// ?? 3
 
         wordViewPager.setCurrentItem(vpCurrentItem, false);
 
         numDeterminer.setText(String.valueOf(unitNum));
         setSupportActionBar(slideWordToolBar);
         viesOnClickListener();
+        speedDeterminerFunctions();
     }
     private void extrasGetter(){
         Intent vpPIntent = getIntent();
@@ -1265,6 +1508,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         vpCurrentItem = vpPIntent.getIntExtra(strWordId, 0);
         autoPlayFlag = vpPIntent.getBooleanExtra(autoPlayFlagKey, false);
         flagListAutoPly = vpPIntent.getBooleanArrayExtra(autoPlayFlagListKey);
+        autoPlayerSpeedVal = vpPIntent.getFloatExtra(speedMeterKey, 1f);
         autoPlayDeterminer(flagListAutoPly);
     }
     private void autoPlayDeterminer(boolean[] flagList){
@@ -1287,10 +1531,204 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         reviewImg.setOnClickListener(this);
         hardBtn.setOnClickListener(this);
         easyBtn.setOnClickListener(this);
-        translateBtn.setOnClickListener(this);
+        marked_and_speedMetter.setOnClickListener(this);
         searchImgView.setOnClickListener(this);
         backPressLayout.setOnClickListener(this);
         sample.setOnClickListener(this);
+    }
+
+    private void speedDeterminerFunctions(){
+        speedMeterImgView.setOnClickListener(v ->{
+            cardViewGetDownAnimation();
+            new Handler(Looper.getMainLooper()).postDelayed(this::upAnimationSpeedMeterCardView, 350);
+        });
+
+
+        vrySlwImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(0.5f);
+            speedTextColorDeterminer(1);
+            cardViewsAnimationDeterminer();
+
+        });
+        slwImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(0.75f);
+            speedTextColorDeterminer(2);
+            cardViewsAnimationDeterminer();
+        });
+        normalImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(1.0f);
+            speedTextColorDeterminer(3);
+            cardViewsAnimationDeterminer();
+        });
+        fstImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(1.5f);
+            speedTextColorDeterminer(4);
+            cardViewsAnimationDeterminer();
+        });
+        vryFstImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(2.0f);
+            speedTextColorDeterminer(5);
+            cardViewsAnimationDeterminer();
+        });
+    }
+    private void mediaSpeedSetter(float speed){
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            PlaybackParams playbackParams = new PlaybackParams();
+            playbackParams.setSpeed(speed);
+            mainPlayer.setPlaybackParams(playbackParams);
+            speedMeter = speed;
+            playMainPlayer();
+        }
+
+    }
+    private PlaybackParams autoPlayBackParams(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            PlaybackParams playbackParams = new PlaybackParams();
+            return playbackParams.setSpeed(autoPlayerSpeedVal);
+        }else{
+            return null;
+        }
+    }
+    private void cardViewsAnimationDeterminer(){
+        downAnimationSpeedMeterCardView();
+        //new Handler(Looper.getMainLooper()).postDelayed(this::cardViewGetUpAnimation, 350);
+    }
+
+    private void downAnimationSpeedMeterCardView(){
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 500f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            final float progress = (float) animation.getAnimatedValue();
+            speedMeterLayout.setTranslationY(progress);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> speedMeterLayout.setVisibility(View.GONE), 350);
+        });
+        animator.start();
+        speedMeterFlag = false;
+    }
+    private void upAnimationSpeedMeterCardView(){
+        ValueAnimator animator = ValueAnimator.ofFloat(500f, 0f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            final float progress = (float) animation.getAnimatedValue();
+            speedMeterLayout.setVisibility(View.VISIBLE);
+            speedMeterLayout.setTranslationY(progress);
+        });
+        animator.start();
+        speedMeterFlag = true;
+    }
+
+
+    private void speedTextColorDeterminer(int txtPosition){
+        switch (txtPosition){
+            case 1:
+                tooSlowTxtViewBolder();
+                break;
+            case 2:
+                slowTxtViewBolder();
+                break;
+            case 3:
+                normalTxtViewBolder();
+                break;
+            case 4:
+                fastTxtViewBolder();
+                break;
+            case 5:
+                tooFastTxtViewBolder();
+                break;
+        }
+    }
+    private void tooSlowTxtViewBolder(){
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(1));
+    }
+    private void slowTxtViewBolder(){
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(2));
+    }
+    private void normalTxtViewBolder(){
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(3));
+    }
+    private void fastTxtViewBolder(){
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(4));
+    }
+    private void tooFastTxtViewBolder(){
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+        speedMeterImgView.setImageResource(speedImage(5));
+    }
+
+    private int speedImage(int position){
+        if (position == 5){
+            return R.drawable.speed_too_fast_icon;
+        }else if (position == 4){
+            return R.drawable.speed_fast_icon;
+        }else if (position == 3){
+            return R.drawable.speed_normal_icon;
+        }else if (position == 2){
+            return R.drawable.speed_slow_icon;
+        }else {
+            return R.drawable.speed_too_slow_icon;
+        }
     }
 
 
@@ -1371,6 +1809,8 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
     @Override
     public int getCount() {
-        return listWordModel.size();
+        return listSize();
     }
+    private int listSize(){return listWordModel.size();}
+
 }

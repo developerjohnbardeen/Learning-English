@@ -4,6 +4,7 @@ public class ExtraNotes {
     public static final String DB_NUMBER = "DB_NUMBER";
     public static final String UNIT_NUMBER = "UNIT_NUMBER";
     public static final String AUTO_PLAY_FLAG_KEY = "AUTO_PLAY_FLAG";
+    public static final String SPEED_METER_KEY = "SPEED_METER_KEY";
     public static final String AUTO_PLAY_BOOLEAN_LIST = "AUTO_PLAY_BOOLEAN_LIST";
     public static final String WORD_ID = "WORD_ID";
     public static final String QUIZ_TYPE = "QUIZ_TYPE";

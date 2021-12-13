@@ -5,46 +5,34 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
-
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookOne;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookSix;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookThree;
-import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookTwo;
-import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFive;
-import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookFour;
-import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookOne;
-import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookSix;
-import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
-import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords.MainReviewMarkedWordActivity;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AutoPlayInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
-import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.exoplayer2.decoder.DecoderReuseEvaluation;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ValueAnimator;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
@@ -52,19 +40,23 @@ import java.util.ArrayList;
 public class AutoPlayDialogFragment extends DialogFragment implements View.OnClickListener{
     private TextView autoPlayBtn, rejectBtn, saveAndPlayBtn;
     private TextView replyWordsTextView;
+
+    private RelativeLayout tooSlowLayout, slowLayout, normalLayout, fastLayout, tooFastLayout;
+    private ImageView tooSlowImgView, slowImgView, normalImgView, fastImgView, tooFastImgView;
+    private TextView tooSlowTextView, slowTextView, normalTextView, fastTextView, tooFastTextView;
+
     private RelativeLayout plyNxtUnitLayout;
     private LinearLayoutCompat extraDisplayTranslationLayout;
-    private AppCompatCheckBox allPlyCheckBox, wrdPlyCheckBox, defPlyCheckBox, exmplPlyCheckBox;
+    private AppCompatCheckBox wrdPlyCheckBox, defPlyCheckBox, exmplPlyCheckBox;
     private AppCompatCheckBox plyAgainUnitCheckBox, plyNxtUnitCheckBox, displayTranslationCheckBox;
     private AppCompatCheckBox wordTrnslCheckBox, defTrnslCheckBox, exmplTrnslCheckBox;
     private AutoPlayInterface autoPlayInterface;
     private boolean[] checkBoxesStatusFlags;
     private int[] dbInfoList;
+    private float plySpeedValue = 1f;
     private final static String keyActivity = AutoPlayNotes.ACTIVITY_NAME;
     private final static String dbInfoKey = AutoPlayNotes.DB_INFO_DIALOG_LIST_KEY;
     private String nameActivity;
-    private boolean allCheckFlag, wrdCheckFlag = true, defCheckFlag, exmplCheckFlag;
-    private boolean isShwAtAll, isShwWord, isShwDef, isShwExmpl;
     private final String strWordId = ExtraNotes.WORD_ID;
     private final String strDbNumber = ExtraNotes.DB_NUMBER;
     private final String strUnitNumber = ExtraNotes.UNIT_NUMBER;
@@ -75,6 +67,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
     private final static String markedWordActivity = AutoPlayNotes.MARKED_WORD_ACTIVITY;
     private final static String mainReviewActivity = AutoPlayNotes.MAIN_REVIEW_MARKED_WORD_ACTIVITY;
     private final static String quizResultActivity = AutoPlayNotes.QUIZ_RESULT_ACTIVITY;
+    private final static String speedMeterKey = ExtraNotes.SPEED_METER_KEY;
     private ArrayList<WordModel> wordList;
 
     private SharedPreferences autoPlayAudioPreferences;
@@ -84,6 +77,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
     private final String plyExmplLKey = SettingsPreferencesNotes.PLAY_DETAILED_EXAMPLE_WORD_KEY;
     private final String plyAgainKey = SettingsPreferencesNotes.PLAY_AGAIN_AT_END_KEY;
     private final String plyNxtUnitKey = SettingsPreferencesNotes.PLAY_NEXT_UNIT_KEY;
+    private final String speedPlayKey = SettingsPreferencesNotes.SPEED_PLAY_KEY;
     private final String dsplyTrnsltKey = SettingsPreferencesNotes.PLAY_DISPLAY_TRANSLATIONS_KEY;
     private final String dsplyWordKey = SettingsPreferencesNotes.PLAY_DISPLAY_WORD_KEY;
     private final String dsplyDefKey = SettingsPreferencesNotes.PLAY_DISPLAY_DEFINITION_KEY;
@@ -93,8 +87,15 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
 
 
 
-
-
+    public static AutoPlayDialogFragment quizResultNewInstance(String activityName,ArrayList<WordModel> modelLists, int[] dbDialogInfoList){
+        AutoPlayDialogFragment autoPlayDialogFragment = new AutoPlayDialogFragment();
+        Bundle autoPlayBundle = new Bundle();
+        autoPlayBundle.putString(keyActivity, activityName);
+        autoPlayBundle.putIntArray(dbInfoKey, dbDialogInfoList);
+        autoPlayBundle.putParcelableArrayList("reviewList", modelLists);
+        autoPlayDialogFragment.setArguments(autoPlayBundle);
+        return autoPlayDialogFragment;
+    }
     public static AutoPlayDialogFragment newInstance(String activityName, int[] dbDialogInfoList){
         AutoPlayDialogFragment autoPlayDialogFragment = new AutoPlayDialogFragment();
         Bundle autoPlayBundle = new Bundle();
@@ -112,6 +113,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         fragment.setArguments(autoPlayBundle);
         return fragment;
     }
+
 
 
     @Override
@@ -136,6 +138,9 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.auto_play_dialog_fragment, container, false);
     }
+
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -184,10 +189,15 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
             case detailedWordSlideActivity:
                 alreadyInDetailedWordSlide();
                 break;
+            case quizResultActivity:
             case markedWordActivity:
                 plyIntent = new Intent(requireActivity(), MainReviewMarkedWordActivity.class);
                 extraSetter(plyIntent);
-                requireActivity().startActivity(plyIntent);
+                if (wordList.size() > 0){
+                    requireActivity().startActivity(plyIntent);
+                }else {
+                    Toast.makeText(requireActivity(), "اولاد سگ کلمه ای برای پخش نداری نوب سگ:)", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case mainReviewActivity:
                 alreadyInMainReviewWord();
@@ -200,6 +210,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         intent.putExtra(autoPlayFlagKey, true);
         intent.putExtra(strWordId, 0);
         intent.putParcelableArrayListExtra("reviewList", wordList);
+        intent.putExtra(speedMeterKey, plySpeedValue);
         intent.putExtra(autoPlayFlagListKey, setCheckBoxesStatusFlags());
     }
     private boolean[] setCheckBoxesStatusFlags(){
@@ -229,11 +240,11 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
 
 
     private void alreadyInDetailedWordSlide(){
-        autoPlayInterface.autoPlayer(setCheckBoxesStatusFlags());
+        autoPlayInterface.autoPlayer(setCheckBoxesStatusFlags(), plySpeedValue);
     }
 
     private void alreadyInMainReviewWord(){
-            autoPlayInterface.autoPlayer(setCheckBoxesStatusFlags());
+            autoPlayInterface.autoPlayer(setCheckBoxesStatusFlags(), plySpeedValue);
     }
 
 
@@ -275,10 +286,30 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         wordTrnslCheckBox = view.findViewById(R.id.display_word_translation_check_box);
         defTrnslCheckBox = view.findViewById(R.id.display_definition_translation_check_box);
         exmplTrnslCheckBox = view.findViewById(R.id.display_example_translation_check_box);
+
+
+
+        //speed meter imageView
+        tooSlowImgView = view.findViewById(R.id.dialog_auto_play_speed_very_slow_image_view);
+        slowImgView = view.findViewById(R.id.dialog_auto_play_speed_slow_image_view);
+        normalImgView = view.findViewById(R.id.dialog_auto_play_speed_normal_image_view);
+        fastImgView = view.findViewById(R.id.dialog_auto_play_speed_fast_image_view);
+        tooFastImgView = view.findViewById(R.id.dialog_auto_play_speed_too_fast_image_view);
+
+        //speed meter textView
+        tooSlowTextView = view.findViewById(R.id.auto_play_dialog_too_slow_text_view);
+        slowTextView = view.findViewById(R.id.auto_play_dialog_speed_slow_text_view);
+        normalTextView = view.findViewById(R.id.dialog_auto_play_speed_normal_text_view);
+        fastTextView = view.findViewById(R.id.dialog_auto_play_speed_fast_text_view);
+        tooFastTextView = view.findViewById(R.id.dialog_auto_play_speed_too_fast_text_view);
+
         ComponentsValueInitializer();
         plyNextUnitLayoutVisibility(nameActivity);
         thisOnClickListener();
+
     }
+
+
     private void plyNextUnitLayoutVisibility(String activityName){
         final boolean markedWordFlag = activityName.equalsIgnoreCase(markedWordActivity);
         final boolean mainReviewFlag = activityName.equalsIgnoreCase(mainReviewActivity);
@@ -299,7 +330,166 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         wordTrnslCheckBox.setOnClickListener(this);
         defTrnslCheckBox.setOnClickListener(this);
         exmplTrnslCheckBox.setOnClickListener(this);
+
+        speedImageViewClickListener();
+
     }
+
+    private void speedImageViewClickListener(){
+        //preSpeedImageViewSize();
+
+        tooSlowImageViewClickListener();
+        slowImageViewClickListener();
+        normalSpeedImageViewClickListener();
+        fastImageViewClickListener();
+        tooFastImageViewClickListener();
+    }
+    private void preSpeedImageViewSize(){
+        speedViewsAnimation(normalImgView, secondImageView);
+        speedTextViewsAnimation(normalTextView, secondTxtView);
+
+        secondImageView = normalTextView;
+        secondTxtView = normalTextView;
+
+    }
+
+    private View secondImageView;
+    private TextView secondTxtView;
+
+
+    private void tooSlowImageViewClickListener(){
+        tooSlowImgView.setOnClickListener(view -> {
+            if (view != secondImageView) {
+                speedViewsAnimation(view, secondImageView);
+                speedTextViewsAnimation(tooSlowTextView, secondTxtView);
+
+                secondImageView = view;
+                secondTxtView = tooSlowTextView;
+                plySpeedValue = 0.5f;
+            }
+        });
+    }
+    private void slowImageViewClickListener(){
+        slowImgView.setOnClickListener(view -> {
+            if (view != secondImageView) {
+                speedViewsAnimation(view, secondImageView);
+                speedTextViewsAnimation(slowTextView, secondTxtView);
+
+                secondImageView = view;
+                secondTxtView = slowTextView;
+                plySpeedValue = 0.75f;
+            }
+        });
+    }
+    private void normalSpeedImageViewClickListener(){
+        normalImgView.setOnClickListener(view -> {
+            if (view != secondImageView) {
+                speedViewsAnimation(view, secondImageView);
+                speedTextViewsAnimation(normalTextView, secondTxtView);
+
+                secondImageView = view;
+                secondTxtView = normalTextView;
+                plySpeedValue = 1f;
+            }
+        });
+    }
+    private void fastImageViewClickListener(){
+        fastImgView.setOnClickListener(view -> {
+            if (view != secondImageView) {
+                speedViewsAnimation(view, secondImageView);
+                speedTextViewsAnimation(fastTextView, secondTxtView);
+
+                secondImageView = view;
+                secondTxtView = fastTextView;
+                plySpeedValue = 1.5f;
+            }
+        });
+    }
+    private void tooFastImageViewClickListener(){
+        tooFastImgView.setOnClickListener(view -> {
+            if (view != secondImageView) {
+                speedViewsAnimation(view, secondImageView);
+                speedTextViewsAnimation(tooFastTextView, secondTxtView);
+
+                secondImageView = view;
+                secondTxtView = tooFastTextView;
+                plySpeedValue = 2f;
+            }
+        });
+    }
+
+
+    private final float strtSize = 1f;
+    private final float endSize = 1.2f;
+    private final int animDuration = 150;
+
+    private void speedViewsAnimation(View mainView, View secondView){
+        increaseSpeedViewsSize(mainView);
+        decreaseSpeedViewsSize(secondView);
+    }
+    private void increaseSpeedViewsSize(View view){
+        final ValueAnimator increaseAnimator = ValueAnimator.ofFloat(strtSize, endSize);
+        increaseAnimator.setDuration(animDuration);
+
+        increaseAnimator.addUpdateListener(animation -> {
+            view.setScaleX((float) animation.getAnimatedValue());
+            view.setScaleY((float) animation.getAnimatedValue());
+        });
+
+
+        increaseAnimator.start();
+    }
+    private void decreaseSpeedViewsSize(View view){
+        if (view != null) {
+            final ValueAnimator decreaseAnimator = ValueAnimator.ofFloat(endSize, strtSize);
+            decreaseAnimator.setDuration(animDuration);
+
+
+            decreaseAnimator.addUpdateListener(animation -> {
+                view.setScaleX((float) animation.getAnimatedValue());
+                view.setScaleY((float) animation.getAnimatedValue());
+            });
+
+
+            decreaseAnimator.start();
+        }
+    }
+
+    private void speedTextViewsAnimation(TextView mainTxtView, TextView secondTextView){
+        increaseSpeedTextViewViewsSize(mainTxtView);
+        decreaseSpeedTextViewsSize(secondTextView);
+    }
+    private void increaseSpeedTextViewViewsSize(TextView view){
+        final ValueAnimator increaseAnimator = ValueAnimator.ofFloat(strtSize, endSize);
+        increaseAnimator.setDuration(animDuration);
+
+        view.setTextColor(requireActivity().getColor(R.color.colorAccent));
+
+        increaseAnimator.addUpdateListener(animation -> {
+            view.setScaleX((float) animation.getAnimatedValue());
+            view.setScaleY((float) animation.getAnimatedValue());
+        });
+
+
+        increaseAnimator.start();
+    }
+    private void decreaseSpeedTextViewsSize(TextView view){
+        if (view != null) {
+            final ValueAnimator decreaseAnimator = ValueAnimator.ofFloat(endSize, strtSize);
+            decreaseAnimator.setDuration(animDuration);
+            view.setTextColor(requireActivity().getColor(R.color.setting_gray));
+
+            decreaseAnimator.addUpdateListener(animation -> {
+                view.setScaleX((float) animation.getAnimatedValue());
+                view.setScaleY((float) animation.getAnimatedValue());
+            });
+
+
+            decreaseAnimator.start();
+        }
+    }
+
+
 
 
 
@@ -310,6 +500,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         playExmplCheckBoxInitializer();
         playAgainCheckBoxInitializer();
         playNextUnitCheckBoxInitializer();
+        speedMeterPlayInitializer();
         displayTranslationsCheckBoxInitializer();
         farsiTranslationVisibilityMoreOptionsLayout();
         displayWordFarsiCheckBoxInitializer();
@@ -330,6 +521,27 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
     }
     private void playNextUnitCheckBoxInitializer(){
         plyNxtUnitCheckBox.setChecked(isPlyNxt());
+    }
+    private void speedMeterPlayInitializer(){
+        if (speedMeterVal() == 0.5f) {
+            speedMeterPreInitializer(tooSlowImgView, tooSlowTextView, 0.5f);
+        } else if (speedMeterVal() == 0.75f) {
+            speedMeterPreInitializer(slowImgView, slowTextView, 0.75f);
+        } else if (speedMeterVal() == 1.0f) {
+            speedMeterPreInitializer(normalImgView, normalTextView, 1.0f);
+        } else if (speedMeterVal() == 1.5f) {
+            speedMeterPreInitializer(fastImgView, fastTextView, 1.5f);
+        } else if (speedMeterVal() == 2.0f) {
+            speedMeterPreInitializer(tooFastImgView, tooFastTextView, 2.0f);
+        }
+    }
+    private void speedMeterPreInitializer(ImageView imageView, TextView textView, float speedVal){
+        speedViewsAnimation(imageView, null);
+        speedTextViewsAnimation(textView, null);
+
+        secondImageView = imageView;
+        secondTxtView = textView;
+        plySpeedValue = speedVal;
     }
     private void farsiTranslationVisibilityMoreOptionsLayout(){
         if (isAllTranslationDisplayed()){
@@ -360,6 +572,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         autoPlyEdit.putBoolean(plyExmplLKey, isExmplPlyCheckBox());
         autoPlyEdit.putBoolean(plyAgainKey, isPlyAgainCheckBox());
         autoPlyEdit.putBoolean(plyNxtUnitKey, isPlyNxtCheckBox());
+        autoPlyEdit.putFloat(speedPlayKey, plySpeedValue);
         autoPlyEdit.putBoolean(dsplyTrnsltKey, isAllTranslationDisplayedCheckBox());
         autoPlyEdit.putBoolean(dsplyWordKey, isWordShwCheckBox());
         autoPlyEdit.putBoolean(dsplyDefKey, isDefShwCheckBox());
@@ -401,6 +614,10 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         autoPlayAudioPreferences = requireActivity().getSharedPreferences(autoPlayAudioPreferencesName, Context.MODE_PRIVATE);
         return autoPlayAudioPreferences.getBoolean(plyNxtUnitKey, false);
     }
+    private float speedMeterVal(){
+        autoPlayAudioPreferences = requireActivity().getSharedPreferences(autoPlayAudioPreferencesName, Context.MODE_PRIVATE);
+        return autoPlayAudioPreferences.getFloat(speedPlayKey, 1.0f);
+    }
     private boolean isAllTranslationDisplayed(){
         autoPlayAudioPreferences = requireActivity().getSharedPreferences(autoPlayAudioPreferencesName, Context.MODE_PRIVATE);
         return autoPlayAudioPreferences.getBoolean(dsplyTrnsltKey, false);
@@ -417,9 +634,4 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         autoPlayAudioPreferences = requireActivity().getSharedPreferences(autoPlayAudioPreferencesName, Context.MODE_PRIVATE);
         return autoPlayAudioPreferences.getBoolean(dsplyExmplKey, false);
     }
-
-
-
-
-
 }

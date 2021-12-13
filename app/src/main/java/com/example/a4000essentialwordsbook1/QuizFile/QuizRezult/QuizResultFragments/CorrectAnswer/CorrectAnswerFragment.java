@@ -12,21 +12,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.CorrectModel;
 import com.example.a4000essentialwordsbook1.R;
 
 import java.util.ArrayList;
 
 public class CorrectAnswerFragment extends Fragment {
-    private final Context caContext;
-    private final ArrayList<CorrectModel> correctList;
+    private final ArrayList<WordModel> correctList;
     private RecyclerView correctRecyclerView;
     private final int[] dbInfoList;
+    private final String quizType;
 
-    public CorrectAnswerFragment(Context context, ArrayList<CorrectModel> list, int[] dbInfoList){
-        this.caContext = context;
+    public CorrectAnswerFragment(String quizType, ArrayList<WordModel> list, int[] dbInfoList){
         this.correctList = list;
         this.dbInfoList = dbInfoList;
+        this.quizType = quizType;
     }
 
     @Nullable
@@ -44,8 +45,8 @@ public class CorrectAnswerFragment extends Fragment {
     }
 
     public void recyclerViewValueSetter(View view){
-        RecyclerViewCorrectAnswer correctAnswerAdapter = new RecyclerViewCorrectAnswer(caContext, correctList, dbInfoList);
-        correctRecyclerView.setLayoutManager(new GridLayoutManager(caContext, 1));
+        RecyclerViewCorrectAnswer correctAnswerAdapter = new RecyclerViewCorrectAnswer(requireActivity(), quizType, correctList, dbInfoList);
+        correctRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 1));
         //correctAnswerAdapter.notifyDataSetChanged();
         correctRecyclerView.setAdapter(correctAnswerAdapter);
     }

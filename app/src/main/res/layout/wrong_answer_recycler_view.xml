@@ -9,7 +9,8 @@
     android:layout_gravity="center"
     android:layout_margin="@dimen/_2sdp"
     app:cardCornerRadius="@dimen/_8sdp"
-    app:cardElevation="@dimen/_8sdp">
+    app:cardElevation="@dimen/_8sdp"
+    android:theme="@style/Recycler.Item.CardView.Theme">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,8 +23,9 @@
             android:text="@string/afraid"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="@dimen/_30ssp"
-            android:layout_centerHorizontal="true" />
+            android:textSize="@dimen/_25ssp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"/>
 
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/wrong_tv_image_view"
@@ -35,7 +37,7 @@
             app:siRadius="@dimen/_8sdp"/>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -44,15 +46,17 @@
             android:layout_alignParentStart="true">
 
             <TextView
+                android:id="@+id/wrong_answer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_answer"
                 android:textColor="#F81A1A"
-                android:textStyle="italic"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="@dimen/_13ssp"
-                android:layout_marginStart="@dimen/_7sdp"/>
+                android:layout_marginStart="@dimen/_7sdp"
+                android:paddingStart="@dimen/_7sdp"
+                android:paddingEnd="@dimen/_7sdp"/>
 
             <TextView
                 android:id="@+id/user_wrong_answer"
@@ -63,59 +67,67 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="@dimen/_15ssp"
-                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_below="@+id/wrong_answer_text_view"
+                android:layout_alignStart="@+id/wrong_answer_text_view"
+                android:layout_alignEnd="@+id/wrong_answer_text_view"
                 android:layout_marginBottom="@dimen/_7sdp"/>
 
-        </LinearLayout>
-
+        </RelativeLayout>
 
 
         <Button
             android:id="@+id/wrong_book_image"
             android:layout_width="@dimen/_21sdp"
             android:layout_height="@dimen/_28sdp"
-            android:background="@drawable/ic_baseline_bookmark_border_24"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:layout_margin="@dimen/_7sdp"
-            android:contentDescription="@string/todo" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/ic_baseline_bookmark_border_24"
+            android:backgroundTint="?android:colorAccent"
+            android:contentDescription="@string/todo"
+            android:gravity="center" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <RelativeLayout
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
 
             <TextView
+                android:id="@+id/correct_answer_text_View"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:gravity="center"
                 android:text="@string/correct_answers"
                 android:textColor="#5EFB3C"
-                android:textStyle="italic"
-                android:textSize="@dimen/_13ssp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginEnd="@dimen/_7sdp"/>
+                android:textSize="@dimen/_13ssp" />
 
             <TextView
                 android:id="@+id/txt_wrong_correct_answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/correct_answer_text_View"
+                android:layout_alignStart="@+id/correct_answer_text_View"
+                android:layout_alignEnd="@+id/correct_answer_text_View"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:gravity="center"
                 android:text="@string/afraid_translate"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginEnd="@dimen/_7sdp"
-                android:layout_marginBottom="@dimen/_7sdp"/>
+                android:textSize="@dimen/_15ssp" />
 
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </RelativeLayout>
 
 
 

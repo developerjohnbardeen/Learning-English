@@ -5,22 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="bottom"
-    android:fitsSystemWindows="true">
+    android:layout_gravity="bottom">
 
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/slide_word_card_view_appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="?android:actionBarSize"
+        android:fitsSystemWindows="true">
 
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/slide_word_card_view_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
             app:layout_scrollFlags="noScroll"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
@@ -37,7 +35,7 @@
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_quiz_result_play_circle_outline_24"
+                    android:src="@drawable/ic_tool_bar_play_circle_filled_24"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_centerVertical="true"
@@ -88,7 +86,7 @@
                         android:gravity="center"
                         android:text="@string/back"
                         android:visibility="visible"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="?android:textColorPrimary"
                         android:textSize="@dimen/_13ssp" />
                 </RelativeLayout>
 
@@ -107,19 +105,21 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/unit"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="?android:textColorPrimary"
                         android:textSize="@dimen/_15sdp" />
 
                     <TextView
                         android:id="@+id/slide_word_card_view_unit_selected_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_toEndOf="@+id/slide_word_card_view_unit"
                         android:layout_alignTop="@+id/slide_word_card_view_unit"
                         android:layout_alignBottom="@+id/slide_word_card_view_unit"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_toEndOf="@+id/slide_word_card_view_unit"
                         android:gravity="center"
-                        android:text="@string/number" />
+                        android:text="@string/number"
+                        android:textSize="@dimen/_15ssp"
+                        android:textColor="?android:textColorPrimary" />
 
 
 
@@ -138,169 +138,363 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/slide_word_card_view_word_detailed_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_72sdp"
-        app:cardElevation="@dimen/_5sdp"
-        app:cardCornerRadius="@dimen/_7sdp"
-        android:layout_margin="@dimen/_7sdp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-        <RelativeLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/slide_word_card_view_word_detailed_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:theme="@style/Media.Player.CardView.Theme"
+            app:rippleColor="?rippleColor"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:animateLayoutChanges="true"
+            android:layout_below="@+id/easy_or_har_buttons_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_toStartOf="@+id/slide_word_detail_all_translate_btn">
-
-                <RelativeLayout
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:layout_toStartOf="@+id/slide_word_detail_marked_and_speed_meter"
+                    android:layout_below="@+id/slide_word_indicator_view_pager_container">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true">
+                        android:layout_height="wrap_content">
 
-                        <Button
-                            android:id="@+id/slide_word_easy_button"
+                        <com.jackandphantom.circularimageview.RoundedImage
+                            android:id="@+id/slide_word_detailed_card_ply_image"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:src="@drawable/mx_play_normal"
+                            android:layout_centerVertical="true"/>
+
+                        <SeekBar
+                            android:id="@+id/slide_word_detailed_music_seek_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Base.Widget.AppCompat.SeekBar"
+                            android:layout_toEndOf="@+id/slide_word_detailed_card_ply_image"
+                            android:layout_toStartOf="@+id/slide_word_detailed_progress_time_text"
+                            android:layout_centerVertical="true"/>
+
+
+                        <TextView
+                            android:id="@+id/slide_word_detailed_progress_time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:minWidth="0dp"
-                            android:minHeight="@dimen/_30sdp"
-                            android:text="@string/i_know"
+                            android:text="@string/default_time"
+                            android:textColor="?android:textColorPrimary"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="bold"
+                            android:layout_toStartOf="@+id/slide_word_detailed_divider_text"
                             android:layout_centerVertical="true"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/slide_word_detailed_divider_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textColor="?android:textColorPrimary"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:layout_toStartOf="@+id/slide_word_detailed_audio_total_time_text"
                             android:gravity="center"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_9sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:layout_marginBottom="@dimen/_2sdp"
-                            android:layout_marginStart="@dimen/_2sdp"
-                            android:backgroundTint="#55C305"
-                            android:stateListAnimator="@null"/>
-
-                        <Button
-                            android:id="@+id/slide_word_hard_button"
+                            android:text="@string/divide_1" />
+                        <TextView
+                            android:id="@+id/slide_word_detailed_audio_total_time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:minWidth="0dp"
-                            android:minHeight="@dimen/_30sdp"
-                            android:text="@string/need_to_review"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_9ssp"
+                            android:text="@string/default_time"
+                            android:textColor="?android:textColorPrimary"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="bold"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_2sdp"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:layout_marginBottom="@dimen/_2sdp"
                             android:layout_alignParentEnd="true"
-                            android:layout_toEndOf="@+id/slide_word_easy_button"
-                            android:backgroundTint="#FD4949"
-                            android:gravity="center"
-                            android:stateListAnimator="@null"/>
+                            android:gravity="center"/>
 
                     </RelativeLayout>
 
-                </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/slide_word_detail_marked_and_speed_meter"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_7sdp"
+                    app:cardElevation="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:contentDescription="@string/todo"
+                    app:rippleColor="?rippleColor"
+                    android:theme="@style/Custom.CardView_Button_functionality"
+                    android:layout_below="@id/slide_word_indicator_view_pager_container">
 
                     <com.jackandphantom.circularimageview.RoundedImage
-                        android:id="@+id/slide_word_detailed_card_ply_image"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:src="@drawable/mx_play_normal"
-                        android:layout_alignParentTop="true"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_baseline_swap_vert_24"
+                        app:rounded_radius="7"
+                        android:contentDescription="@string/todo"/>
 
-                    <SeekBar
-                        android:id="@+id/slide_word_detailed_music_seek_bar"
-                        android:layout_width="@dimen/_10sdp"
-                        android:layout_height="wrap_content"
-                        style="@style/Base.Widget.AppCompat.SeekBar"
-                        android:layout_toEndOf="@+id/slide_word_detailed_card_ply_image"
-                        android:layout_toStartOf="@+id/slide_word_detailed_progress_time_text"
-                        android:layout_centerVertical="true"/>
+                </com.google.android.material.card.MaterialCardView>
 
 
-                    <TextView
-                        android:id="@+id/slide_word_detailed_progress_time_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_time"
-                        android:textSize="@dimen/_9ssp"
-                        android:layout_toStartOf="@+id/slide_word_detailed_divider_text"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"/>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/slide_word_indicator_view_pager_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp">
 
-                    <TextView
-                        android:id="@+id/slide_word_detailed_divider_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/_9ssp"
-                        android:layout_toStartOf="@+id/slide_word_detailed_audio_total_time_text"
-                        android:gravity="center"
-                        android:text="@string/divide_1"/>
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/slide_word_indicator_view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_7sdp"
+                        app:tabIndicator="@drawable/line_indicator"
+                        app:tabIndicatorColor="?android:thumbTint"
+                        app:tabIconTint="?android:thumbTint"
+                        app:tabGravity="fill"
+                        android:layout_gravity="top"
+                        app:tabIndicatorGravity="top"
+                        android:visibility="visible" />
 
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:id="@+id/slide_word_detailed_audio_total_time_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_time"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/_9ssp"
-                        android:layout_alignParentEnd="true"
-                        android:gravity="center"/>
+        <RelativeLayout
+            android:id="@+id/easy_or_har_buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:visibility="gone">
 
-                </RelativeLayout>
-
-
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <ImageButton
-                android:id="@+id/slide_word_detail_all_translate_btn"
+            <Button
+                android:id="@+id/slide_word_easy_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:layout_marginBottom="@dimen/_3sdp"
-                android:backgroundTint="#D3CFCF"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_word_detailed_baseline_translate_24"
-                android:stateListAnimator="@null"
-                android:text="@string/translate_text"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="@dimen/_32sdp"
+                android:text="@string/i_know"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_9sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:backgroundTint="#55C305"
+                android:layout_toStartOf="@+id/speed_meter_image_view"
+                android:layout_alignParentStart="true"
+                android:stateListAnimator="@null"/>
+            <ImageView
+                android:id="@+id/speed_meter_image_view"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:src="@drawable/speed_normal_icon"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/todo"/>
+            <Button
+                android:id="@+id/slide_word_hard_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:minHeight="@dimen/_32sdp"
+                android:text="@string/need_to_review"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9ssp"
-                android:clickable="true"
-                android:focusable="true" />
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/slide_word_indicator_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_7sdp"
-                android:layout_alignParentBottom="true"
-                app:tabIndicator="@drawable/line_indicator"
-                app:tabIndicatorColor="#0FDD17"
-                app:tabGravity="fill"
-                android:layout_gravity="bottom"
-                app:tabIndicatorGravity="center"
-                android:visibility="visible"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_3sdp"/>
-
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/speed_meter_image_view"
+                android:backgroundTint="#FD4949"
+                android:gravity="center"
+                android:stateListAnimator="@null"/>
 
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/speed_meter_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_alignEnd="@+id/slide_word_card_view_word_detailed_container"
+            android:layout_alignStart="@+id/slide_word_card_view_word_detailed_container">
+
+            <ImageView
+                android:id="@+id/speed_normal_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/speed_normal_icon"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/speed_normal_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_normal_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_9ssp"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/mines10mdp"
+                android:layout_alignEnd="@+id/speed_normal_image_view"
+                android:layout_alignStart="@+id/speed_normal_image_view"
+                android:layout_below="@+id/speed_normal_image_view"/>
+
+            <ImageView
+                android:id="@+id/speed_very_slow_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/speed_too_slow_icon"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/speed_very_slow_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_too_slow_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_9ssp"
+                android:layout_marginTop="@dimen/mines7mdp"
+                android:gravity="center"
+                android:layout_alignEnd="@+id/speed_very_slow_image_view"
+                android:layout_alignStart="@+id/speed_very_slow_image_view"
+                android:layout_below="@+id/speed_very_slow_image_view"/>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/speed_very_slow_image_view"
+                android:layout_toStartOf="@+id/speed_normal_image_view"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/speed_slow_image_view"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/speed_slow_icon"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/todo"/>
+
+                <TextView
+                    android:id="@+id/speed_slow_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/speed_slow_str"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/_9ssp"
+                    android:layout_marginTop="@dimen/mines7mdp"
+                    android:gravity="center"
+                    android:layout_alignEnd="@+id/speed_slow_image_view"
+                    android:layout_alignStart="@+id/speed_slow_image_view"
+                    android:layout_below="@+id/speed_slow_image_view"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/speed_normal_image_view"
+                android:layout_toStartOf="@+id/speed_too_fast_image_view">
+
+                <ImageView
+                    android:id="@+id/speed_fast_image_view"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/speed_fast_icon"
+                    android:layout_alignParentTop="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/todo"/>
+
+                <TextView
+                    android:id="@+id/speed_fast_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/speed_fast_str"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/_9ssp"
+                    android:layout_marginTop="@dimen/mines7mdp"
+                    android:gravity="center"
+                    android:layout_alignEnd="@+id/speed_fast_image_view"
+                    android:layout_alignStart="@+id/speed_fast_image_view"
+                    android:layout_below="@+id/speed_fast_image_view"/>
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:id="@+id/speed_too_fast_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/speed_too_fast_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/speed_too_fast_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_too_fast_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_9ssp"
+                android:layout_marginTop="@dimen/mines7mdp"
+                android:gravity="center"
+                android:layout_alignEnd="@+id/speed_too_fast_image_view"
+                android:layout_alignStart="@+id/speed_too_fast_image_view"
+                android:layout_below="@+id/speed_too_fast_image_view"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

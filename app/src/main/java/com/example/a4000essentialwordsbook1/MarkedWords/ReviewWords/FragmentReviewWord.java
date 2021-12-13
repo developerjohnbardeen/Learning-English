@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +26,13 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.Linsteners.AudioPlayerListener;
+import com.example.a4000essentialwordsbook1.MarkedWords.RecyclerViewMarkedWords;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.EditedTranslationInterface;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AddNoteInterFace;
 import com.example.a4000essentialwordsbook1.SpannableString.TextViewBolder;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
@@ -35,12 +40,17 @@ import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.jackandphantom.circularimageview.CircleImage;
 import com.scwang.smartrefresh.header.material.CircleImageView;
 
+import java.io.File;
 
-public class FragmentReviewWord extends Fragment implements View.OnClickListener , EditedTranslationInterface {
+
+public class FragmentReviewWord extends Fragment implements View.OnClickListener ,
+        EditedTranslationInterface, AddNoteInterFace {
     private WordModel reviewModel;
     private CardView tenlstCardView, imgAndWordCardView;
     private CardView plyWordUsingCard;
     private ImageView plyWordUsingImage;
+    private CardView addedNoteCardView;
+    private TextView addedNoteTextView;
     private RoundedImageView tvImage;
     private LinearLayoutCompat imgLayout;
     private TextView txtWord, txtPhonetic, txtWordTranslate;
@@ -75,6 +85,8 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
     private final String perListPositionKey = SettingsPreferencesNotes.PERSIAN_LIST_POSITION_KEY;
     private final String txtViewSizeKey = SettingsPreferencesNotes.PERSIAN_TEXT_VIEW_SIZE_KEY;
     private final String engTxtViewSizeKey = SettingsPreferencesNotes.ENGLISH_TEXT_VIEW_SIZE_KEY;
+    private final String engTxtBolderKey = SettingsPreferencesNotes.ENGLISH_TEXT_BOLDER_KEY;
+    private final String perTxtBolderKey = SettingsPreferencesNotes.PERSIAN_TEXT_BOLDER_KEY;
 
     public static FragmentReviewWord newInstance(WordModel model, boolean[] shwFarsiFlags){
         FragmentReviewWord fragmentReviewWord = new FragmentReviewWord();
@@ -133,15 +145,18 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
         String translateExmpl = wordReviewList.getTranslateExmpl();
 
 
-        valuesSetter(image, id, word, phonetic, wordTranslate, definition,
+        valuesSetter(word, phonetic, wordTranslate, definition,
                 translateDef, example, translateExmpl);
 
     }
 
-    private void valuesSetter(int image, int id, String word, String phonetic,
+    private void valuesSetter(String word, String phonetic,
                               String wordTranslate, String definition, String translateDef,
                               String example, String translateExmpl){
-        tvImage.setImageResource(image);
+
+        //tvImage.setImageResource(image);
+        setImageResources(reviewModel);
+
         txtWord.setText(word);
         txtPhonetic.setText(phonetic);
         txtWordTranslate.setText(wordTranslate);
@@ -151,6 +166,34 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
         txtTranslateExmpl.setText(translateExmpl);
 
         stringBolder(txtDefinition, txtExample, definition , example, word);
+    }
+    private void setImageResources(WordModel model){
+        final String appPath = requireActivity().getApplicationInfo().dataDir;
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File imgMainPath = new File("Image Files");
+        final File wordImgPath = new File(imgMainPath, File.separator + "Word Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + model.getBookNum());
+        final File wordUnitImgBookPath = new File(wordImgBookPath, File.separator + "Unit_" + model.getUnitNum());
+
+        final File imgName = new File(wordUnitImgBookPath, File.separator + "." + new File(model.getImgUri()).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+            Glide.with(requireActivity())
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(tvImage);
+        }else {
+            Glide.with(requireActivity())
+                    .load(model.getImgUri())
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(tvImage);
+        }
     }
 
     private void stringBolder(TextView txtDefinition, TextView txtExample,
@@ -166,7 +209,6 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case (R.id.main_review_slide_word_detail_all_translate_btn):
             case (R.id.word_review_detailed_translate_btn):
                 translateTextViewVisibility();
                 break;
@@ -337,8 +379,6 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
     }
 
 
-
-
     public interface RemoveCardItem{
         void removeItem();
     }
@@ -380,6 +420,15 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
+        onResumeFunctions();
+    }
+    private void onResumeFunctions(){
+
+        addedNoteFunctions(reviewModel.getAddNote());
+
+        TextViewsSizeSetterFunctions();
+        textViewsValueSetterFunctions();
+
         textViewsVisibilityFunctions();
         displayTranslationFunctions();
     }
@@ -462,13 +511,12 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
         imgLayout = view.findViewById(R.id.profile_img_container);
         exampleRelativeLayout = view.findViewById(R.id.word_review_example_layout);
         definitionRelativeLayout = view.findViewById(R.id.word_review_definition_layout);
-        imgBtnTranslate = requireActivity().findViewById(R.id.main_review_slide_word_detail_all_translate_btn);
         imgAndWordCardView = view.findViewById(R.id.main_review_img_and_word_Card_View);
         imgTrnBtn = view.findViewById(R.id.word_review_detailed_translate_btn);
         imgLayout.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-        TextViewsSizeSetterFunctions();
-        textViewsValueSetterFunctions();
+        addedNoteCardView = view.findViewById(R.id.main_review_note_card_view);
+        addedNoteTextView = view.findViewById(R.id.main_review_note_detailed_text_view);
     }
     private void thisOnClickListener(){
         removeItemBtn.setOnClickListener(this);
@@ -478,7 +526,6 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
         txtExample.setOnClickListener(this);
         exampleRelativeLayout.setOnClickListener(this);
         definitionRelativeLayout.setOnClickListener(this);
-        imgBtnTranslate.setOnClickListener(this);
         tvImage.setOnClickListener(this);
         imgAndWordCardView.setOnClickListener(this);
     }
@@ -494,19 +541,35 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
         perTxtViewFontSetter();
     }
     private void engTxtViewFontSetter(){
-        txtWord.setTypeface(engTypeFace());
-        txtPhonetic.setTypeface(engTypeFace());
-        txtDefinition.setTypeface(engTypeFace());
-        txtExample.setTypeface(engTypeFace());
-        txtDefTitle.setTypeface(engTypeFace());
-        txtDefDivider.setTypeface(engTypeFace());
-        txtExmplTitle.setTypeface(engTypeFace());
-        txtExmplDivider.setTypeface(engTypeFace());
+        txtWord.setTypeface(engTypeFace(), engTextStyle());
+        txtPhonetic.setTypeface(engTypeFace(), engTextStyle());
+        txtDefinition.setTypeface(engTypeFace(), engTextStyle());
+        txtExample.setTypeface(engTypeFace(), engTextStyle());
+        txtDefTitle.setTypeface(engTypeFace(), engTextStyle());
+        txtDefDivider.setTypeface(engTypeFace(), engTextStyle());
+        txtExmplTitle.setTypeface(engTypeFace(), engTextStyle());
+        txtExmplDivider.setTypeface(engTypeFace(), engTextStyle());
     }
     private void perTxtViewFontSetter(){
-        txtWordTranslate.setTypeface(perTypeFace());
-        txtTranslateDef.setTypeface(perTypeFace());
-        txtTranslateExmpl.setTypeface(perTypeFace());
+        txtWordTranslate.setTypeface(perTypeFace(), perTextStyle());
+        txtTranslateDef.setTypeface(perTypeFace(), perTextStyle());
+        txtTranslateExmpl.setTypeface(perTypeFace(), perTextStyle());
+    }
+
+
+    private int engTextStyle(){
+     if (getEngBolderPreference()){
+         return Typeface.BOLD;
+     }else {
+         return Typeface.NORMAL;
+     }
+    }
+    private int perTextStyle(){
+        if (getPerBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
     }
 
 
@@ -546,11 +609,26 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
         txtTranslateExmpl.setTextSize(perTxtSize());
     }
 
+
+
     @Override
     public void translationEditor(String wrdTrnslt, String defTrnslt, String exmplTrnslt) {
         txtWordTranslate.setText(wrdTrnslt);
         txtTranslateDef.setText(defTrnslt);
         txtTranslateExmpl.setText(exmplTrnslt);
+    }
+    @Override
+    public void addNote(String note) {
+        addedNoteFunctions(note);
+    }
+    private void addedNoteFunctions(String note){
+        if (note != null && note.length() > 0) {
+            addedNoteCardView.setVisibility(View.VISIBLE);
+            addedNoteTextView.setText(note);
+        }else {
+            addedNoteCardView.setVisibility(View.GONE);
+            addedNoteTextView.setText("");
+        }
     }
 
 
@@ -592,4 +670,15 @@ public class FragmentReviewWord extends Fragment implements View.OnClickListener
         displayPreference = requireActivity().getSharedPreferences(displayTranslationsPreferencesName, Context.MODE_PRIVATE);
         return displayPreference.getBoolean(dsplyExmplKey, true);
     }
+
+    private boolean getEngBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(engTxtBolderKey, false);
+    }
+    private boolean getPerBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(perTxtBolderKey, false);
+    }
+
+
 }

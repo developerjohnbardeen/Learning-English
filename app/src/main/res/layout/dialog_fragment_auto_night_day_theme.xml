@@ -109,7 +109,7 @@
         android:layout_marginBottom="@dimen/_10sdp">
 
         <TextView
-            android:id="@+id/auto_night_mode_settings_button"
+            android:id="@+id/auto_night_mode_confirm_settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/confirmation"

@@ -2,6 +2,7 @@ package com.example.a4000essentialwordsbook1.SelectedUnitTab.StoryList.StoryWord
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -10,8 +11,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -26,6 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookOne;
@@ -45,6 +50,8 @@ import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -60,7 +67,7 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
     private final int tmLineMines = 80;
     private ExecutorService autoPlayThread;
     private MediaPlayer singleMediaPlayer;
-    private int plyAudio;
+    private String plyAudio;
     private boolean trnsltFlag = false;
     private final int startAnimationInt = 300;
     private final int endAnimationInt = 300;
@@ -90,6 +97,8 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
     private final String perListPositionKey = SettingsPreferencesNotes.PERSIAN_LIST_POSITION_KEY;
     private final String txtViewSizeKey = SettingsPreferencesNotes.PERSIAN_TEXT_VIEW_SIZE_KEY;
     private final String engTxtViewSizeKey = SettingsPreferencesNotes.ENGLISH_TEXT_VIEW_SIZE_KEY;
+    private final String engTxtBolderKey = SettingsPreferencesNotes.ENGLISH_TEXT_BOLDER_KEY;
+    private final String perTxtBolderKey = SettingsPreferencesNotes.PERSIAN_TEXT_BOLDER_KEY;
 
     public static StoryWordTouchedDialog newInstance(WordModel model, int[] dbInfoList){
         StoryWordTouchedDialog fragment = new StoryWordTouchedDialog();
@@ -421,9 +430,99 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
         plyAudioBtn = view.findViewById(R.id.word_pop_up_ply_audio_btn);
         translateBtn = view.findViewById(R.id.word_pop_up_translate_btn);
         cancelImg = view.findViewById(R.id.cancel_pop_up);
+
         textViewsValuesSetter();
+        textViewsValueSetterFunctions();
         thiDialogItemOnClickListener();
+
     }
+    private void textViewsValueSetterFunctions(){
+        TextViewsSizeSetterFunctions();
+        textViewsFontSetterFunctions();
+    }
+
+    private void textViewsFontSetterFunctions(){
+        engTxtViewFontSetter();
+        perTxtViewFontSetter();
+    }
+    private void engTxtViewFontSetter(){
+        word.setTypeface(engTypeFace(), engTextStyle());
+        wordPhonetic.setTypeface(engTypeFace(), engTextStyle());
+        definition.setTypeface(engTypeFace(), engTextStyle());
+        example.setTypeface(engTypeFace(), engTextStyle());
+        defTxtTv.setTypeface(engTypeFace(), engTextStyle());
+        exmplTXTTv.setTypeface(engTypeFace(), engTextStyle());
+    }
+    private int engTextStyle(){
+        if (getEngBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
+    }
+    private void perTxtViewFontSetter(){
+        wordTranslate.setTypeface(perTypeFace(), perTextStyle());
+        translateDefinition.setTypeface(perTypeFace(), perTextStyle());
+        translateExample.setTypeface(perTypeFace(), perTextStyle());
+    }
+    private int perTextStyle(){
+        if (getPerBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
+    }
+    private Typeface engTypeFace(){
+        return ResourcesCompat.getFont(requireActivity(), engFontFace());
+    }
+    private int engFontFace(){
+        return engFontList[engFontVal()];
+    }
+    private Typeface perTypeFace(){
+        return ResourcesCompat.getFont(requireActivity(), perFontFace());
+    }
+    private int perFontFace(){
+        return perFontList[perFontVal()];
+    }
+
+
+    private void TextViewsSizeSetterFunctions(){
+        engTxtSizeSetter();
+        perTxtSizeSetter();
+    }
+    private void engTxtSizeSetter(){
+        word.setTextSize(engTxtSize());
+        wordPhonetic.setTextSize(engTxtSize());
+        definition.setTextSize(engTxtSize());
+        example.setTextSize(engTxtSize());
+        defTxtTv.setTextSize(engTxtSize());
+        exmplTXTTv.setTextSize(engTxtSize());
+    }
+    private void perTxtSizeSetter(){
+        wordTranslate.setTextSize(perTxtSize());
+        translateDefinition.setTextSize(perTxtSize());
+        translateExample.setTextSize(perTxtSize());
+    }
+
+
+
+    private int engFontVal(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getInt(engListPositionKey, 1);
+    }
+    private int perFontVal(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getInt(perListPositionKey, 1);
+    }
+    private int engTxtSize(){
+        textSizePreferences = requireActivity().getSharedPreferences(textViewSizePreferencesName, Context.MODE_PRIVATE);
+        return textSizePreferences.getInt(engTxtViewSizeKey, 18);
+    }
+    private int perTxtSize(){
+        textSizePreferences = requireActivity().getSharedPreferences(textViewSizePreferencesName, Context.MODE_PRIVATE);
+        return textSizePreferences.getInt(txtViewSizeKey, 18);
+    }
+
 
     private void textViewsValuesSetter(){
         textViewsSizeSetter();
@@ -469,30 +568,11 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
         translateExample.setTypeface(perTypeFace());
     }
 
-    private Typeface engTypeFace(){return ResourcesCompat.getFont(requireActivity(), getEngFont());}
-    private Typeface perTypeFace(){return ResourcesCompat.getFont(requireActivity(), getPerFont());}
 
-    private int getEngFont(){return engFontList[engFontVal()];}
-    private int getPerFont(){return perFontList[perFontVal()];}
-
-    private int engFontVal(){
-        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
-        return fontTypePreferences.getInt(engListPositionKey, 1);
-    }
-    private int perFontVal(){
-        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
-        return fontTypePreferences.getInt(perListPositionKey, 1);
-    }
-
-    private int engTxtSize(){
-    textSizePreferences = requireActivity().getSharedPreferences(textViewSizePreferencesName, Context.MODE_PRIVATE);
-    return textSizePreferences.getInt(engTxtViewSizeKey, 18);}
-    private int perTxtSize(){
-    textSizePreferences = requireActivity().getSharedPreferences(textViewSizePreferencesName, Context.MODE_PRIVATE);
-    return textSizePreferences.getInt(txtViewSizeKey, 18);}
 
     private void setViewsValues(WordModel modelList){
-        wordImage.setImageResource(modelList.getWordImage());
+        //wordImage.setImageResource(modelList.getWordImage());
+        setImageResources();
         String txt = modelList.getWord();
         word.setText(txt);
         wordPhonetic.setText(modelList.getPhonetic());
@@ -501,6 +581,42 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
         wordTranslate.setText(modelList.getTranslateWord());
         translateDefinition.setText(modelList.getTranslateDef());
         translateExample.setText(modelList.getTranslateExmpl());
+    }
+    private void setImageResources(){
+        final String appPath = requireActivity().getApplicationInfo().dataDir;
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File imgMainPath = new File("Image Files");
+        final File wordImgPath = new File(imgMainPath, File.separator + "Word Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + dbInfoList[0]);
+        final File wordUnitImgBookPath = new File(wordImgBookPath, File.separator + "Unit_" + model.getUnitNum());
+
+        final File imgName = new File(wordUnitImgBookPath, File.separator + "." + new File(model.getImgUri()).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+
+            final float size = (float) (imgFile.length() / 1024);
+            DecimalFormat deci = new DecimalFormat("#.##");
+            final String outPut = (deci.format(size));
+
+
+            Toast.makeText(requireActivity(), "" + outPut, Toast.LENGTH_SHORT).show();
+
+            Glide.with(requireActivity())
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(wordImage);
+        }else {
+            Glide.with(requireActivity())
+                    .load(model.getImgUri())
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(wordImage);
+        }
     }
     private void thiDialogItemOnClickListener(){
         plyAudioBtn.setOnClickListener(this);
@@ -512,6 +628,7 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
 
 
 
+    @SuppressLint("Range")
     private void wordAudioReceiver(int dbNum, int unitNum){
         SQLiteDatabase db = unitListDatabase(dbNum).getReadableDatabase();
 
@@ -522,7 +639,7 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
 
         if (awCursor != null && awCursor.getCount() != 0){
             while (awCursor.moveToNext()){
-                plyAudio = awCursor.getInt(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
+                plyAudio = awCursor.getString(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
             }
             audioPlayers(plyAudio);
         }
@@ -546,6 +663,7 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
         }
     }
 
+    @SuppressLint("Range")
     private void wordDatabaseReceiver(int dbNum, int unitNum){
         if (unitNum == 0) {
             unitNum = 1;
@@ -564,27 +682,27 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
 
             while (cursor.moveToNext()){
 
-                int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                int imgWord = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                final String imgWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                final int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                final int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                final int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                final int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                final int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                final int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                final int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                final int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
                 //String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                final String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                final String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
 
 
                 model.setId(id);
-                model.setWordImage(imgWord);
+                model.setImgUri(imgWord);
                 model.setBookNum(bookIdNum);
                 model.setUnitNum(unitIdNum);
                 model.setWrdStart(wrdStart - tmLineMines);
@@ -623,8 +741,19 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
         }
     }
 
-    private void audioPlayers(int plyAudio){
-        singleMediaPlayer = MediaPlayer.create(requireActivity(), plyAudio);
+    private void audioPlayers(String plyAudio){
+        final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File audioMainPath = new File("Audio Files");
+        final File audioWordPath = new File(audioMainPath, File.separator + "Word Audios");
+
+
+        final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbInfoList[0]);
+        final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(plyAudio).getName());
+
+        final String plyPath = Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
+
+        singleMediaPlayer = MediaPlayer.create(requireActivity(), Uri.parse(plyPath));
     }
 
 
@@ -716,6 +845,15 @@ public class StoryWordTouchedDialog extends DialogFragment implements View.OnCli
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private boolean getEngBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(engTxtBolderKey, false);
+    }
+    private boolean getPerBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(perTxtBolderKey, false);
     }
 
 }

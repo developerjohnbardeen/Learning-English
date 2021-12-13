@@ -3,19 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_marked_word_appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_marked_word_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:layout_scrollFlags="noScroll"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -38,7 +38,7 @@
                     android:contentDescription="@string/todo"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_quiz_result_settings_24"
-                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                    android:background="?attr/selectableItemBackgroundBorderless" />
 
 
                 <ImageView
@@ -51,7 +51,7 @@
                     android:layout_marginBottom="@dimen/_3sdp"
                     android:contentDescription="@string/todo"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_quiz_result_play_circle_outline_24"
+                    android:src="@drawable/ic_tool_bar_play_circle_filled_24"
                     android:layout_toStartOf="@+id/main_marked_word_settings_launcher"
                     android:background="?attr/selectableItemBackgroundBorderless"/>
 
@@ -119,157 +119,339 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/main_review_marked_word_card_view_word_detailed_container"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        app:cardCornerRadius="@dimen/_10sdp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/main_review_marked_word_card_view_word_detailed_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_below="@+id/main_review_easy_hard_layout"
+            app:rippleColor="?rippleColor"
+            android:theme="@style/Custom.Material.CardView.Theme">
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/main_review_tab_layout_container_layout"
+                    android:layout_toStartOf="@+id/main_review_review_know_displayer_btn">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.jackandphantom.circularimageview.RoundedImage
+                            android:id="@+id/main_review_marked_word_detailed_card_ply_image"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:src="@drawable/mx_play_normal"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_centerVertical="true"/>
+
+                        <SeekBar
+                            android:id="@+id/main_review_marked_word_detailed_music_seek_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Base.Widget.AppCompat.SeekBar"
+                            android:layout_toStartOf="@+id/main_review_marked_word_progress_time_text"
+                            android:layout_toEndOf="@+id/main_review_marked_word_detailed_card_ply_image"
+                            android:layout_centerVertical="true"/>
+
+                        <TextView
+                            android:id="@+id/main_review_marked_word_progress_time_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/main_review_marked_word_word_detailed_divider_text"
+                            android:gravity="center"
+                            android:text="@string/default_time" />
+                        <TextView
+                            android:id="@+id/main_review_marked_word_word_detailed_divider_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/main_review_marked_word_audio_total_time_text"
+                            android:gravity="center"
+                            android:text="@string/divide_1"/>
+                        <TextView
+                            android:id="@+id/main_review_marked_word_audio_total_time_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/default_time"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:gravity="center"/>
+
+                    </RelativeLayout>
+
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/main_review_review_know_displayer_btn"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#D3CFCF"
+                    android:visibility="visible"
+                    app:cardCornerRadius="@dimen/_7sdp"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_baseline_swap_vert_24"
+                        android:contentDescription="@string/todo"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/main_review_tab_layout_container_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/main_review_marked_word_tab_indicator_view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_7sdp"
+                        app:tabIndicator="@drawable/line_indicator"
+                        app:tabIndicatorColor="#0FDD17"
+                        app:tabGravity="fill"
+                        android:layout_gravity="bottom"
+                        app:tabIndicatorGravity="top"
+                        android:visibility="visible"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <RelativeLayout
+            android:id="@+id/main_review_easy_hard_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_toStartOf="@+id/main_review_slide_word_detail_all_translate_btn">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/main_review_marked_word_hard_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minWidth="@dimen/_30sdp"
-                        android:minHeight="@dimen/_30sdp"
-                        android:text="@string/ask_me_again"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10ssp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:backgroundTint="#C7F856"
-                        android:layout_toStartOf="@+id/main_review_marked_word_easy_button"
-                        android:layout_alignParentStart="true"
-                        android:gravity="center"
-                        android:stateListAnimator="@null"/>
-
-                    <Button
-                        android:id="@+id/main_review_marked_word_easy_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minWidth="@dimen/_30sdp"
-                        android:minHeight="@dimen/_30sdp"
-                        android:gravity="center"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_centerVertical="true"
-                        android:text="@string/i_know"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10ssp"
-                        android:layout_alignParentEnd="true"
-                        android:backgroundTint="#55C305"
-                        android:stateListAnimator="@null" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.jackandphantom.circularimageview.RoundedImage
-                        android:id="@+id/main_review_marked_word_detailed_card_ply_image"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:src="@drawable/mx_play_normal"
-                        android:layout_centerVertical="true"/>
-
-                    <SeekBar
-                        android:id="@+id/main_review_marked_word_detailed_music_seek_bar"
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/main_review_marked_word_progress_time_text"
-                        style="@style/Base.Widget.AppCompat.SeekBar"
-                        android:layout_toEndOf="@+id/main_review_marked_word_detailed_card_ply_image"
-                        android:layout_centerVertical="true"/>
-
-
-                    <TextView
-                        android:id="@+id/main_review_marked_word_progress_time_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/main_review_marked_word_word_detailed_divider_text"
-                        android:gravity="center"
-                        android:text="@string/default_time" />
-
-                    <TextView
-                        android:id="@+id/main_review_marked_word_word_detailed_divider_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/main_review_marked_word_audio_total_time_text"
-                        android:gravity="center"
-                        android:text="@string/divide_1"/>
-
-
-                    <TextView
-                        android:id="@+id/main_review_marked_word_audio_total_time_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_time"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:gravity="center"/>
-
-
-                </RelativeLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
-
-            <ImageButton
-                android:id="@+id/main_review_slide_word_detail_all_translate_btn"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/main_review_marked_word_hard_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:layout_marginBottom="@dimen/_4sdp"
-                android:backgroundTint="#D3CFCF"
-                android:contentDescription="@string/todo"
-                android:src="@drawable/ic_word_detailed_baseline_translate_24"
-                android:stateListAnimator="@null"
-                android:text="@string/translate_text"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/_30sdp"
+                android:minHeight="@dimen/_30sdp"
+                android:text="@string/ask_me_again"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp"
-                android:visibility="gone"/>
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/main_review_marked_word_tab_indicator_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_7sdp"
-                app:tabIndicator="@drawable/line_indicator"
-                app:tabIndicatorColor="#0FDD17"
-                app:tabGravity="fill"
-                android:layout_gravity="bottom"
-                app:tabIndicatorGravity="top"
-                android:visibility="visible"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_3sdp"/>
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:backgroundTint="#C7F856"
+                android:layout_toStartOf="@+id/main_review_speed_meter_image_view"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:stateListAnimator="@null"/>
+
+            <ImageView
+                android:id="@+id/main_review_speed_meter_image_view"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:src="@drawable/speed_normal_icon"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/todo"/>
+
+            <Button
+                android:id="@+id/main_review_marked_word_easy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/_30sdp"
+                android:minHeight="@dimen/_30sdp"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/main_review_speed_meter_image_view"
+                android:text="@string/i_know"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="#55C305"
+                android:stateListAnimator="@null" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_review_speed_meter_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/main_review_speed_normal_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/speed_normal_icon"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/main_review_speed_normal_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_normal_str"
+                android:textSize="@dimen/_9ssp"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/mines10mdp"
+                android:layout_alignEnd="@+id/main_review_speed_normal_image_view"
+                android:layout_alignStart="@+id/main_review_speed_normal_image_view"
+                android:layout_below="@+id/main_review_speed_normal_image_view"/>
+
+            <ImageView
+                android:id="@+id/main_review_speed_very_slow_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/speed_too_slow_icon"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/main_review_speed_very_slow_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_too_slow_str"
+                android:textSize="@dimen/_9ssp"
+                android:layout_marginTop="@dimen/mines7mdp"
+                android:gravity="center"
+                android:layout_alignEnd="@+id/main_review_speed_very_slow_image_view"
+                android:layout_alignStart="@+id/main_review_speed_very_slow_image_view"
+                android:layout_below="@+id/main_review_speed_very_slow_image_view"/>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/main_review_speed_very_slow_image_view"
+                android:layout_toStartOf="@+id/main_review_speed_normal_image_view"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/main_review_speed_slow_image_view"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/speed_slow_icon"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/todo"/>
+
+                <TextView
+                    android:id="@+id/main_review_speed_slow_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/speed_slow_str"
+                    android:textSize="@dimen/_9ssp"
+                    android:layout_marginTop="@dimen/mines7mdp"
+                    android:gravity="center"
+                    android:layout_alignEnd="@+id/main_review_speed_slow_image_view"
+                    android:layout_alignStart="@+id/main_review_speed_slow_image_view"
+                    android:layout_below="@+id/main_review_speed_slow_image_view"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/main_review_speed_normal_image_view"
+                android:layout_toStartOf="@+id/main_review_speed_too_fast_image_view">
+
+                <ImageView
+                    android:id="@+id/main_review_speed_fast_image_view"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/speed_fast_icon"
+                    android:layout_alignParentTop="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/todo"/>
+
+                <TextView
+                    android:id="@+id/main_review_speed_fast_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/speed_fast_str"
+                    android:textSize="@dimen/_9ssp"
+                    android:layout_marginTop="@dimen/mines7mdp"
+                    android:gravity="center"
+                    android:layout_alignEnd="@+id/main_review_speed_fast_image_view"
+                    android:layout_alignStart="@+id/main_review_speed_fast_image_view"
+                    android:layout_below="@+id/main_review_speed_fast_image_view"/>
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:id="@+id/main_review_speed_too_fast_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/speed_too_fast_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/main_review_speed_too_fast_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_too_fast_str"
+                android:textSize="@dimen/_9ssp"
+                android:layout_marginTop="@dimen/mines7mdp"
+                android:gravity="center"
+                android:layout_alignEnd="@+id/main_review_speed_too_fast_image_view"
+                android:layout_alignStart="@+id/main_review_speed_too_fast_image_view"
+                android:layout_below="@+id/main_review_speed_too_fast_image_view"/>
 
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
 
+
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

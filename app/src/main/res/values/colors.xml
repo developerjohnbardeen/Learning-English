@@ -6,10 +6,206 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="textColor">#215144</color>
     <color name="setting_gray">#CC787878</color>
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="perColor">#FF23E8</color>
     <color name="settings_title_color">#286000</color>
+    <color name="background_color">#F0FDEC</color>
+
+
+    <color name="fullScreen_titleTextColor_light">#000</color>
+    <color name="fullScreen_androidWindowContentOverlay_light">@null</color>
+    <color name="fullScreen_colorPrimary_light">#009474</color>
+    <color name="fullScreen_androidColorPrimary_light">#009474</color>
+    <color name="fullScreen_androidBackgroundTint_light">#F2F6F6</color>
+    <color name="fullScreen_backgroundTint_light">#F2F6F6</color>
+    <color name="fullScreen_androidStatusBarColor_light">#00FFF5FF</color>
+    <color name="fullScreen_androidColorAccent_light">#018F8A</color>
+    <color name="fullScreen_colorAccent_light">#018F8A</color>
+    <color name="fullScreen_androidTextColor_light">#242727</color>
+    <color name="fullScreen_androidColorControlHighlight_light">#215144</color>
+    <color name="fullScreen_androidEditTextColor_light">#45215144</color>
+    <color name="fullScreen_actionMenuTextColor_light">#151515</color>
+    <color name="fullScreen_tabIndicatorColor_light">#2B2828</color>
+    <color name="fullScreen_tabSelectedTextColor_light">#22FCF3</color>
+    <color name="fullScreen_tabIconTint_light">#22FCF3</color>
+    <color name="fullScreen_tabRippleColor_light">#00C2BB</color>
+    <color name="fullScreen_androidExtColorSecondary_light">#008B86</color>
+
+    <color name="mediaPlayerCardView_androidBackgroundTint">#E9EDEC</color>
+    <color name="mediaPlayerCardView_backgroundColor">#F6FAF6</color>
+    <color name="mediaPlayerCardView_colorControlHighlight">#45215144</color>
+    <color name="mediaPlayerCardView_colorAccent">#215144</color>
+    <color name="mediaPlayerCardView_androidColorAccent">#009474</color>
+    <color name="mediaPlayerCardView_androidProgressTint">#00C9C1</color>
+    <color name="mediaPlayerCardView_androidThumbTint">#018F8A</color>
+    <color name="mediaPlayerCardView_androidProgressBackgroundTint">#17A59F</color>
+    <color name="mediaPlayerCardView_androidTextColor">#215144</color>
+    <color name="mediaPlayerCardView_androidTextColorPrimary">#2B2828</color>
+    <color name="mediaPlayerCardView_rippleColor">#45215144</color>
+    <color name="mediaPlayerCardView_itemRippleColor">#ffffff</color>
+    <color name="mediaPlayerCardView_tabIndicatorColor">#009474</color>
+    <color name="mediaPlayerCardView_tabSelectedTextColor">#009474</color>
+    <color name="mediaPlayerCardView_tabIconTint">#00C2BB</color>
+    <color name="mediaPlayerCardView_tabRippleColor">#008B86</color>
+
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+    <!--<color name=""></color>-->
+
+
+
+    titleTextColor
+    android:windowContentOverlay
+    colorPrimary
+    android:colorPrimary
+    android:backgroundTint
+    backgroundTint
+    android:statusBarColor
+    android:
+    android:colorAccent
+    colorAccent
+    android:
+    android:textColorPrimary
+    android:textColor
+    android:colorControlHighlight
+    android:editTextColor
+    actionMenuTextColor
+    tabIndicatorColor
+    tabSelectedTextColor
+    tabIconTint
+    tabRippleColor
+    android:textColorSecondary
+
+
 
     <color name="dum_color">#CCF1C2</color>
 

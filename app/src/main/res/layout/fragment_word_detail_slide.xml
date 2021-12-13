@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:minWidth="0dp"
     android:minHeight="0dp"
+    android:backgroundTint="?android:backgroundTint"
     android:layout_gravity="center"
     android:gravity="center">
 
@@ -18,22 +19,24 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             tools:ignore="UselessParent">
 
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/image_and_word_card_View"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_7sdp"
-                app:cardElevation="@dimen/_1sdp"
-                app:cardCornerRadius="@dimen/_7sdp"
                 android:clickable="true"
                 android:focusable="true"
-                android:backgroundTint="@color/dum_color"
-                android:foreground="?attr/selectableItemBackground">
+                app:rippleColor="?rippleColor"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="@dimen/_7sdp"
+                app:cardElevation="@dimen/_1sdp"
+                android:backgroundTint="#E1EFEA"
+                android:theme="@style/Custom.WordDetailed.Material.CardView.Theme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -44,23 +47,23 @@
                         android:id="@+id/word_image_detailed"
                         android:layout_width="@dimen/_120sdp"
                         android:layout_height="@dimen/_120sdp"
-                        android:layout_gravity="center|top"
                         android:layout_centerHorizontal="true"
-                        android:scaleType="centerCrop"
+                        android:layout_gravity="center|top"
                         android:layout_marginTop="10dp"
-                        app:siRadius="@dimen/_15sdp"
                         android:background="@color/fui_transparent"
-                        android:src="@drawable/peacock"
                         android:clickable="true"
-                        android:focusable="true" />
+                        android:focusable="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/peacock"
+                        app:siRadius="@dimen/_15sdp" />
 
                     <RelativeLayout
                         android:id="@+id/word_and_phonetic_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_below="@id/word_image_detailed"
                         android:layout_centerHorizontal="true"
-                        android:layout_below="@id/word_image_detailed">
+                        android:layout_marginTop="@dimen/_10sdp">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -72,15 +75,20 @@
                                 android:id="@+id/word_detailed"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/todo"/>
+                                android:text="@string/todo"
+                                android:textColor="?android:textColorPrimary"
+                                android:fontFamily="@font/calibril"
+                                android:gravity="center" />
+
                             <TextView
                                 android:id="@+id/word_detailed_phonetic"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/todo"
-                                android:layout_toEndOf="@id/word_detailed"
-                                android:layout_marginStart="10dp"/>
+                                android:textColor="?android:textColorPrimary"
+                                android:fontFamily="@font/calibril"
+                                android:layout_marginStart="10dp"
+                                android:layout_toEndOf="@id/word_detailed"/>
 
                         </RelativeLayout>
 
@@ -89,43 +97,44 @@
                             android:id="@+id/word_detailed_translate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/todo"
-                            android:visibility="invisible"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
                             android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:layout_marginBottom="@dimen/_20sdp"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
-                            android:focusable="true" />
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:text="@string/todo"
+                            android:textColor="?android:textColor"
+                            android:visibility="invisible" />
 
                         <ImageButton
                             android:id="@+id/word_detailed_translate_btn"
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:src="@drawable/ic_word_detailed_baseline_translate_24"
-                            android:contentDescription="@string/todo"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
-                            android:focusable="true" />
+                            android:contentDescription="@string/todo"
+                            android:focusable="true"
+                            android:src="@drawable/ic_word_detailed_baseline_translate_24" />
 
                     </RelativeLayout>
 
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/_90sdp"
-                android:fillViewport="true"
                 android:clickable="true"
+                android:fillViewport="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
@@ -135,186 +144,208 @@
                     android:layout_gravity="center"
                     android:gravity="top|center">
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/definition_slide_word_detailed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardElevation="2dp"
-                        app:cardCornerRadius="@dimen/_10sdp"
                         android:layout_margin="@dimen/_7sdp"
+                        android:theme="@style/Custom.WordDetailed.Material.CardView.Theme"
                         android:clickable="true"
                         android:focusable="true"
-                        android:padding="@dimen/_10sdp">
+                        app:rippleColor="?rippleColor"
+                        android:padding="@dimen/_10sdp"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="2dp">
 
                         <RelativeLayout
                             android:id="@+id/word_detailed_definition_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/_15sdp"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_15sdp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:foreground="?android:attr/selectableItemBackground">
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_15sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_15sdp">
 
                             <TextView
                                 android:id="@+id/word_detailed_def"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/word_text_definition"
+                                android:textColor="?android:textColorPrimary"
+                                android:fontFamily="@font/calibril"
                                 android:clickable="true"
-                                android:focusable="true" />
+                                android:focusable="true"/>
 
                             <TextView
                                 android:id="@+id/word_detailed_def_divider"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/word_divider"
-                                android:layout_toEndOf="@+id/word_detailed_def"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_toEndOf="@+id/word_detailed_def"
                                 android:clickable="true"
-                                android:focusable="true" />
+                                android:focusable="true"
+                                android:text="@string/word_divider"
+                                android:textColor="?android:textColorPrimary"/>
 
                             <TextView
                                 android:id="@+id/word_detailed_definition"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="start"
-                                android:text="@string/app_name"
                                 android:layout_toEndOf="@+id/word_detailed_def_divider"
                                 android:clickable="true"
-                                android:focusable="true"/>
+                                android:focusable="true"
+                                android:fontFamily="@font/calibril"
+                                android:gravity="start"
+                                android:text="@string/wise_defi"
+                                android:textColor="?android:textColorPrimary"/>
 
                             <TextView
                                 android:id="@+id/word_detailed_definition_translate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/app_name"
-                                android:gravity="center"
                                 android:layout_below="@+id/word_detailed_definition"
                                 android:layout_alignStart="@+id/word_detailed_definition"
                                 android:layout_alignEnd="@+id/word_detailed_definition"
-                                android:visibility="gone"
-                                android:paddingTop="@dimen/_10sdp"
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:clickable="true"
-                                android:focusable="true" />
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:text="@string/app_name"
+                                android:textColor="?android:textColor"
+                                android:visibility="gone" />
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/example_slide_word_detailed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardElevation="@dimen/_2sdp"
-                        app:cardCornerRadius="@dimen/_10sdp"
-                        android:layout_margin="@dimen/_7sdp"
                         android:layout_below="@+id/definition_slide_word_detailed"
+                        android:layout_margin="@dimen/_7sdp"
+                        android:theme="@style/Custom.WordDetailed.Material.CardView.Theme"
                         android:clickable="true"
-                        android:focusable="true">
+                        android:focusable="true"
+                        app:rippleColor="?rippleColor"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_2sdp">
 
                         <RelativeLayout
                             android:id="@+id/word_example_detailed_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/_15sdp"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_15sdp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:foreground="?attr/selectableItemBackground">
+                            android:foreground="?attr/selectableItemBackground"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_15sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_15sdp">
 
                             <TextView
                                 android:id="@+id/word_detailed_ex"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/word_text_example"
                                 android:clickable="true"
-                                android:focusable="true"/>
+                                android:focusable="true"
+                                android:text="@string/word_text_example"
+                                android:textColor="?android:textColorPrimary"/>
+
                             <TextView
                                 android:id="@+id/word_detailed_ex_divider"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/word_divider"
-                                android:layout_toEndOf="@+id/word_detailed_ex"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_toEndOf="@+id/word_detailed_ex"
                                 android:clickable="true"
-                                android:focusable="true" />
+                                android:focusable="true"
+                                android:text="@string/word_divider"
+                                android:textColor="?android:textColorPrimary"/>
+
                             <TextView
                                 android:id="@+id/word_detailed_example"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="@string/wise_exmpl"
+                                android:textColor="?android:textColorPrimary"
                                 android:layout_marginEnd="@dimen/_10sdp"
-                                android:gravity="start"
+                                android:fontFamily="@font/calibril"
                                 android:layout_toEndOf="@+id/word_detailed_ex_divider"
-                                android:text="@string/app_name"
                                 android:clickable="true"
-                                android:focusable="true"/>
+                                android:focusable="true"
+                                android:gravity="start"/>
 
 
                             <TextView
                                 android:id="@+id/word_detailed_example_translate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/app_name"
+                                android:layout_below="@+id/word_detailed_example"
+                                android:layout_alignStart="@+id/word_detailed_example"
+                                android:layout_alignEnd="@+id/word_detailed_example"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:layout_toEndOf="@+id/word_detailed_ex_divider"
-                                android:layout_below="@+id/word_detailed_example"
-                                android:layout_alignEnd="@+id/word_detailed_example"
-                                android:layout_alignStart="@+id/word_detailed_example"
-                                android:gravity="center"
-                                android:visibility="gone"
-                                android:paddingTop="@dimen/_10sdp"
                                 android:clickable="true"
-                                android:focusable="true"/>
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:text="@string/app_name"
+                                android:textColor="?android:textColor"
+                                android:visibility="gone" />
+
                         </RelativeLayout>
 
 
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/note_slide_word_detailed"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/note_slide_word_detailed_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardElevation="@dimen/_2sdp"
-                        app:cardCornerRadius="@dimen/_10sdp"
+                        android:layout_below="@+id/example_slide_word_detailed"
                         android:layout_margin="@dimen/_10sdp"
+                        android:theme="@style/Custom.WordDetailed.Material.CardView.Theme"
                         android:visibility="invisible"
-                        android:layout_below="@+id/example_slide_word_detailed">
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_2sdp">
+
                         <RelativeLayout
                             android:id="@+id/note_detailed_detailed_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/_10sdp"
                             android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp">
 
                             <TextView
-                                android:id="@+id/note_detailed_ex"
+                                android:id="@+id/note_added_detailed_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
                                 android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
                                 android:gravity="center"
-                                android:text="@string/word_text_example"/>
-
+                                android:text="@string/word_text_example"
+                                android:textColor="?android:textColor"/>
 
 
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                 </RelativeLayout>
-
 
 
             </ScrollView>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.core.widget.NestedScrollView>
 
 

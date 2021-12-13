@@ -5,6 +5,6 @@
     android:viewportWidth="100"
     android:viewportHeight="1000">
     <path
-        android:fillColor="#4CAF50"
+        android:fillColor="?tabIndicatorColor"
         android:pathData="M6,19h150v150H6z"/>
 </vector>

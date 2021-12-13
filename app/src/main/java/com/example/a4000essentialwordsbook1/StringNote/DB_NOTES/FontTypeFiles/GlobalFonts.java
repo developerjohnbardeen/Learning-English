@@ -33,15 +33,19 @@ public class GlobalFonts {
 
 
     public final static String[] engStringList =
-            {"Great Vibes", "Dope Style",
+            {"Gothic", "Calibril", "Segoeuil", "Baloo Da2", "Great Vibes", "Dope Style",
                     "myFrida Hollow", "myFrida Bold", "myFrida Bold Italic", "myFrida Hollow Italic", "myFrida Shadow Regular",
                     "Chingolo Pro", "Boom Box","Black Cancery", "Aqum", "Andieny", "Cupcakia"};
 
     public final static int[] engFontList = {
-            R.font.eng_greate_vibes_font, R.font.eng_dope_style_font,
+            R.font.gothica1_regular, R.font.calibril, R.font.segoeuil, R.font.baloo_da_2, R.font.eng_greate_vibes_font, R.font.eng_dope_style_font,
 
             R.font.eng_my_frida_hollow_font, R.font.eng_my_frida_bold_font, R.font.eng_my_frida_bold_italic_font, R.font.eng_my_frida_hollow_italic_font, R.font.eng_my_frida_shadow_regular_font,
 
             R.font.eng_chingolo_pro_font, R.font.eng_boom_box_font, R.font.eng_blackhancery_font,
             R.font.eng_aqum_font, R.font.eng_andi_font, R.font.eng_cupkacia_font};
+
+    public final static int engSize = engFontList.length;
+    public final static int perSize = perFontList.length;
+
 }

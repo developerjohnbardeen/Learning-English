@@ -2,6 +2,9 @@ package com.example.a4000essentialwordsbook1.SelectedBook;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.ActivitySelectedTab;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBook.ViewHolder>{
@@ -27,7 +31,7 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
     private final ArrayList<UnitModel> unitList;
     private final LayoutInflater inflater;
     private int itemPosition;
-    private int unitAudio;
+
     private final int dbNUm;
     private final String sDbNumber = ExtraNotes.DB_NUMBER;
     private final String sUnitNumber = ExtraNotes.UNIT_NUMBER;
@@ -56,18 +60,46 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
         itemPosition = holder.getLayoutPosition();
 
 
-        Glide.with(unitContext)
+/*        Glide.with(unitContext)
                 .load(model.getUnitImg())
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.loadimg)
                 .error(R.drawable.loadimg)
-                .into(holder.unitImg);
+                .into(holder.unitImg);*/
 
+        setImageResources(holder, model);
 
         String text = Integer.toString(model.getuId());
         holder.unitTtl.setText(model.getUnitTitle());
         holder.unitNum.setText(text);
-        unitAudio = model.getUnitAudio();
+    }
+
+    private void setImageResources(ViewHolder holder, UnitModel model){
+        final String appPath = unitContext.getApplicationInfo().dataDir;
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File imgMainPath = new File("Image Files");
+        final File wordImgPath = new File(imgMainPath, File.separator + "Unit Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + dbNUm);
+
+        final File imgName = new File(wordImgBookPath, File.separator + "." + new File(model.getUnitImg()).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+            Glide.with(unitContext)
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(holder.unitImg);
+        }else {
+            Glide.with(unitContext)
+                    .load(model.getUnitImg())
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(holder.unitImg);
+        }
     }
 
 

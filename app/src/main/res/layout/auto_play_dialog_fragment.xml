@@ -52,7 +52,10 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/auto_play_word_txt_View"
         android:layout_alignBottom="@+id/auto_play_word_txt_View"
-        android:gravity="end"
+        android:layout_alignEnd="@+id/auto_play_word_txt_View"
+        android:layout_alignStart="@+id/auto_play_example_check_box"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:gravity="center"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true">
 
@@ -67,12 +70,12 @@
             android:layout_alignTop="@+id/auto_play_definition_check_box"
             android:layout_alignBottom="@+id/auto_play_definition_check_box"
             android:gravity="center"/>
-
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/auto_play_definition_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginEnd="@dimen/_minus40sdp"
             android:checked="false"/>
 
 
@@ -100,13 +103,191 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginStart="@dimen/_20sdp"/>
 
+
+    <TextView
+        android:id="@+id/speed_meter_title_text_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auto_play_speed_str"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/_15ssp"
+        android:layout_toStartOf="@+id/auto_play_word_check_box"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/mines3mdp"
+        android:layout_marginEnd="@dimen/mines15mdp"
+        android:layout_below="@+id/auto_play_example_txt_View"/>
+
+    <RelativeLayout
+        android:id="@+id/dialog_auto_play_speed_meter_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:visibility="visible"
+        android:layout_below="@+id/speed_meter_title_text_View">
+
+
+        <ImageView
+            android:id="@+id/dialog_auto_play_speed_very_slow_image_view"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:padding="@dimen/_9sdp"
+            android:src="@drawable/speed_too_slow_icon"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/todo"/>
+        <TextView
+            android:id="@+id/auto_play_dialog_too_slow_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/speed_too_slow_str"
+            android:textColor="@color/setting_gray"
+            android:textSize="@dimen/_10ssp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/mines15mdp"
+            android:layout_marginStart="@dimen/_17sdp"
+            android:layout_below="@+id/dialog_auto_play_speed_very_slow_image_view"/>
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/dialog_auto_play_speed_slow_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/dialog_auto_play_speed_normal_image_view"
+            android:layout_toEndOf="@+id/dialog_auto_play_speed_very_slow_image_view"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/dialog_auto_play_speed_slow_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_9sdp"
+                android:src="@drawable/speed_slow_icon"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/auto_play_dialog_speed_slow_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_slow_str"
+                android:textColor="@color/setting_gray"
+                android:textSize="@dimen/_10ssp"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/mines15mdp"
+                android:layout_marginStart="@dimen/_13sdp"
+                android:layout_below="@+id/dialog_auto_play_speed_slow_image_view"/>
+
+        </RelativeLayout>
+
+
+
+        <ImageView
+            android:id="@+id/dialog_auto_play_speed_normal_image_view"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:padding="@dimen/_9sdp"
+            android:src="@drawable/speed_normal_icon"
+            android:layout_centerInParent="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/todo"/>
+        <TextView
+            android:id="@+id/dialog_auto_play_speed_normal_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/speed_normal_str"
+            android:textColor="@color/setting_gray"
+            android:textSize="@dimen/_10ssp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/mines15mdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_below="@+id/dialog_auto_play_speed_normal_image_view"/>
+
+
+
+        <RelativeLayout
+            android:id="@+id/auto_play_dialog_fast_icon_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dialog_auto_play_speed_normal_image_view"
+            android:layout_toStartOf="@+id/dialog_auto_play_speed_too_fast_image_view">
+
+            <ImageView
+                android:id="@+id/dialog_auto_play_speed_fast_image_view"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_9sdp"
+                android:src="@drawable/speed_fast_icon"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/todo"/>
+            <TextView
+                android:id="@+id/dialog_auto_play_speed_fast_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_fast_str"
+                android:textColor="@color/setting_gray"
+                android:textSize="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/mines15mdp"
+                android:layout_below="@+id/dialog_auto_play_speed_fast_image_view"
+                android:layout_alignEnd="@+id/dialog_auto_play_speed_fast_image_view"
+                android:layout_alignStart="@+id/dialog_auto_play_speed_fast_image_view"
+                android:gravity="center"/>
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/dialog_auto_play_speed_too_fast_image_view"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:padding="@dimen/_9sdp"
+            android:src="@drawable/speed_too_fast_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_13sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/todo"/>
+        <TextView
+            android:id="@+id/dialog_auto_play_speed_too_fast_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/speed_too_fast_str"
+            android:textColor="@color/setting_gray"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/mines15mdp"
+            android:layout_marginEnd="@dimen/_19sdp"
+            android:layout_below="@+id/dialog_auto_play_speed_too_fast_image_view"
+            android:layout_alignParentEnd="true"/>
+
+
+
+    </RelativeLayout>
+
+
+
     <View
         android:id="@+id/auto_play_dialog_divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/_3sdp"
         android:layout_margin="@dimen/_8sdp"
-        android:layout_below="@+id/auto_play_word_check_box"
-        android:background="@color/gary"/>
+        android:layout_below="@+id/dialog_auto_play_speed_meter_main_layout"
+        android:backgroundTint="?android:textColorPrimary"/>
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -144,7 +325,8 @@
         <RelativeLayout
             android:id="@+id/play_next_unit_dialog_child_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/play_next_unit_check_box"
                 android:layout_width="wrap_content"

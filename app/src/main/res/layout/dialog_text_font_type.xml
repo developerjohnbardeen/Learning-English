@@ -105,6 +105,46 @@
     </RelativeLayout>
 
 
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/english_check_box_bolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_below="@+id/font_picker_type_layout"/>
+    <TextView
+        android:id="@+id/english_text_view_bolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eng_text_bolder_str"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_toStartOf="@+id/english_check_box_bolder"
+        android:layout_alignTop="@+id/english_check_box_bolder"
+        android:layout_alignBottom="@+id/english_check_box_bolder"/>
+
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/persian_check_box_bolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_below="@+id/english_check_box_bolder"/>
+    <TextView
+        android:id="@+id/persian_text_view_bolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/per_text_bolder_str"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_toStartOf="@+id/persian_check_box_bolder"
+        android:layout_alignTop="@+id/persian_check_box_bolder"
+        android:layout_alignBottom="@+id/persian_check_box_bolder"/>
+
+
 
     <RelativeLayout
         android:id="@+id/story_font_type_confirm_reject_layout"
@@ -112,7 +152,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/reject_confirm_margin_top"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_below="@id/font_picker_type_layout">
+        android:layout_below="@id/persian_text_view_bolder">
 
         <TextView
             android:id="@+id/story_font_type_confirmation_settings_button"

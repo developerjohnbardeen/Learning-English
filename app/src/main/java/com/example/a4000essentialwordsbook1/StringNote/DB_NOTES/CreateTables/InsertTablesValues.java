@@ -26,6 +26,7 @@ public class InsertTablesValues {
     public static final String DEF_END = DB_NOTES.DEF_END;
     public static final String EXMPL_START = DB_NOTES.EXMPL_START;
     public static final String EXMPL_END = DB_NOTES.EXMPL_END;
+    public static final String EXTRA_NOTE = DB_NOTES.EXTRA_NOTE;
 
 
     public static final String WORD_TABLE_1 = DB_NOTES.WORD_TABLE_1;
@@ -59,14 +60,13 @@ public class InsertTablesValues {
     public static final String WORD_TABLE_29 = DB_NOTES.WORD_TABLE_29;
     public static final String WORD_TABLE_30 = DB_NOTES.WORD_TABLE_30;
 
-    public void insertAllWordTables_1(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_1(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -84,18 +84,18 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_1, null, unitOneValue);
     }
 
 
-    public void insertAllWordTables_2(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_2(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitTwoValue = new ContentValues();
         unitTwoValue.put(WORD_IMG, imgWord);
-        unitTwoValue.put(AUDIO_WORD, audio);
         unitTwoValue.put(HARD_FLAG, hardFlag);
         unitTwoValue.put(EASY_FLAG, easyFlag);
         unitTwoValue.put(BOOK_NUMBER, bookNum);
@@ -113,17 +113,17 @@ public class InsertTablesValues {
         unitTwoValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitTwoValue.put(EXAMPLE_WORD, example);
         unitTwoValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitTwoValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_2, null, unitTwoValue);
     }
 
-    public void insertAllWordTables_3(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_3(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -141,17 +141,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_3, null, unitOneValue);
     }
 
-    public void insertAllWordTables_4(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_4(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -169,17 +169,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_4, null, unitOneValue);
     }
 
-    public void insertAllWordTables_5(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_5(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -197,17 +197,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_5, null, unitOneValue);
     }
 
-    public void insertAllWordTables_6(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_6(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -225,17 +225,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_6, null, unitOneValue);
     }
 
-    public void insertAllWordTables_7(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_7(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -253,17 +253,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_7, null, unitOneValue);
     }
 
-    public void insertAllWordTables_8(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_8(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -281,17 +281,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_8, null, unitOneValue);
     }
 
-    public void insertAllWordTables_9(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_9(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                       int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                       String word, String phonetic, String wordTranslate,
-                                      String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                      String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -309,17 +309,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_9, null, unitOneValue);
     }
 
-    public void insertAllWordTables_10(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_10(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -337,17 +337,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_10, null, unitOneValue);
     }
 
-    public void insertAllWordTables_11(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_11(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -365,17 +365,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_11, null, unitOneValue);
     }
 
-    public void insertAllWordTables_12(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_12(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -393,17 +393,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_12, null, unitOneValue);
     }
 
-    public void insertAllWordTables_13(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_13(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -421,17 +421,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_13, null, unitOneValue);
     }
 
-    public void insertAllWordTables_14(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_14(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -449,17 +449,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_14, null, unitOneValue);
     }
 
-    public void insertAllWordTables_15(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_15(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -477,17 +477,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_15, null, unitOneValue);
     }
 
-    public void insertAllWordTables_16(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_16(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -505,17 +505,18 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_16, null, unitOneValue);
     }
 
-    public void insertAllWordTables_17(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_17(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
+
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -533,17 +534,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_17, null, unitOneValue);
     }
 
-    public void insertAllWordTables_18(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_18(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -561,17 +562,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_18, null, unitOneValue);
     }
 
-    public void insertAllWordTables_19(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_19(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -589,17 +590,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_19, null, unitOneValue);
     }
 
-    public void insertAllWordTables_20(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_20(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -617,17 +618,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_20, null, unitOneValue);
     }
 
-    public void insertAllWordTables_21(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_21(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -645,17 +646,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_21, null, unitOneValue);
     }
 
-    public void insertAllWordTables_22(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_22(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -673,17 +674,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_22, null, unitOneValue);
     }
 
-    public void insertAllWordTables_23(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_23(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -701,17 +702,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_23, null, unitOneValue);
     }
 
-    public void insertAllWordTables_24(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_24(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -729,17 +730,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_24, null, unitOneValue);
     }
 
-    public void insertAllWordTables_25(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_25(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -757,17 +758,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_25, null, unitOneValue);
     }
 
-    public void insertAllWordTables_26(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_26(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -785,17 +786,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_26, null, unitOneValue);
     }
 
-    public void insertAllWordTables_27(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_27(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -813,17 +814,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_27, null, unitOneValue);
     }
 
-    public void insertAllWordTables_28(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_28(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -841,17 +842,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_28, null, unitOneValue);
     }
 
-    public void insertAllWordTables_29(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_29(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitOneValue = new ContentValues();
         unitOneValue.put(WORD_IMG, imgWord);
-        unitOneValue.put(AUDIO_WORD, audio);
         unitOneValue.put(HARD_FLAG, hardFlag);
         unitOneValue.put(EASY_FLAG, easyFlag);
         unitOneValue.put(BOOK_NUMBER, bookNum);
@@ -869,17 +870,17 @@ public class InsertTablesValues {
         unitOneValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitOneValue.put(EXAMPLE_WORD, example);
         unitOneValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitOneValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_29, null, unitOneValue);
     }
 
-    public void insertAllWordTables_30(SQLiteDatabase db, int imgWord, int audio, int hardFlag, int easyFlag, int bookNum, int unitNum,
+    public void insertAllWordTables_30(SQLiteDatabase db, String imgWord, int hardFlag, int easyFlag, int bookNum, int unitNum,
                                        int wrdStart, int wrdEnd, int defStart, int defEnd, int exmplStart, int exmplEndl,
                                        String word, String phonetic, String wordTranslate,
-                                       String definition, String definitionTranslate, String example, String exmplTranslate) {
+                                       String definition, String definitionTranslate, String example, String exmplTranslate, String extraNote) {
 
         ContentValues unitThirtyValue = new ContentValues();
         unitThirtyValue.put(WORD_IMG, imgWord);
-        unitThirtyValue.put(AUDIO_WORD, audio);
         unitThirtyValue.put(HARD_FLAG, hardFlag);
         unitThirtyValue.put(EASY_FLAG, easyFlag);
         unitThirtyValue.put(BOOK_NUMBER, bookNum);
@@ -897,6 +898,7 @@ public class InsertTablesValues {
         unitThirtyValue.put(DEFINITION_TRANSLATE_WORD, definitionTranslate);
         unitThirtyValue.put(EXAMPLE_WORD, example);
         unitThirtyValue.put(EXAMPLE_TRANSLATE_WORD, exmplTranslate);
+        unitThirtyValue.put(EXTRA_NOTE, extraNote);
         db.insert(WORD_TABLE_30, null, unitThirtyValue);
     }
 

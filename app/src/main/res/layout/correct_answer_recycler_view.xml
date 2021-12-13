@@ -7,7 +7,8 @@
     android:layout_gravity="center"
     android:layout_margin="@dimen/_2sdp"
     app:cardCornerRadius="@dimen/_7sdp"
-    app:cardElevation="@dimen/_7sdp">
+    app:cardElevation="@dimen/_7sdp"
+    android:theme="@style/Recycler.Item.CardView.Theme">
 
     <RelativeLayout
         android:layout_width="match_parent"

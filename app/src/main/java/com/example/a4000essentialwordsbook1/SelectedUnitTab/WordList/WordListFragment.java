@@ -1,6 +1,7 @@
 package com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -126,6 +127,7 @@ public class WordListFragment extends Fragment{
             });
         });
     }
+    @SuppressLint("Range")
     private void WordListDataReceiver(){
         if (unitNum == 0){
             unitNum = 1;
@@ -135,7 +137,8 @@ public class WordListFragment extends Fragment{
 
         Cursor cursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitNum,
                 new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD ,DB_NOTES.TRANSLATE_WORD ,
-                        DB_NOTES.DEFINITION_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.AUDIO_WORD},
+                        DB_NOTES.DEFINITION_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD
+                        , DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER},
                 null, null, null, null, null);
 
 
@@ -144,19 +147,21 @@ public class WordListFragment extends Fragment{
 
                 WordModel listModel =  new WordModel();
 
-                int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                int wordImg = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
-                String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                final String wordImg = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                final int dbNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                final int unitNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                final String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                final String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
 
                 listModel.setId(id);
-                listModel.setWordImage(wordImg);
-                listModel.setAudio(audio);
+                listModel.setImgUri(wordImg);
+                listModel.setBookNum(dbNum);
+                listModel.setUnitNum(unitNum);
                 listModel.setWord(word);
                 listModel.setPhonetic(phonetic);
                 listModel.setTranslateWord(translate_word);
@@ -190,6 +195,8 @@ public class WordListFragment extends Fragment{
     public void onPause() {
         super.onPause();
     }
+
+
 
     @Override
     public void onStop() {

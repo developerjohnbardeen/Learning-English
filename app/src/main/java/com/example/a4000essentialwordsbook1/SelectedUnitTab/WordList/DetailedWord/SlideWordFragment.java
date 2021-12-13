@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,26 +22,31 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.Linsteners.AudioPlayerListener;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.DisplayTranslationInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.EditedTranslationInterface;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AddNoteInterFace;
 import com.example.a4000essentialwordsbook1.SpannableString.TextViewBolder;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import java.io.File;
 import java.util.ArrayList;
 
 
-public class SlideWordFragment extends Fragment implements View.OnClickListener, EditedTranslationInterface, DisplayTranslationInterface {
+public class SlideWordFragment extends Fragment implements View.OnClickListener,
+        EditedTranslationInterface, DisplayTranslationInterface, AddNoteInterFace {
 
 
     private WordModel modelList;
     private final int startAnimationInt = 300;
     private final int endAnimationInt = 300;
     private ImageView imageWord;
-    private ImageButton trnsltBtn;
     private CardView plyWordUingCardView, plyDefUingCardView, plyExmplUingCardView;
+    private CardView addedNoteCardView;
+    private TextView addedNoteTextView;
     private TextView definition, translateDefinition,
             example, translateExample, word, wordPhonetic, wordTranslate, defDivider;
     private RelativeLayout defRelLayout, exmplRelLayout;
@@ -72,9 +79,12 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
     private final String perListPositionKey = SettingsPreferencesNotes.PERSIAN_LIST_POSITION_KEY;
     private final String txtViewSizeKey = SettingsPreferencesNotes.PERSIAN_TEXT_VIEW_SIZE_KEY;
     private final String engTxtViewSizeKey = SettingsPreferencesNotes.ENGLISH_TEXT_VIEW_SIZE_KEY;
+    private final String engTxtBolderKey = SettingsPreferencesNotes.ENGLISH_TEXT_BOLDER_KEY;
+    private final String perTxtBolderKey = SettingsPreferencesNotes.PERSIAN_TEXT_BOLDER_KEY;
 
     private SharedPreferences autoPlayAudioPreferences;
     private final String autoPlayAudioPreferencesName = SettingsPreferencesNotes.AUTO_PLAY_AUDIO_DETAILED_WORD_PREFERENCES;
+    private final String plySpeedKey = SettingsPreferencesNotes.SPEED_PLAY_KEY;
     private final String plyWordKey = SettingsPreferencesNotes.PLAY_DETAILED_WORD_KEY;
     private final String plyDefKey = SettingsPreferencesNotes.PLAY_DETAILED_DEFINITION_WORD_KEY;
     private final String plyExmplLKey = SettingsPreferencesNotes.PLAY_DETAILED_EXAMPLE_WORD_KEY;
@@ -142,6 +152,20 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
+    public void addNote(String note) {
+        addedNoteFunctions(note);
+    }
+    private void addedNoteFunctions(String note){
+        if (note != null && note.length() > 0) {
+            addedNoteCardView.setVisibility(View.VISIBLE);
+            addedNoteTextView.setText(note);
+        }else {
+            addedNoteCardView.setVisibility(View.GONE);
+            addedNoteTextView.setText("");
+        }
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         Activity activity = (Activity) context;
@@ -187,8 +211,35 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
 
 
     private void viewsValuesSetter(WordModel list){
+        final String appPath = requireActivity().getApplicationInfo().dataDir;
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
 
-        imageWord.setImageResource(list.getWordImage());
+        final File imgMainPath = new File("Image Files");
+        final File wordImgPath = new File(imgMainPath, File.separator + "Word Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + modelList.getBookNum());
+        final File wordUnitImgBookPath = new File(wordImgBookPath, File.separator + "Unit_" + modelList.getUnitNum());
+
+        final File imgName = new File(wordUnitImgBookPath, File.separator + "." + new File(modelList.getImgUri()).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+            Glide.with(requireActivity())
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(imageWord);
+        }else {
+            Glide.with(requireActivity())
+                    .load(list.getImgUri())
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(imageWord);
+        }
+
+
+        //imageWord.setImageResource(list.getWordImage());
         word.setText(list.getWord());
         wordPhonetic.setText(list.getPhonetic());
         wordTranslate.setText(list.getTranslateWord());
@@ -382,10 +433,13 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onResume() {
         super.onResume();
+        onResumeFunctions();
+    }
+    private void onResumeFunctions(){
         textViewsVisibilityFunctions();
         displayTranslationFunctions();
+        thisOnClick();
     }
-
     private void displayTranslationFunctions(){
         if (shwAtAll) {
             if (shwWordFlag) {
@@ -455,19 +509,22 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
         example = view.findViewById(R.id.word_detailed_example);
         exmplTitle = view.findViewById(R.id.word_detailed_ex);
         translateExample = view.findViewById(R.id.word_detailed_example_translate);
-        trnsltBtn = requireActivity().findViewById(R.id.slide_word_detail_all_translate_btn);
+        //trnsltBtn = requireActivity().findViewById(R.id.slide_word_detail_all_translate_btn);
         imgTrnBtn = view.findViewById(R.id.word_detailed_translate_btn);
         plyWordUingCardView = view.findViewById(R.id.image_and_word_card_View);
         plyDefUingCardView = view.findViewById(R.id.definition_slide_word_detailed);
         plyExmplUingCardView = view.findViewById(R.id.example_slide_word_detailed);
         defRelLayout = view.findViewById(R.id.word_detailed_definition_layout);
+        addedNoteCardView = view.findViewById(R.id.note_slide_word_detailed_card_view);
+        addedNoteTextView = view.findViewById(R.id.note_added_detailed_text_view);//added note
         exmplRelLayout = view.findViewById(R.id.word_example_detailed_layout);
+        addedNoteFunctions(modelList.getAddNote());
         textViewsValueSetterFunctions();
-        thisOnClick();
+
     }
+
     private void thisOnClick(){
         imgTrnBtn.setOnClickListener(this);
-        trnsltBtn.setOnClickListener(this);
         wordTranslate.setOnClickListener(this);
         plyWordUingCardView.setOnClickListener(this);
         plyDefUingCardView.setOnClickListener(this);
@@ -477,7 +534,6 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
         example.setOnClickListener(this);
         translateExample.setOnClickListener(this);
         imageWord.setOnClickListener(this);
-
         imageWord.setOnClickListener(this);
         word.setOnClickListener(this);
         wordPhonetic.setOnClickListener(this);
@@ -489,7 +545,6 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
         example.setOnClickListener(this);
         exmplTitle.setOnClickListener(this);
         translateExample.setOnClickListener(this);
-        trnsltBtn.setOnClickListener(this);
         imgTrnBtn.setOnClickListener(this);
         plyWordUingCardView.setOnClickListener(this);
         plyDefUingCardView.setOnClickListener(this);
@@ -500,8 +555,8 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
 
 
     private void textViewsValueSetterFunctions(){
-        textViewsFontSetterFunctions();
         TextViewsSizeSetterFunctions();
+        textViewsFontSetterFunctions();
     }
 
     private void textViewsFontSetterFunctions(){
@@ -509,19 +564,33 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
         perTxtViewFontSetter();
     }
     private void engTxtViewFontSetter(){
-        word.setTypeface(engTypeFace());
-        wordPhonetic.setTypeface(engTypeFace());
-        definition.setTypeface(engTypeFace());
-        example.setTypeface(engTypeFace());
-        defTitle.setTypeface(engTypeFace());
-        exmplTitle.setTypeface(engTypeFace());
+        word.setTypeface(engTypeFace(), engTextStyle());
+        wordPhonetic.setTypeface(engTypeFace(), engTextStyle());
+        definition.setTypeface(engTypeFace(), engTextStyle());
+        example.setTypeface(engTypeFace(), engTextStyle());
+        defTitle.setTypeface(engTypeFace(), engTextStyle());
+        exmplTitle.setTypeface(engTypeFace(), engTextStyle());
+    }
+    private int engTextStyle(){
+        if (getEngBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
     }
     private void perTxtViewFontSetter(){
-        wordTranslate.setTypeface(perTypeFace());
-        translateDefinition.setTypeface(perTypeFace());
-        translateExample.setTypeface(perTypeFace());
+        wordTranslate.setTypeface(perTypeFace(), perTextStyle());
+        translateDefinition.setTypeface(perTypeFace(), perTextStyle());
+        translateExample.setTypeface(perTypeFace(), perTextStyle());
+        addedNoteTextView.setTypeface(perTypeFace(), perTextStyle());
     }
-
+    private int perTextStyle(){
+        if (getPerBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
+    }
     private Typeface engTypeFace(){
         return ResourcesCompat.getFont(requireActivity(), engFontFace());
     }
@@ -552,6 +621,7 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
         wordTranslate.setTextSize(perTxtSize());
         translateDefinition.setTextSize(perTxtSize());
         translateExample.setTextSize(perTxtSize());
+        addedNoteTextView.setTextSize(perTxtSize());
     }
 
 
@@ -574,6 +644,14 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
     }
 
 
+    private boolean getEngBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(engTxtBolderKey, false);
+    }
+    private boolean getPerBolderPreference(){
+        fontTypePreferences = requireActivity().getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(perTxtBolderKey, false);
+    }
 
 
 
@@ -597,5 +675,4 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
         displayPreference = requireActivity().getSharedPreferences(displayTranslationsPreferencesName, Context.MODE_PRIVATE);
         return displayPreference.getBoolean(dsplyExmplKey, true);
     }
-
 }

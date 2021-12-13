@@ -23,7 +23,7 @@ public class SettingsStoryTextSizeDialogFragment extends DialogFragment implemen
     private TextView storySampleTextView;
     private int stryIntSize;
 
-    SharedPreferences storyTextSizePreferences;
+    private SharedPreferences storyTextSizePreferences;
     private final String storyTextSizePreferencesName = SettingsPreferencesNotes.SETTINGS_STORY_TEXT_VIEW_SIZE_PREFERENCES;
     private final String storyTextSizeKey = SettingsPreferencesNotes.STORY_TEXT_VIEW_SIZE_KEY;
 

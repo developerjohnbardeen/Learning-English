@@ -13,6 +13,7 @@ public class CreateTablesBluePrint {
     public static final String DEFINITION_TRANSLATE_WORD = DB_NOTES.DEFINITION_TRANSLATE_WORD;
     public static final String EXAMPLE_WORD = DB_NOTES.EXAMPLE_WORD;
     public static final String EXAMPLE_TRANSLATE_WORD = DB_NOTES.EXAMPLE_TRANSLATE_WORD;
+    public static final String EXTRA_NOTE = DB_NOTES.EXTRA_NOTE;
     public static final String HARD_FLAG = DB_NOTES.HARD_FLAG;
     public static final String EASY_FLAG = DB_NOTES.EASY_FLAG;
     public static final String WORD_START = DB_NOTES.WORD_START;
@@ -46,6 +47,8 @@ public class CreateTablesBluePrint {
                 DEFINITION_WORD + " TEXT, " +
                 DEFINITION_TRANSLATE_WORD + " TEXT, " +
                 EXAMPLE_WORD + " TEXT, " +
-                EXAMPLE_TRANSLATE_WORD + " TEXT);";
+                EXAMPLE_TRANSLATE_WORD + " TEXT, " +
+                EXTRA_NOTE + " TEXT);";
+
     }
 }

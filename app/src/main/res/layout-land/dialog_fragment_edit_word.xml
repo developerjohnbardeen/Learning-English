@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:theme="@style/Theme.AppCompat.Light.RTL.DirectionLayout.NoActionBar.FullScreen">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/edit_word_nested_scroll_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_above="@+id/edit_word_content_confirm_reject_layout">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_50sdp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.github.siyamed.shapeimageview.RoundedImageView
+                android:id="@+id/dialog_fragment_roundImageView"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:src="@drawable/peacock"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:riv_corner_radius="@dimen/_11sdp"
+                app:siRadius="@dimen/_15sdp"/>
+
+
+            <RelativeLayout
+                android:id="@+id/edit_word_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dialog_fragment_roundImageView"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp">
+
+
+                <TextView
+                    android:id="@+id/dialog_fragment_word_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sample"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_toEndOf="@+id/dialog_fragment_phonetic_text_view"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/dialog_fragment_phonetic_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sample"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+
+
+            </RelativeLayout>
+
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:id="@+id/dialog_fragment_word_text_field_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelText="@string/word_edit"
+                android:layout_below="@+id/edit_word_info_layout"
+                android:layout_marginTop="@dimen/edit_box_mgn_top">
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/dialog_fragment_word_extend_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:id="@+id/dialog_fragment_definition_text_field_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelText="@string/definition_edit"
+                android:layout_below="@+id/dialog_fragment_word_text_field_box"
+                android:layout_marginTop="@dimen/edit_box_mgn_top">
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/dialog_fragment_definition_extend_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"/>
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:id="@+id/dialog_fragment_example_text_field_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelText="@string/example_edit"
+                android:layout_below="@+id/dialog_fragment_definition_text_field_box"
+                android:layout_marginTop="@dimen/edit_box_mgn_top">
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/dialog_fragment_example_extend_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"/>
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/edit_word_content_confirm_reject_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/dialog_fragment_save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_str"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:layout_margin="@dimen/_7sdp"
+            android:padding="@dimen/_7sdp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/story_font_center_view"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
+        <View
+            android:id="@+id/story_font_center_view"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/dialog_fragment_reject_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reject_str"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:layout_margin="@dimen/_7sdp"
+            android:padding="@dimen/_7sdp"
+            android:gravity="center"
+            android:layout_toEndOf="@+id/story_font_center_view"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

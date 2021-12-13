@@ -2,6 +2,9 @@ package com.example.a4000essentialwordsbook1.MarkedWords;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +16,12 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords.MainReviewMarkedWordActivity;
+import com.example.a4000essentialwordsbook1.QuizFile.QuizRezult.QuizResultFragments.CorrectAnswer.RecyclerViewCorrectAnswer;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
+
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -79,12 +85,42 @@ public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMa
                 .placeholder(R.drawable.loadimg)
                 .error(R.drawable.loadimg)
                 .into(holder.wordImage);
-
+        setImageResources(holder, list.get(position));
 
         holder.wordName.setText(word);
         holder.wordPhonetic.setText(phonetic);
         holder.cardView.setOnClickListener(v -> intentActivity(position));
 
+    }
+
+    private void setImageResources(ViewHolder holder, WordModel model){
+        final String appPath = context.getApplicationInfo().dataDir;
+
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File imgMainPath = new File("Image Files");
+        final File wordImgPath = new File(imgMainPath, File.separator + "Word Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + model.getBookNum());
+        final File wordUnitImgBookPath = new File(wordImgBookPath, File.separator + "Unit_" + model.getUnitNum());
+
+        final File imgName = new File(wordUnitImgBookPath, File.separator + "." + new File(model.getImgUri()).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+            Glide.with(context)
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(holder.wordImage);
+        }else {
+            Glide.with(context)
+                    .load(model.getImgUri())
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(holder.wordImage);
+        }
     }
 
 
@@ -106,7 +142,7 @@ public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMa
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cardView;
         ImageView wordImage;
-        ImageButton imgRemoveButton;
+        ImageButton imgRemoveButton, playAudioBtn;
         MarkedWordPosition itemPositionInterface;
         TextView wordName, wordTranslate, wordPhonetic;
         ArrayList<WordModel> holderList;
@@ -122,17 +158,44 @@ public class RecyclerViewMarkedWords extends RecyclerView.Adapter<RecyclerViewMa
             wordName = itemView.findViewById(R.id.marked_words_name);
             wordPhonetic = itemView.findViewById(R.id.marked_words_phonetic);
             imgRemoveButton = itemView.findViewById(R.id.marked_btn_word_changer);
-            imgRemoveButton.setOnClickListener(this);
             wordTranslate = itemView.findViewById(R.id.marked_words_translate);
+            playAudioBtn = itemView.findViewById(R.id.play_audio_marked_word);
+
+            onThisViewHolderClickListener();
          }
+
+         private void onThisViewHolderClickListener(){
+             imgRemoveButton.setOnClickListener(this);
+             playAudioBtn.setOnClickListener(this);
+             wordImage.setOnClickListener(this);
+
+         }
+
+
 
         @Override
         public void onClick(View v) {
             final int dbId = holderList.get(getLayoutPosition()).getBookNum();
             final int unitId = holderList.get(getLayoutPosition()).getUnitNum();
             final int wordId = holderList.get(getLayoutPosition()).getId();
+
+            switch (v.getId()){
+                case (R.id.marked_btn_word_changer):
+                    itemRemover(dbId, unitId, wordId);
+                    break;
+                case (R.id.img_word_marked):
+                case (R.id.play_audio_marked_word):
+                    audioPlayer(getLayoutPosition());
+                    break;
+            }
+
+        }
+        private void itemRemover(int dbId, int unitId, int wordId){
             wordRemover.removeMarkedWord(dbId, unitId, getLayoutPosition(), wordId);
             itemPositionInterface.recyclerItemPosition(getLayoutPosition());
+        }
+        private void audioPlayer(int position){
+            wordRemover.audioPlayer(position);
         }
     }
 }

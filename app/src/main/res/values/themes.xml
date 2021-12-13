@@ -23,25 +23,180 @@
         <item name="shadow_color">@color/fui_transparent</item>
     </style>
 
+
+    <style name="Sample.Style" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+    </style>
+
+
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <item name="titleTextColor">#FFFFFF</item>
+
+        <item name="titleTextColor">#000</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">#00FF91</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#009474</item>
+        //#009474
+        <item name="android:colorPrimary">#009474</item>
+
+        <item name="android:backgroundTint">#F2F6F6</item>
+        <item name="backgroundTint">#F2F6F6</item>
+        //F8FAFA
+
+        <item name="android:statusBarColor">#00FFF5FF</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:colorAccent">#018F8A</item>
+        <item name="colorAccent">#018F8A</item>
+
         <item name="android:layoutDirection">ltr</item>
-        <item name="android:textColorPrimary">#1B1A1A</item>
+        <item name="android:textColorPrimary">#242727</item>
+
+        <item name="android:textColor">#215144</item>
+        <item name="android:colorControlHighlight">#45215144</item>
+        <item name="android:editTextColor">#151515</item>
+        <item name="actionMenuTextColor">#2B2828</item>
+
+
+        <item name="tabIndicatorColor">#22FCF3</item>
+        <item name="tabSelectedTextColor">#22FCF3</item>
+        <item name="tabIconTint">#00C2BB</item>
+        <item name="tabRippleColor">#008B86</item>
+
         <item name="android:textColorSecondary">#252323</item>
     </style>
 
+    <style name="Media.Player.CardView.Theme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="android:backgroundTint">#E9EDEC</item>
+        <item name="backgroundColor">#F6FAF6</item>
+        //E8E6F1
+        <item name="colorControlHighlight">#45215144</item>
+
+        <item name="colorAccent">#215144</item>
+        <item name="android:colorAccent">#009474</item>
+
+        <item name="android:progressTint">#00C9C1</item>
+        <item name="android:thumbTint">#018F8A</item>
+        <item name="android:progressBackgroundTint">#17A59F</item>
+
+        <item name="android:textColor">#215144</item>
+        <item name="android:textColorPrimary">#2B2828</item>
+
+        <item name="rippleColor">#45215144</item>
+        <!--<item name="tabRippleColor">#ffffff</item>-->
+        <item name="itemRippleColor">#ffffff</item>
+
+        <item name="tabIndicatorColor">#009474</item>
+        <item name="tabSelectedTextColor">#009474</item>
+        <item name="tabIconTint">#00C2BB</item>
+        <item name="tabRippleColor">#008B86</item>
+        <item name="tabGravity">center</item>
+
+
+    </style>
+
+    <style name="Custom.Material.CardView.Theme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:backgroundTint">#E4E8E8</item>
+
+        <item name="colorAccent">#215144</item>
+        <item name="android:colorAccent">#009474</item>
+
+        <item name="rippleColor">@color/fui_transparent</item>
+
+        <item name="android:textColor">#2B2828</item>
+        <item name="android:textColorPrimary">#2B2828</item>
+
+
+    </style>
+
+    <style name="Custom.WordDetailed.Material.CardView.Theme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="android:backgroundTint">#E1EFEA</item>
+        <item name="android:textColorPrimary">#2B2828</item>
+        <item name="android:textColor">#215144</item>
+        <item name="rippleColor">#45215144</item>
+
+
+    </style>
+
+    <style name="Recycler.Item.CardView.Theme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:backgroundTint">#F2F6F6</item>
+        <item name="backgroundTint">#F2F6F6</item>
+
+        <item name="rippleColor">@color/fui_transparent</item>
+        <item name="android:textColorPrimary">#242727</item>
+
+        <item name="android:textColor">#215144</item>
+        <item name="errorColor">#000</item>
+
+    </style>
+
+    <style name="Custom.TabLayout.ActionBar.Theme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <item name="android:backgroundTint">#F2F6F6</item>
+        <item name="colorPrimary">#009474</item>
+
+        <item name="android:textColorPrimary">#2B2828</item>
+        <item name="android:textColor">#2B2828</item>
+
+
+        <item name="tabIndicatorColor">#018F8A</item>
+        <item name="tabSelectedTextColor">#018F8A</item>
+        <item name="tabIconTint">#009688</item>
+        <item name="tabRippleColor">#018F8A</item>
+        <item name="tabGravity">center</item>
+    </style>
+
+    <style name="Custom.CardView_Button_functionality" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:backgroundTint">#999A99</item>
+        <item name="backgroundColor">#F8FAFA</item>
+
+        <item name="colorControlHighlight">#3C124537</item>
+
+        <item name="rippleColor">@color/fui_transparent</item>
+    </style>
+
+
+
+    <style name="Custom_ThemeOverlay_AppCompat_Dark_ActionBar" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="titleTextColor">#000</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">#FFF5FF</item>
+
+        <item name="android:backgroundTint">#FAF8FF</item>
+        <item name="backgroundTint">#FFF5FF</item>
+
+        <item name="android:statusBarColor">#00FFF5FF</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:layoutDirection">ltr</item>
+        <item name="android:textColorPrimary">#2B2828</item>
+        <item name="android:textColor">#2B2828</item>
+
+        <item name="android:colorAccent">#FFF5FF</item>
+        <item name="android:colorControlHighlight">#000</item>
+        <item name="android:editTextColor">#151515</item>
+        <item name="backgroundColor">#FCF7FF</item>
+
+        <item name="android:textColorSecondary">#252323</item>
+    </style>
+
+    <style name="Custom.ProgressBar.AppCompat.Theme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+    </style>
+
     <style name="Theme.AppCompat.Light.RTL.DirectionLayout.NoActionBar.FullScreen" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="android:backgroundTint">#F2F6F6</item>
+        <item name="backgroundTint">#000</item>
+
         <item name="titleTextColor">#FFFFFF</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="colorPrimary">#00FF91</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:layoutDirection">rtl</item>
-        <item name="android:textColorPrimary">#1B1A1A</item>
+        <item name="android:textColorPrimary">#2B2828</item>??
         <item name="android:textColorSecondary">#252323</item>
     </style>
 
@@ -81,6 +236,15 @@
     </style>
 
     <style name="NavigationTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="android:backgroundTint">#F8FAFA</item>
+
+        <item name="android:textColorPrimary">#2B2828</item>
+
+        <item name="android:textColor">#215144</item>
+        <item name="android:colorControlHighlight">#45215144</item>
+        <item name="android:editTextColor">#151515</item>
+        <item name="actionMenuTextColor">#2B2828</item>
+
         <item name="colorPrimary">@color/black</item>
         <item name="android:layoutDirection">ltr</item>
     </style>

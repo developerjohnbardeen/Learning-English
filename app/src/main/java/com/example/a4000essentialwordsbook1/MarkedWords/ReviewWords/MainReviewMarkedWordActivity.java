@@ -1,20 +1,29 @@
 package com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords;
 
 
+
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,12 +31,14 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentOnAttachListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.widget.ViewPager2;
@@ -50,6 +61,8 @@ import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.EditedTranslationInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.SaveEditsInterface;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AddNoteInterFace;
+import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AddNoteDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AutoPlayDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AutoPlayInterface;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.EditWordDialogFragment;
@@ -62,27 +75,35 @@ import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferen
 import com.example.a4000essentialwordsbook1.UpdateDatabases.UpdateWordDatabase;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 
 
 public class MainReviewMarkedWordActivity extends AppCompatActivity implements View.OnClickListener,
-        TextProvider, FragmentReviewWord.RemoveCardItem, SaveEditsInterface, AutoPlayInterface, AudioPlayerListener {
+        TextProvider, FragmentReviewWord.RemoveCardItem, SaveEditsInterface, AutoPlayInterface,
+        AudioPlayerListener, AddNoteInterFace {
     private int vpCurrentItem;
 
     private ViewPager2 reviewWordViewPager;
-    private ViewPager2.OnPageChangeCallback changeListener;
     private FragmentManager rvwFragmentManager;
     private TabLayoutMediator tabLayoutMediator;
     private TabLayout reviewWordTabIndicator;
     private Button iKnowBtn, askMeAgainBtn;
     private ImageView plyImageBtn, settingIcon, autoPlayIcon;
-    private ImageButton rvwBtnTranslation;
+
+    private RelativeLayout speedMeterLayout, easyHardLayout;
+    private ImageView vrySlwImageView, slwImageView, normalImageView, fstImageView, vryFstImageView;
+    private ImageView speedMeterImgView;
+    private TextView vrySlwTextView, slwTextView, normalTextView, fstTextView, vryFstTextView;
+    private float speedMeter = 1.0f;
+    private float autoPlayerSpeedVal = 1.0f;
+
+
+    private CardView rvwUpAndDownBtn;
     private RelativeLayout backPressLayout;
     private Toolbar mainReviewToolBar;
     private SeekBar vpSeekBar;
@@ -103,24 +124,22 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     private final String defDurationNote = AutoPlayTypeNote.DEFINITION_DURATION;
     private final String exmplStartNote = AutoPlayTypeNote.EXAMPLE_START;
     private final String exmplDurationNote = AutoPlayTypeNote.EXAMPLE_DURATION;
-    private boolean wordPlay, defPlay, exmplPlay, allPlay;
+    private final String speedMeterKey = ExtraNotes.SPEED_METER_KEY;
+    private String playAudio;
     private MediaPlayer mainMediaPlayer, singleMediaPlayer, twoMediaPlayer;
-    private int plyAudio, mediaPosition;
-    private int wrdDuration, defDuration, exmplDuration;
     private TimeUtil timeUtil;
-    private long ttlMediaTime, timeElapsed;
+    private long timeElapsed;
     private ExecutorService autoPlayThread;
-    private Handler autoPlayHandler, plyAgainHandler;
+    private Handler autoPlayHandler;
     private int dbNum, unitNum;
     private int[] dbInfoList;
-    private int startAll, endAll, ttlIndex;
-    private final int tmLineMines = 80;
     private int mainMediaPosition , seekBarPosition;
-    private boolean autoPlayFlag, trnslFlag, mediaFlag;
+    private boolean autoPlayFlag, trnslFlag;
     private boolean allPlayFlag, wordPlayFlag, defPlayFlag, exmplPlayFlag, plyAgainFlag, plyNxtFlag;
     private boolean[] flagListAutoPly, shwFarsiFlags;
     private WordModel wordModel;
     private EditedTranslationInterface editorInterFace;
+    private AddNoteInterFace addNoteInterFace;
     private MainReviewTranslationInterface translationInterface;
 
     private SharedPreferences plyAudioPreferences;
@@ -128,7 +147,11 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     private final String wordPlyKey = SettingsPreferencesNotes.WORD_PLAY_KEY;
     private final String definitionPlyKey = SettingsPreferencesNotes.DEFINITION_PLAY_KEY;
     private final String examplePlyKey = SettingsPreferencesNotes.EXAMPLE_PLAY_KEY;
+    private final int tmLineMines = 100;
     private final int audioDelay = 500;
+    private final int outerDelay = 200;
+    private final int innerDelay = 200;
+
 
 
 
@@ -150,29 +173,48 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
 
     /*********************************************************************************************/
 
+
     private void twoMediaAutoPlay(int firstStart, int firstEnd, int secondStart, int secondEnd) {
+        new Handler(Looper.getMainLooper()).postDelayed(() ->{
 
-        if (twoMediaPlayer.isPlaying()){
-            twoMediaPlayHandler.removeCallbacks(twoAudioOneThread);
-            twoMediaPlayHandler.removeCallbacks(twoAudioTwoThread);
-            twoMediaPlayer.pause();
+            if (twoMediaPlayer.isPlaying()){
+                twoMediaPlayHandler.removeCallbacks(twoAudioOneThread);
+                twoMediaPlayHandler.removeCallbacks(twoAudioTwoThread);
+                twoMediaPlayer.pause();
+                twoMediaPlayer.seekTo(firstStart);
+            }
+
+            twoAudioOneThread = () -> {
+                twoMediaPlayer.pause();
+                twoMediaPlayer.seekTo(secondStart);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    twoMediaPlayer.setPlaybackParams(autoPlayBackParams());
+                }
+                twoMediaPlayer.start();
+                twoMediaPlayHandler.postDelayed(twoAudioTwoThread, (int) (secondEnd / autoPlayerSpeedVal));
+            };
+            twoAudioTwoThread = () -> {
+                twoMediaPlayer.pause();
+                twoMediaPlayer.seekTo(firstStart);
+                autoViewPagerScroller();
+            };
             twoMediaPlayer.seekTo(firstStart);
-        }
-
-        twoAudioOneThread = () -> {
-            twoMediaPlayer.pause();
-            twoMediaPlayer.seekTo(secondStart);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                twoMediaPlayer.setPlaybackParams(autoPlayBackParams());
+            }
             twoMediaPlayer.start();
-            twoMediaPlayHandler.postDelayed(twoAudioTwoThread, secondEnd);
-        };
-        twoAudioTwoThread = () -> {
-            twoMediaPlayer.pause();
-            twoMediaPlayer.seekTo(firstStart);
-            autoViewPagerScroller();
-        };
-        twoMediaPlayer.seekTo(firstStart);
-        twoMediaPlayer.start();
-        twoMediaPlayHandler.postDelayed(twoAudioOneThread, firstEnd);
+            twoMediaPlayHandler.postDelayed(twoAudioOneThread, (int) (firstEnd / autoPlayerSpeedVal));
+
+        }, outerDelay);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private PlaybackParams autoPlayBackParams(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            PlaybackParams playbackParams = new PlaybackParams();
+            return playbackParams.setSpeed(autoPlayerSpeedVal);
+        }else{
+            return null;
+        }
     }
 
     private final Handler twoMediaPlayHandler = new Handler(Looper.getMainLooper());
@@ -183,31 +225,41 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
 
     private void singlePlayAudio(int start, int end) {
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
-            if (singleMediaPlayer != null) {
-                boolean isPlaying = singleMediaPlayer.isPlaying();
+            try {
+                pauseMainPlayer();
+                ExecutorService thread = Executors.newSingleThreadExecutor();
+                thread.execute(() -> mainAudioReceiver(dbNumber(), unitNumber()));
+                if (singleMediaPlayer != null) {
+                    boolean isPlaying = singleMediaPlayer.isPlaying();
 
-                if (isPlaying) {
-                    mediaPlayHandler.removeCallbacks(singleAudioThread);
-                    singleMediaPlayer.pause();
+                    if (isPlaying) {
+                        mediaPlayHandler.removeCallbacks(singleAudioThread);
+                        singleMediaPlayer.pause();
+                        singleMediaPlayer.seekTo(start);
+                    }
+                    singleAudioThread = () -> {
+                        singleMediaPlayer.pause();
+                        singleMediaPlayer.seekTo(start);
+                        autoViewPagerScroller();
+                    };
                     singleMediaPlayer.seekTo(start);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        singleMediaPlayer.setPlaybackParams(autoPlayBackParams());
+                    }
+                    singleMediaPlayer.start();
+
+                    if (singleMediaPlayer.isPlaying()) {
+                        mediaPlayHandler.postDelayed(singleAudioThread,(int) (end / autoPlayerSpeedVal));
+                    }
                 }
-                singleAudioThread = () -> {
-                    singleMediaPlayer.pause();
-                    singleMediaPlayer.seekTo(start);
-                    autoViewPagerScroller();
-                };
-                singleMediaPlayer.seekTo(start);
-                singleMediaPlayer.start();
-
-                if (singleMediaPlayer.isPlaying()){mediaPlayHandler.postDelayed(singleAudioThread, end);}
-            }
-        }, 200);
+            }catch (Exception e){e.printStackTrace();}
+        }, outerDelay);
     }
     private final Handler mediaPlayHandler = new Handler(Looper.getMainLooper());
     private  Runnable singleAudioThread;
     private void autoViewPagerScroller(){
         if (plyAgainFlag) {
-            int newPosition = (plusOneItem() == lstSize()) ? 0 : plusOneItem();
+            final int newPosition = (plusOneItem() == lstSize()) ? 0 : plusOneItem();
             this.reviewWordViewPager.setCurrentItem(newPosition, true);
         }else if (autoPlayFlag){
             this.reviewWordViewPager.setCurrentItem(currentItem() + 1, true);
@@ -217,72 +269,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     /**********************************************************************************************/
 
 
-    private void wordAudioReceiver(int dbNumber, int unitNumber){
-        SQLiteDatabase db = unitListDatabase(dbNumber).getReadableDatabase();
 
-        Cursor awCursor = db.query(DB_NOTES.UNIT_TABLE,
-                new String[]{DB_NOTES.UNIT_COMPLETE_WORD_AUDIO},
-                DB_NOTES.UNIT_ID + " = ? ", new String[]{Integer.toString(unitNumber)},
-                null, null, null);
-
-        if (awCursor != null && awCursor.getCount() != 0){
-            while (awCursor.moveToNext()){
-                plyAudio = awCursor.getInt(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
-            }
-        }
-        allAudioPlayers(plyAudio);
-        mainMediaPlayer();
-
-        assert awCursor != null;
-        awCursor.close();
-        db.close();
-    }
-    private SQLiteOpenHelper unitListDatabase(int unitId){
-        if (unitId == 1){
-            return new UnitDatabaseBookOne(this);
-        }else if (unitId == 2){
-            return new UnitDatabaseBookTwo(this);
-        }else if (unitId == 3){
-            return new UnitDatabaseBookThree(this);
-        }else if (unitId == 4){
-            return new UnitDatabaseBookFour(this);
-        }else if (unitId == 5){
-            return new UnitDatabaseBookFive(this);
-        }else {
-            return new UnitDatabaseBookSix(this);
-        }
-    }
-    private void allAudioPlayers(int plyAudio){
-        mainMediaPlayer = MediaPlayer.create(this, plyAudio);
-        singleMediaPlayer = MediaPlayer.create(this, plyAudio);
-        twoMediaPlayer = MediaPlayer.create(this, plyAudio);
-    }
-    private void mainMediaPlayer(){
-
-        final int newSeekPosition = Math.max(seekBarPosition, 0);
-        timeUtil = new TimeUtil();
-        vpSeekBar.setMax(currentDuration(currentItem()));
-        vpSeekBar.setProgress(newSeekPosition);
-        final int newPosition = currentWrdStart(currentItem());
-        mainMediaPlayer.seekTo(newPosition);
-        new Handler(Looper.getMainLooper()).post(() -> plyImageBtn.setImageResource(R.drawable.mx_play_normal));
-
-        vpSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                endSeekBarHandler.removeCallbacks(endSeekBarThread);
-                final int mdPosition = (currentWrdStart(currentItem()) + seekBar.getProgress());
-                mainMediaPlayer.seekTo(mdPosition);
-                endSeekBarHandler.postDelayed(endSeekBarThread, endHandlerDelay());
-            }
-        });
-
-    }
 
 
     private void mainReviewWordsViewPagerAdapter(){
@@ -291,13 +278,14 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         rvwFragmentManager.addFragmentOnAttachListener((fragmentManager, fragment) -> {
             try {
                 editorInterFace = (FragmentReviewWord) fragment;
+                addNoteInterFace = (FragmentReviewWord) fragment;
             }catch (Exception e){
                 e.printStackTrace();
             }
         });
 
         fragmentPagerAdapter = new ReviewWordFragmentPagerAdapter(
-                getLifecycle(), shwFarsiFlags, rvwFragmentManager, this);
+                getLifecycle(),reviewList, shwFarsiFlags, rvwFragmentManager, this);
         reviewWordViewPager.setAdapter(fragmentPagerAdapter);
         /*new Handler(Looper.getMainLooper()).postDelayed(() -> {
             reviewWordViewPager.setCurrentItem(vpCurrentItem, true);
@@ -315,7 +303,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         tabLayoutMediator.attach();
     }
     private void reviewWordViewPagerOnChangeListener(){
-        changeListener = new ViewPager2.OnPageChangeCallback() {
+        ViewPager2.OnPageChangeCallback changeListener = new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -326,6 +314,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 super.onPageSelected(position);
                 if (reviewList.size() > 0) {
                     onPageSelectedFunctions();
+                    speedDeterminerFunctions();
                 }
             }
 
@@ -355,7 +344,147 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     private void mdPlayersDestroyerAndAudioReceiver(){
         mediaPlayerOnDestroy();
         ExecutorService thread = Executors.newSingleThreadExecutor();
-        thread.execute(() -> wordAudioReceiver(dbNumber(), unitNumber()));
+        Handler handler = new Handler(Looper.getMainLooper());
+        thread.execute(() -> {
+            wordAudioReceiver(dbNumber(), unitNumber());
+            mainAudioReceiver(dbNumber(), unitNumber());
+
+            handler.post(() ->{
+               if (autoPlayFlag){
+                   autoMediaPlayer();
+               }
+            });
+        });
+    }
+
+    @SuppressLint("Range")
+    private void wordAudioReceiver(int dbNumber, int unitNumber){
+        SQLiteDatabase db = unitListDatabase(dbNumber).getReadableDatabase();
+
+        Cursor awCursor = db.query(DB_NOTES.UNIT_TABLE,
+                new String[]{DB_NOTES.UNIT_COMPLETE_WORD_AUDIO},
+                DB_NOTES.UNIT_ID + " = ? ", new String[]{Integer.toString(unitNumber)},
+                null, null, null);
+
+        if (awCursor != null && awCursor.getCount() != 0){
+            while (awCursor.moveToNext()){
+                playAudio = awCursor.getString(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
+            }
+        }
+        new Handler(Looper.getMainLooper()).post(() ->{
+            try {
+                allAudioPlayers(playAudio);
+            }catch (Exception e){e.printStackTrace();}
+        });
+
+        assert awCursor != null;
+        awCursor.close();
+        db.close();
+    }
+    @SuppressLint("Range")
+    private void mainAudioReceiver(int dbNumber, int unitNumber){
+        SQLiteDatabase db = unitListDatabase(dbNumber).getReadableDatabase();
+
+        Cursor awCursor = db.query(DB_NOTES.UNIT_TABLE,
+                new String[]{DB_NOTES.UNIT_COMPLETE_WORD_AUDIO},
+                DB_NOTES.UNIT_ID + " = ? ", new String[]{Integer.toString(unitNumber)},
+                null, null, null);
+
+        if (awCursor != null && awCursor.getCount() != 0){
+            while (awCursor.moveToNext()){
+                playAudio = awCursor.getString(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
+            }
+        }
+        new Handler(Looper.getMainLooper()).post(() ->{
+            try {
+                mainMediaPlayer = MediaPlayer.create(MainReviewMarkedWordActivity.this, Uri.parse(plyPathLink(playAudio)));
+                mainMediaPlayer();
+            }catch (Exception e){e.printStackTrace();}
+        });
+
+        assert awCursor != null;
+        awCursor.close();
+        db.close();
+    }
+
+
+    private SQLiteOpenHelper unitListDatabase(int unitId){
+        if (unitId == 1){
+            return new UnitDatabaseBookOne(this);
+        }else if (unitId == 2){
+            return new UnitDatabaseBookTwo(this);
+        }else if (unitId == 3){
+            return new UnitDatabaseBookThree(this);
+        }else if (unitId == 4){
+            return new UnitDatabaseBookFour(this);
+        }else if (unitId == 5){
+            return new UnitDatabaseBookFive(this);
+        }else {
+            return new UnitDatabaseBookSix(this);
+        }
+    }
+    private void allAudioPlayers(String plyAudio){
+        final String appPath = this.getApplicationInfo().dataDir;
+        final File audioMainPath = new File("Audio Files");
+        final File audioWordPath = new File(audioMainPath, File.separator + "Word Audios");
+
+        final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbNum);
+        final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(plyAudio).getName());
+
+        final String plyPath = Environment.getExternalStoragePublicDirectory(appPath).toString() + File.separator + secondSubFile.toString();
+
+        singleMediaPlayer = MediaPlayer.create(this, Uri.parse(plyPath()));
+        twoMediaPlayer = MediaPlayer.create(this, Uri.parse(plyPath()));
+    }
+    private String plyPath(){
+        final String appPath = this.getApplicationInfo().dataDir;
+        final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File audioMainPath = new File("Audio Files");
+        final File audioWordPath = new File(audioMainPath, File.separator + "Word Audios");
+
+        final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbNum);
+        final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(playAudio).getName());
+
+        return Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
+    }
+    private String plyPathLink(String path){
+        final String appPath = this.getApplicationInfo().dataDir;
+        final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File audioMainPath = new File("Audio Files");
+        final File audioWordPath = new File(audioMainPath, File.separator + "Word Audios");
+
+        final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbNum);
+        final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(path).getName());
+
+        return Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
+    }
+    private void mainMediaPlayer(){
+        final int newSeekPosition = Math.max(seekBarPosition, 0);
+        timeUtil = new TimeUtil();
+        vpSeekBar.setMax(currentDuration(currentItem()));
+        vpSeekBar.setProgress(newSeekPosition);
+        final int newPosition = currentWrdStart(currentItem());
+        Log.e("mediaError", Integer.toString(newPosition));
+        mainMediaPlayer.seekTo(newPosition);
+        new Handler(Looper.getMainLooper()).post(() -> plyImageBtn.setImageResource(R.drawable.mx_play_normal));
+
+        vpSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                endSeekBarHandler.removeCallbacks(endSeekBarThread);
+                final int mdPosition = (currentWrdStart(currentItem()) + seekBar.getProgress());
+                mainMediaPlayer.seekTo(mdPosition);
+                endSeekBarHandler.postDelayed(endSeekBarThread, (int)(endHandlerDelay() / speedMeter));
+            }
+        });
+
     }
 
 
@@ -380,14 +509,55 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
             case (R.id.main_marked_word_tab_layout_bck_bttn_layout):
                 onBackPressed();
                 break;
-            case (R.id.main_review_slide_word_detail_all_translate_btn):
-                trnslFlag = !trnslFlag;
-                translationInterface.displayTranslations(trnslFlag);
+            case (R.id.main_review_review_know_displayer_btn):
+                hardEasyCardViewAnimationDeterminer();
                 break;
             case (R.id.main_review_marked_word_hard_button):
                 askAgainViewPagerScroller();
                 break;
         }
+    }
+
+    private boolean hardEasyFlag;
+    private boolean speedMeterFlag;
+
+    private void hardEasyCardViewAnimationDeterminer(){
+        if (hardEasyFlag){
+            cardViewGetDownAnimation();
+        }else {
+            if (speedMeterFlag){
+                downAnimationSpeedMeterCardView();
+                new Handler(Looper.getMainLooper()).postDelayed(this::cardViewGetUpAnimation, 350);
+            }else {
+                cardViewGetUpAnimation();
+            }
+        }
+    }
+
+    private void cardViewGetUpAnimation(){
+        ValueAnimator animator = ValueAnimator.ofFloat(500f, 0f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            float progress = (float) animation.getAnimatedValue();
+            easyHardLayout.setVisibility(View.VISIBLE);
+            easyHardLayout.setTranslationY(progress);
+        });
+        animator.start();
+        hardEasyFlag = true;
+    }
+    private void cardViewGetDownAnimation(){
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 500f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            float progress = (float) animation.getAnimatedValue();
+            easyHardLayout.setTranslationY(progress);
+        });
+        animator.start();
+        hardEasyFlag = false;
     }
 
 
@@ -408,15 +578,23 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     }
 
     private boolean canAskAgainPress(){
-        boolean mainIsPlaying = true;
-        boolean singleIsPlaying = true;
-        boolean twoIsPlaying = true;
+        boolean mainIsPlaying = false;
+        boolean singleIsPlaying = false;
+        boolean twoIsPlaying = false;
 
         try {
-            if (mainMediaPlayer != null) {mainIsPlaying = mainMediaPlayer.isPlaying();}
-            if (singleMediaPlayer != null) {singleIsPlaying = singleMediaPlayer.isPlaying();}
-            if (twoMediaPlayer != null) {twoIsPlaying = twoMediaPlayer.isPlaying();}
-        }catch (Exception e){e.printStackTrace(); }
+            if (mainMediaPlayer != null) {
+                mainIsPlaying = mainMediaPlayer.isPlaying();
+            }
+            if (singleMediaPlayer != null) {
+                singleIsPlaying = singleMediaPlayer.isPlaying();
+            }
+            if (twoMediaPlayer != null) {
+                twoIsPlaying = twoMediaPlayer.isPlaying();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         return !mainIsPlaying && !singleIsPlaying && !twoIsPlaying && !autoPlayFlag && !plyAgainFlag;
@@ -425,9 +603,11 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
 
 
     private void playOrPauseMainPlayer(){
+
+        final boolean isMediaNull = mainMediaPlayer == null;
         preDoMainPlayer();
 
-        if (mainMediaPlayer.isPlaying()){
+        if (!isMediaNull && mainMediaPlayer.isPlaying()){
             pauseMainPlayer();
         }else {
             allAgainCanceler();
@@ -436,15 +616,18 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     }
 
     private void preDoMainPlayer(){
-        pauseMediaPlayers();
+        pauseSingleMediaPlayer();
+        pauseTwoMediaPlayer();
     }
 
     private void pauseMainPlayer(){
-        if (mainMediaPlayer != null && mainMediaPlayer.isPlaying()) {
-            mainMediaPlayer.pause();
-            endSeekBarHandler.removeCallbacks(endSeekBarThread);
-            durationHandler.removeCallbacks(updateVpSeekBar);
-            plyImageBtn.setImageResource(R.drawable.mx_play_normal);
+        if (mainMediaPlayer != null) {
+            try {
+                mainMediaPlayer.pause();
+                endSeekBarHandler.removeCallbacks(endSeekBarThread);
+                durationHandler.removeCallbacks(updateVpSeekBar);
+                plyImageBtn.setImageResource(R.drawable.mx_play_normal);
+            }catch (Exception e){e.printStackTrace();}
         }
     }
     private void playMainPlayer(){
@@ -458,7 +641,8 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         durationHandler.postDelayed(updateVpSeekBar, 100);
         plyImageBtn.setImageResource(R.drawable.mx_pause_normal);
 
-        endSeekBarHandler.postDelayed(endSeekBarThread, endHandlerDelay());
+        final int endPlayerDelay = (int) (endHandlerDelay() / speedMeter);
+        endSeekBarHandler.postDelayed(endSeekBarThread, endPlayerDelay);
     }
     private int endHandlerDelay(){
         return (currentExmplEnd(currentItem()) - mainMediaPlayer.getCurrentPosition());
@@ -495,9 +679,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     };
 
 
-    private int currentWrdStart(int index){
-        return reviewList.get(index).getWrdStart();
-    }
+    private int currentWrdStart(int index){return reviewList.get(index).getWrdStart();}
     private int currentExmplEnd(int index){return reviewList.get(index).getExmplEnd();}
     private int currentDuration(int index){
         return reviewList.get(index).getExmplEnd() - reviewList.get(index).getWrdStart();
@@ -510,6 +692,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         reviewList.remove(currentItem());
         fragmentPagerAdapter.notifyItemRemoved(currentItem());
         fragmentPagerAdapter.notifyChangeInPosition(currentItem());
+        ReviewWordFragmentPagerAdapter.listChanger(reviewList);
         reviewListSizeChecker();
     }
     private void updateHardFlagDatabase(int columnId){
@@ -545,7 +728,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     /**********************************************************************************************/
 
     @Override
-    public void autoPlayer(boolean[] autoPlayFlagList) {
+    public void autoPlayer(boolean[] autoPlayFlagList, float mediaSpeed) {
         autoPlayDeterminer(autoPlayFlagList);
         autoPlayFlag = !plyAgainFlag;
         autoMediaPlayer();
@@ -593,10 +776,10 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
 
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
 
             autoPlayThread.execute(() -> {
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
 
                 autoPlayHandler.postDelayed(() ->{
@@ -612,17 +795,17 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
 
             this.autoPlayThread = Executors.newSingleThreadExecutor();
             this.autoPlayHandler = new Handler(Looper.getMainLooper());
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
 
             autoPlayThread.execute(() ->{
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
                 autoPlayHandler.postDelayed(() ->{
                     if (canPlyAgain()){playAllAudios(currentItem());}
-                }, 200);
+                }, innerDelay);
             });
 
-        }, 100);
+        }, outerDelay);
     }
 
     private void allAgainCanceler() {
@@ -656,35 +839,35 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
 
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
 
             autoPlayThread.execute(() ->{
 
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
 
                 autoPlayHandler.postDelayed(() ->{
                 playTwoAudios(currentItem(), startFirst, durationFirst, startSecond, durationSecond);
-            }, 200);
+            }, innerDelay);
 
             });
-        },100);
+        },outerDelay);
     }
     private void autoPlayAgainTwoAudio(String startFirst, String durationFirst, String startSecond, String durationSecond){
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
 
             autoPlayThread.execute(() ->{
                 shwTranslationsInAutoPlay();
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 autoPlayHandler.postDelayed(() ->{
                     if (!isFinishing()){playTwoAudios(currentItem(), startFirst, durationFirst, startSecond, durationSecond);}
-                }, 200);
+                }, innerDelay);
 
             });
-        }, 100);
+        }, outerDelay);
     }
     private void playTwoAudios(int finalIndex, String startFirst, String durationFirst, String startSecond, String durationSecond){
         final int startOne = startAudio(startFirst, finalIndex);
@@ -692,10 +875,6 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         final int startTwo = startAudio(startSecond, finalIndex);
         final int endTwo = durationAudio(durationSecond, finalIndex);
         twoMediaAutoPlay(startOne, endOne, startTwo, endTwo);
-    }
-
-    private int ttlTwoDuration(int finalIndex, String durationFirst, String durationSecond){
-        return durationAudio(durationFirst, finalIndex) + durationAudio(durationSecond, finalIndex);
     }
 
 
@@ -728,7 +907,6 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
             autoWordPlayer();
         }
     }
-
     @Override
     public void wordAudioPlayer(boolean autoPlyFlag) {
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
@@ -740,37 +918,38 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 farsiReSetter();
                 normalWordAudioPlayer();
             }
-        }, 100);
+        }, 200);
     }
     private void autoWordPlayer(){
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
 
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
             autoPlayThread.execute(() ->{
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
-                autoPlayHandler.postDelayed(this::normalWordAudioPlayer, 200);
+                autoPlayHandler.postDelayed(this::normalWordAudioPlayer, innerDelay);
             });
 
-        }, 100);
+        }, outerDelay);
     }
     private void wordPlayerOnceOrAgain(){
 
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
-            shwTranslationsInAutoPlay();
 
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
             autoPlayThread.execute(() ->{
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
-                autoPlayHandler.postDelayed(() ->{if (!isFinishing()){normalWordAudioPlayer();}}, 200);
+                autoPlayHandler.postDelayed(() ->{
+                    if (!isFinishing()){normalWordAudioPlayer();}
+                }, innerDelay);
             });
 
-        }, 100);
+        }, outerDelay);
     }
     private void normalWordAudioPlayer(){
         new Handler(Looper.getMainLooper()).post(() -> plyImageBtn.setImageResource(R.drawable.mx_play_normal));
@@ -802,33 +981,33 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 normalDefinitionAudiPlayer();
             }
 
-        }, 100);
+        }, 200);
     }
     private void definitionAutoPlayer(){
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
 
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
             autoPlayThread.execute(() ->{
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
-                autoPlayHandler.postDelayed(this::normalDefinitionAudiPlayer, 200);
+                autoPlayHandler.postDelayed(this::normalDefinitionAudiPlayer, innerDelay);
             });
-        }, 100);
+        }, outerDelay);
     }
     private void definitionPlayerOnceOrAgain(){
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
 
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
             autoPlayThread.execute(() ->{
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
-                autoPlayHandler.postDelayed(() ->{if (!isFinishing()){normalDefinitionAudiPlayer();}}, 200);
+                autoPlayHandler.postDelayed(() ->{if (!isFinishing()){normalDefinitionAudiPlayer();}}, innerDelay);
             });
-        }, 100);
+        }, outerDelay);
     }
     private void normalDefinitionAudiPlayer(){
         mediaPlayHandler.post(defNormalRunnable);
@@ -866,32 +1045,32 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
 
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
 
             autoPlayThread.execute(() ->{
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
-                autoPlayHandler.postDelayed(this::normalExampleAudioPlayer, 200);
+                autoPlayHandler.postDelayed(this::normalExampleAudioPlayer, innerDelay);
             });
 
 
-        }, 100);
+        }, outerDelay);
     }
     private void examplePlayerOnceOrAgain(){
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
 
             autoPlayThread = Executors.newSingleThreadExecutor();
             autoPlayHandler = new Handler(Looper.getMainLooper());
-            mediaPlayerOnDestroy();
+            //mediaPlayerOnDestroy();
 
             autoPlayThread.execute(() ->{
-                wordAudioReceiver(dbNumber(), unitNumber());
+                //wordAudioReceiver(dbNumber(), unitNumber());
                 shwTranslationsInAutoPlay();
-                autoPlayHandler.postDelayed(() ->{if (!isFinishing()){normalExampleAudioPlayer();}}, 200);
+                autoPlayHandler.postDelayed(() ->{if (!isFinishing()){normalExampleAudioPlayer();}}, innerDelay);
             });
 
 
-        }, 100);
+        }, outerDelay);
     }
     private void normalExampleAudioPlayer(){
         mediaPlayHandler.post(normalExmplRunnable);
@@ -974,6 +1153,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
             spcHandler.post(this::mainReviewWordsViewPagerAdapter);
         });
     }
+    @SuppressLint("Range")
     private void allMarkedWordReceiver(){
         Cursor cursor = null;
         SQLiteDatabase db = null;
@@ -985,8 +1165,11 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 cursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitId,
                         new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.WORD, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER,
                                 DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
-                                DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.HARD_FLAG,
-                                DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END},
+                                DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD,
+                                DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
+                                DB_NOTES.HARD_FLAG, DB_NOTES.WORD_START, DB_NOTES.WORD_END,
+                                DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START,
+                                DB_NOTES.EXMPL_END, DB_NOTES.EXTRA_NOTE},
                         DB_NOTES.HARD_FLAG + " > ?", new String[]{Integer.toString(0)}, null, null, null);
 
 
@@ -994,27 +1177,29 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                     while (cursor.moveToNext()) {
 
                         WordModel listModel = new WordModel();
-                        int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                        int img = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                        int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-                        int databaseNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                        int tableNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                        int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                        int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                        int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                        int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                        int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                        int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                        String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                        String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                        String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                        String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                        String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                        String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                        String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+
+                        final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                        final String img = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                        final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                        final int databaseNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                        final int tableNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                        final int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                        final int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                        final int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                        final int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                        final int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                        final int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                        final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                        final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                        final String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                        final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                        final String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                        final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                        final String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                        final String userNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
 
                         listModel.setId(id);
-                        listModel.setWordImage(img);
+                        listModel.setImgUri(img);
                         listModel.setHardFlag(hardFlag);
                         listModel.setBookNum(databaseNum);
                         listModel.setUnitNum(tableNum);
@@ -1031,7 +1216,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                         listModel.setTranslateDef(translateDef);
                         listModel.setExample(example);
                         listModel.setTranslateExmpl(translate_example);
-
+                        listModel.setAddNote(userNote);
                         reviewList.add(listModel);
                     }
                 }
@@ -1042,6 +1227,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         db.close();
 
     }
+    @SuppressLint("Range")
     private void specificMarkedWordReceiver(int dbId){
         Cursor cursor = null;
         reviewList = new ArrayList<>();
@@ -1050,10 +1236,13 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         for (int unitId = 1 ; unitId <= 30 ; unitId ++) {
 
             cursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitId,
-                    new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.WORD, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER,
+                    new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.WORD,
+                            DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER,
                             DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
-                            DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.HARD_FLAG,
-                            DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END,},
+                            DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD,
+                            DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.HARD_FLAG,
+                            DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END,
+                            DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END, DB_NOTES.EXTRA_NOTE},
                     DB_NOTES.HARD_FLAG + " > ?", new String[]{Integer.toString(0)}, null, null, null);
 
 
@@ -1061,27 +1250,29 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 while (cursor.moveToNext()) {
 
                     WordModel listModel = new WordModel();
-                    int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                    int img = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                    int databaseId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                    int tableId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                    int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-                    int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                    int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                    int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                    int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                    int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                    int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                    String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                    String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                    String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                    String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                    String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                    String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                    String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+
+                    final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                    final String img = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                    final int databaseId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                    final int tableId = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                    final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                    final int wordStat = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                    final int wordEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                    final int defStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                    final int defEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                    final int exmplStart = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                    final int exmplEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                    final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                    final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                    final String translate_word = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                    final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                    final String translateDef = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                    final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                    final String translate_example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                    final String userNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
 
                     listModel.setId(id);
-                    listModel.setWordImage(img);
+                    listModel.setImgUri(img);
                     listModel.setBookNum(databaseId);
                     listModel.setUnitNum(tableId);
                     listModel.setHardFlag(hardFlag);
@@ -1098,6 +1289,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                     listModel.setTranslateDef(translateDef);
                     listModel.setExample(example);
                     listModel.setTranslateExmpl(translate_example);
+                    listModel.setAddNote(userNote);
 
                     reviewList.add(listModel);
                 }
@@ -1154,34 +1346,6 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     }
 
 
-    private void editWordDialog(){
-        EditWordDialogFragment ewDialogFragment =
-                EditWordDialogFragment.newInstance(editTextValuesExtractor(), dbInfoList());
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null){
-            ft.remove(prev);
-        }
-        ewDialogFragment.show(ft, "dialog");
-    }
-    private String[] editTextValuesExtractor(){
-        String[] edtTxtValues = new String[5];
-        edtTxtValues[0] = reviewList.get(currentItem()).getTranslateWord();
-        edtTxtValues[1] = reviewList.get(currentItem()).getTranslateDef();
-        edtTxtValues[2] = reviewList.get(currentItem()).getTranslateExmpl();
-        edtTxtValues[3] = reviewList.get(currentItem()).getWord();
-        edtTxtValues[4] = reviewList.get(currentItem()).getPhonetic();
-        return edtTxtValues;
-    }
-    private int[] dbInfoList(){
-        int[] dbInfoList = new int[3];
-        dbInfoList[0] = reviewList.get(currentItem()).getBookNum();
-        dbInfoList[1] = reviewList.get(currentItem()).getUnitNum();
-        dbInfoList[2] = reviewList.get(currentItem()).getId();
-        return dbInfoList;
-    }
-
-
     private void entranceAudioPlayFunctions(){
         if (isAllPlay()) {
             playAllAudios(currentItem());
@@ -1231,7 +1395,6 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         }
 
         return !isPlaying && !plyAgainFlag && !autoPlayFlag;
-        //return !allPlayFlag && !wordPlayFlag && !defPlayFlag && !exmplPlayFlag && !isPlaying;
     }
 
     @Override
@@ -1245,12 +1408,39 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
             final int newWordId = reviewList.get(currentItem()).getId();
             reReceiverWordDatabase(newWordId);
             reHandler.post(() ->{
-                //ReviewWordFragmentPagerAdapter.listChanger(reviewList.get(currentItem()));
-                getWordModel(reviewList.get(currentItem()), currentItem());
+                ReviewWordFragmentPagerAdapter.listChanger(reviewList);
+                //getWordModel(reviewList.get(currentItem()), currentItem());
                 editorInterFace.translationEditor(word, def, exmpl);
+                //mainReviewWordsViewPagerAdapterReSetter(currentItem());
+
             });
         });
     }
+    private void mainReviewWordsViewPagerAdapterReSetter(int position){
+
+        rvwFragmentManager = getSupportFragmentManager();
+        rvwFragmentManager.addFragmentOnAttachListener((fragmentManager, fragment) -> {
+            try {
+                editorInterFace = (FragmentReviewWord) fragment;
+                addNoteInterFace = (FragmentReviewWord) fragment;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
+        fragmentPagerAdapter = new ReviewWordFragmentPagerAdapter(
+                getLifecycle(),reviewList, shwFarsiFlags, rvwFragmentManager, this);
+        reviewWordViewPager.setAdapter(fragmentPagerAdapter);
+        /*new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            reviewWordViewPager.setCurrentItem(vpCurrentItem, true);
+        }, 100);*/
+
+
+        reviewWordViewPagerOnChangeListener();
+        reviewWordViewPager.setCurrentItem(position, false);
+        tabLayoutFunctions();
+    }
+    @SuppressLint("Range")
     private void reReceiverWordDatabase(int newWordId){
 
         SQLiteDatabase database = wordListDatabase(dbNumber()).getReadableDatabase();
@@ -1258,37 +1448,38 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
                         DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END,
                         DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.AUDIO_WORD,
-                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG},
+                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG, DB_NOTES.EXTRA_NOTE},
                 DB_NOTES.WORD_ID + " = ? ", new String[]{Integer.toString(newWordId)}, null, null, null);
         if (cursor != null && cursor.getCount() != 0){
 
             while (cursor.moveToNext()){
                 wordModel = new WordModel();
 
-                int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
-                int imgWord = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
-                int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-                int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
-                int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
-                int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-                int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
-                int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
-                int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
-                int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
-                int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
-                int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
-                int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
-                String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
-                String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-                String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-                String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-                String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-                String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-                String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                final String imgWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                final int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                final int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                final int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
+                final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                final int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
+                final int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                final int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                final int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                final int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                final int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                final int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                final String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                final String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                final String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final String userNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
 
 
                 wordModel.setId(id);
-                wordModel.setWordImage(imgWord);
+                wordModel.setImgUri(imgWord);
                 wordModel.setAudio(audio);
                 wordModel.setBookNum(bookIdNum);
                 wordModel.setUnitNum(unitIdNum);
@@ -1307,6 +1498,94 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 wordModel.setTranslateDef(translateDefinition);
                 wordModel.setExample(example);
                 wordModel.setTranslateExmpl(translateExample);
+                wordModel.setAddNote(userNote);
+                reviewList.set(currentItem(), wordModel);
+            }
+            database.close();
+            cursor.close();
+        }
+    }
+
+
+
+    @Override
+    public void addNote(String note) {
+        addNoteValueReSetter(note);
+    }
+    private void addNoteValueReSetter(String note){
+        ExecutorService thread = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        thread.execute(() ->{
+            final int newWordId = reviewList.get(currentItem()).getId();
+            databaseReReceiverForAddedNote(newWordId);
+            handler.post(() ->{
+                ReviewWordFragmentPagerAdapter.listChanger(reviewList);
+                addNoteInterFace.addNote(note);
+            });
+        });
+
+    }
+    @SuppressLint("Range")
+    private void databaseReReceiverForAddedNote(int newWordId){
+        unitNum = (unitNum == 0) ? 1 : unitNum;
+
+        SQLiteDatabase database = wordListDatabase(dbNum).getReadableDatabase();
+        Cursor cursor = database.query(DB_NOTES.NEUTRAL_WORD_TABLE + unitNum,
+                new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD_IMG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD,
+                        DB_NOTES.WORD_START, DB_NOTES.WORD_END, DB_NOTES.DEF_START, DB_NOTES.DEF_END, DB_NOTES.EXMPL_START, DB_NOTES.EXMPL_END,
+                        DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD, DB_NOTES.AUDIO_WORD,
+                        DB_NOTES.HARD_FLAG, DB_NOTES.EASY_FLAG, DB_NOTES.EXTRA_NOTE},
+                DB_NOTES.WORD_ID + " = ? ", new String[]{Integer.toString(newWordId)}, null, null, null);
+        if (cursor != null && cursor.getCount() != 0){
+
+            while (cursor.moveToNext()){
+                wordModel = new WordModel();
+
+                final int id = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_ID));
+                final String imgWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD_IMG));
+                final int bookIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+                final int unitIdNum = cursor.getInt(cursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+                final int audio = cursor.getInt(cursor.getColumnIndex(DB_NOTES.AUDIO_WORD));
+                final int hardFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                final int easyFlag = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EASY_FLAG));
+                final int wrdStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_START));
+                final int wrdEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.WORD_END));
+                final int defStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_START));
+                final int defEnd  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.DEF_END));
+                final int exmStart  = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_START));
+                final int exmEnd = cursor.getInt(cursor.getColumnIndex(DB_NOTES.EXMPL_END));
+                final String word = cursor.getString(cursor.getColumnIndex(DB_NOTES.WORD));
+                final String phonetic = cursor.getString(cursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+                final String translateWord = cursor.getString(cursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                final String definition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+                final String translateDefinition = cursor.getString(cursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+                final String example = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+                final String translateExample = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+                final String userNote = cursor.getString(cursor.getColumnIndex(DB_NOTES.EXTRA_NOTE));
+
+
+                wordModel.setId(id);
+                wordModel.setImgUri(imgWord);
+                wordModel.setAudio(audio);
+                wordModel.setBookNum(bookIdNum);
+                wordModel.setUnitNum(unitIdNum);
+                wordModel.setHardFlag(hardFlag);
+                wordModel.setEasyFlag(easyFlag);
+                wordModel.setWrdStart(wrdStart - tmLineMines);
+                wordModel.setWrdEnd(wrdEnd- tmLineMines);
+                wordModel.setDefStart(defStart- tmLineMines);
+                wordModel.setDefEnd(defEnd- tmLineMines);
+                wordModel.setExmplStart(exmStart- tmLineMines);
+                wordModel.setExmplEnd(exmEnd- tmLineMines);
+                wordModel.setWord(word);
+                wordModel.setPhonetic(phonetic);
+                wordModel.setTranslateWord(translateWord);
+                wordModel.setDefinition(definition);
+                wordModel.setTranslateDef(translateDefinition);
+                wordModel.setExample(example);
+                wordModel.setTranslateExmpl(translateExample);
+                wordModel.setAddNote(userNote);
                 reviewList.set(currentItem(), wordModel);
             }
             database.close();
@@ -1326,12 +1605,14 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
 
     private void pauseMediaPlayers() {
         if (mainMediaPlayer != null) {
-            mediaPosition = mainMediaPlayer.getCurrentPosition();
+            try {
+                int mediaPosition = mainMediaPlayer.getCurrentPosition();
+            }catch (Exception e){e.printStackTrace();}
         }
         pauseMainPlayer();
         //pauseManiMediaPlayer();
         pauseTwoMediaPlayer();
-        singleMediaPlayer();
+        pauseSingleMediaPlayer();
 
     }
     private void pauseManiMediaPlayer(){
@@ -1350,8 +1631,8 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
             twoMediaPlayHandler.removeCallbacks(twoAudioTwoThread);
         }
     }
-    private void singleMediaPlayer(){
-        if (singleMediaPlayer != null && singleMediaPlayer.isPlaying()){
+    private void pauseSingleMediaPlayer(){
+        if (singleMediaPlayer != null ){
             singleMediaPlayer.pause();
             mediaPlayHandler.removeCallbacks(singleAudioThread);
         }
@@ -1371,13 +1652,16 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         singleMediaDestroyer();
     }
     private void mainMediaPlayDestroyer(){
-        if (mainMediaPlayer != null && mainMediaPlayer.isPlaying()) {
-            mainMediaPlayer.pause();
-            mainMediaPlayer.stop();
-            mainMediaPlayer.release();
+        if (mainMediaPlayer != null) {
+            try {
+                durationHandler.removeCallbacks(updateVpSeekBar);
+                endSeekBarHandler.removeCallbacks(endSeekBarThread);
 
-            durationHandler.removeCallbacks(updateVpSeekBar);
-            endSeekBarHandler.removeCallbacks(endSeekBarThread);
+                //mainMediaPlayer.seekTo(0);
+                mainMediaPlayer.pause();
+                mainMediaPlayer.stop();
+                mainMediaPlayer.release();
+            }catch (Exception e){e.printStackTrace();}
         }
     }
     private void twoMediaPlayDestroyer(){
@@ -1386,6 +1670,7 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 twoMediaPlayHandler.removeCallbacks(twoAudioOneThread);
                 twoMediaPlayHandler.removeCallbacks(twoAudioTwoThread);
 
+                twoMediaPlayer.seekTo(0);
                 twoMediaPlayer.pause();
                 twoMediaPlayer.stop();
                 twoMediaPlayer.reset();
@@ -1396,19 +1681,16 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
     private void singleMediaDestroyer(){
         try {
             if (singleMediaPlayer != null) {
-                if (singleMediaPlayer.isPlaying()) {
-                /*autoPlayHandler.removeCallbacks(defAutoRun);
-                autoPlayHandler.removeCallbacks(exmplAutoRun);*/
-                    mediaPlayHandler.removeCallbacks(normalExmplRunnable);
-                    mediaPlayHandler.removeCallbacks(wordNormalRunnable);
-                    mediaPlayHandler.removeCallbacks(defNormalRunnable);
-                    mediaPlayHandler.removeCallbacks(singleAudioThread);
+                mediaPlayHandler.removeCallbacks(normalExmplRunnable);
+                mediaPlayHandler.removeCallbacks(wordNormalRunnable);
+                mediaPlayHandler.removeCallbacks(defNormalRunnable);
+                mediaPlayHandler.removeCallbacks(singleAudioThread);
 
-                    singleMediaPlayer.pause();
-                    singleMediaPlayer.stop();
-                    singleMediaPlayer.reset();
-                    singleMediaPlayer.release();
-                }
+                singleMediaPlayer.seekTo(0);
+                singleMediaPlayer.pause();
+                singleMediaPlayer.stop();
+                singleMediaPlayer.reset();
+                singleMediaPlayer.release();
             }
         }catch (Exception e){e.printStackTrace();}
     }
@@ -1431,22 +1713,41 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         settingIcon = findViewById(R.id.main_marked_word_settings_launcher);
         autoPlayIcon = findViewById(R.id.main_marked_word_auto_play_launcher);
         backPressLayout = findViewById(R.id.main_marked_word_tab_layout_bck_bttn_layout);
-        rvwBtnTranslation = findViewById(R.id.main_review_slide_word_detail_all_translate_btn);
+        rvwUpAndDownBtn = findViewById(R.id.main_review_review_know_displayer_btn);
+
+        speedMeterLayout = findViewById(R.id.main_review_speed_meter_main_layout);
+        easyHardLayout = findViewById(R.id.main_review_easy_hard_layout);
+
+        speedMeterImgView = findViewById(R.id.main_review_speed_meter_image_view);
+        vrySlwImageView = findViewById(R.id.main_review_speed_very_slow_image_view);
+        slwImageView = findViewById(R.id.main_review_speed_slow_image_view);
+        normalImageView = findViewById(R.id.main_review_speed_normal_image_view);
+        fstImageView = findViewById(R.id.main_review_speed_fast_image_view);
+        vryFstImageView = findViewById(R.id.main_review_speed_too_fast_image_view);
+
+
+        vrySlwTextView = findViewById(R.id.main_review_speed_very_slow_text_view);
+        slwTextView = findViewById(R.id.main_review_speed_slow_text_view);
+        normalTextView = findViewById(R.id.main_review_speed_normal_text_view);
+        fstTextView = findViewById(R.id.main_review_speed_fast_text_view);
+        vryFstTextView = findViewById(R.id.main_review_speed_too_fast_text_view);
+
+
+
         setSupportActionBar(mainReviewToolBar);
-        if (autoPlayFlag){autoMediaPlayer();}
+        //if (autoPlayFlag){autoMediaPlayer();}
         reviewWordViewPager.setCurrentItem(vpCurrentItem, true);
         thisClickListener();
     }
     private void extrasGetter(){
-        Intent pIntent = getIntent();
-        Intent dbIntent = getIntent();
-        Intent unitIntent = getIntent();
-        reviewList = this.getIntent().getParcelableArrayListExtra("reviewList");
-        vpCurrentItem = pIntent.getIntExtra("cardPosition",0);
-        dbNum = dbIntent.getIntExtra(sDbNumber, 0);
-        unitNum = unitIntent.getIntExtra(sUnitNumber, 1);
-        autoPlayFlag = unitIntent.getBooleanExtra(autoPlayFlagKey, false);
-        flagListAutoPly = unitIntent.getBooleanArrayExtra(autoPlayFlagListKey);
+        Intent intent = getIntent();
+        reviewList = intent.getParcelableArrayListExtra("reviewList");
+        vpCurrentItem = intent.getIntExtra("cardPosition",0);
+        dbNum = intent.getIntExtra(sDbNumber, 0);
+        unitNum = intent.getIntExtra(sUnitNumber, 1);
+        autoPlayFlag = intent.getBooleanExtra(autoPlayFlagKey, false);
+        flagListAutoPly = intent.getBooleanArrayExtra(autoPlayFlagListKey);
+        autoPlayerSpeedVal = intent.getFloatExtra(speedMeterKey, 1.0f);
         autoPlayDeterminer(flagListAutoPly);
     }
     private void autoPlayDeterminer(boolean[] flagList){
@@ -1471,8 +1772,197 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
         settingIcon.setOnClickListener(this);
         autoPlayIcon.setOnClickListener(this);
         backPressLayout.setOnClickListener(this);
-        rvwBtnTranslation.setOnClickListener(this);
+        rvwUpAndDownBtn.setOnClickListener(this);
     }
+
+
+
+    private void speedDeterminerFunctions(){
+        speedMeterImgView.setOnClickListener(v ->{
+            cardViewGetDownAnimation();
+            new Handler(Looper.getMainLooper()).postDelayed(this::upAnimationSpeedMeterCardView, 350);
+        });
+
+
+        vrySlwImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(0.5f);
+            speedTextColorDeterminer(1);
+            cardViewsAnimationDeterminer();
+
+        });
+        slwImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(0.75f);
+            speedTextColorDeterminer(2);
+            cardViewsAnimationDeterminer();
+        });
+        normalImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(1.0f);
+            speedTextColorDeterminer(3);
+            cardViewsAnimationDeterminer();
+        });
+        fstImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(1.5f);
+            speedTextColorDeterminer(4);
+            cardViewsAnimationDeterminer();
+        });
+        vryFstImageView.setOnClickListener(v -> {
+            mediaSpeedSetter(2.0f);
+            speedTextColorDeterminer(5);
+            cardViewsAnimationDeterminer();
+        });
+    }
+    private void cardViewsAnimationDeterminer(){
+        downAnimationSpeedMeterCardView();
+        //new Handler(Looper.getMainLooper()).postDelayed(this::cardViewGetUpAnimation, 350);
+    }
+
+    private void downAnimationSpeedMeterCardView(){
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 500f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            final float progress = (float) animation.getAnimatedValue();
+            speedMeterLayout.setTranslationY(progress);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> speedMeterLayout.setVisibility(View.GONE), 350);
+        });
+        animator.start();
+        speedMeterFlag = false;
+    }
+    private void upAnimationSpeedMeterCardView(){
+        ValueAnimator animator = ValueAnimator.ofFloat(500f, 0f);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.setDuration(300);
+        animator.addUpdateListener(animation -> {
+            final float progress = (float) animation.getAnimatedValue();
+            speedMeterLayout.setVisibility(View.VISIBLE);
+            speedMeterLayout.setTranslationY(progress);
+        });
+        animator.start();
+        speedMeterFlag = true;
+    }
+
+
+    private void speedTextColorDeterminer(int txtPosition){
+        switch (txtPosition){
+            case 1:
+                tooSlowTxtViewBolder();
+                break;
+            case 2:
+                slowTxtViewBolder();
+                break;
+            case 3:
+                normalTxtViewBolder();
+                break;
+            case 4:
+                fastTxtViewBolder();
+                break;
+            case 5:
+                tooFastTxtViewBolder();
+                break;
+        }
+    }
+    private void tooSlowTxtViewBolder(){
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(1));
+    }
+    private void slowTxtViewBolder(){
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(2));
+    }
+    private void normalTxtViewBolder(){
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(3));
+    }
+    private void fastTxtViewBolder(){
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        speedMeterImgView.setImageResource(speedImage(4));
+    }
+    private void tooFastTxtViewBolder(){
+        vryFstTextView.setTextColor(ContextCompat.getColor(this, R.color.perColor));
+        vrySlwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        slwTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        normalTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+        fstTextView.setTextColor(ContextCompat.getColor(this, R.color.setting_gray));
+
+        vrySlwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        slwTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        normalTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        fstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        vryFstTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+        speedMeterImgView.setImageResource(speedImage(5));
+    }
+
+    private int speedImage(int position){
+        if (position == 5){
+            return R.drawable.speed_too_fast_icon;
+        }else if (position == 4){
+            return R.drawable.speed_fast_icon;
+        }else if (position == 3){
+            return R.drawable.speed_normal_icon;
+        }else if (position == 2){
+            return R.drawable.speed_slow_icon;
+        }else {
+            return R.drawable.speed_too_slow_icon;
+        }
+    }
+
+    private void mediaSpeedSetter(float speed){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            PlaybackParams playbackParams = new PlaybackParams();
+            playbackParams.setSpeed(speed);
+            mainMediaPlayer.setPlaybackParams(playbackParams);
+            speedMeter = speed;
+            playMainPlayer();
+        }
+        //pauseMainPlayer();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -1496,11 +1986,54 @@ public class MainReviewMarkedWordActivity extends AppCompatActivity implements V
                 editWordDialog();
                 return true;
             case (R.id.main_review_add_note_menu):
-                Toast.makeText(this, "Add Note Is Under Process", Toast.LENGTH_SHORT).show();
+                addNoteDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    private void editWordDialog(){
+        EditWordDialogFragment ewDialogFragment =
+                EditWordDialogFragment.newInstance(editTextValuesExtractor(), imgUrlVal(), dbInfoList());
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null){
+            ft.remove(prev);
+        }
+        ewDialogFragment.show(ft, "dialog");
+    }
+    private String imgUrlVal(){
+        return reviewList.get(currentItem()).getImgUri();
+    }
+
+
+    private void addNoteDialog(){
+        AddNoteDialogFragment addNoteDialogFragment =
+                AddNoteDialogFragment.newInstance(editTextValuesExtractor(), dbInfoList());
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("addNoteDialog");
+        if (prev != null){
+            ft.remove(prev);
+        }
+        addNoteDialogFragment.show(ft, "addNoteDialog");
+    }
+    private String[] editTextValuesExtractor(){
+        String[] edtTxtValues = new String[5];
+        edtTxtValues[0] = reviewList.get(currentItem()).getTranslateWord();
+        edtTxtValues[1] = reviewList.get(currentItem()).getTranslateDef();
+        edtTxtValues[2] = reviewList.get(currentItem()).getTranslateExmpl();
+        edtTxtValues[3] = reviewList.get(currentItem()).getWord();
+        edtTxtValues[4] = reviewList.get(currentItem()).getPhonetic();
+        return edtTxtValues;
+    }
+    private int[] dbInfoList(){
+        int[] dbInfoList = new int[3];
+        dbInfoList[0] = reviewList.get(currentItem()).getBookNum();
+        dbInfoList[1] = reviewList.get(currentItem()).getUnitNum();
+        dbInfoList[2] = reviewList.get(currentItem()).getId();
+        return dbInfoList;
+    }
+
 }
 

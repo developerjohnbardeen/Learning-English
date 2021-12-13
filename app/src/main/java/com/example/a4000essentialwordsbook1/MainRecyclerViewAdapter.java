@@ -2,6 +2,7 @@ package com.example.a4000essentialwordsbook1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +52,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.loadimg)
                 .error(R.drawable.loadimg)
-                .into(holder.img);
+                .into(holder.imageTv);
 
-        holder.txt.setText(model.getTitle());
+        holder.textTitle.setText(model.getTitle());
 
     }
 
@@ -63,8 +64,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ImageView img;
-        TextView txt;
+        ImageView imageTv;
+        TextView textTitle;
         CardView cardView;
         Context context;
 
@@ -73,12 +74,11 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             super(itemView);
             this.context = context;
 
-            img = itemView.findViewById(R.id.main_adapter_image_view);
-            txt = itemView.findViewById(R.id.main_adapter_title);
+            imageTv = itemView.findViewById(R.id.main_adapter_image_view);
+            textTitle = itemView.findViewById(R.id.main_adapter_title);
             cardView = itemView.findViewById(R.id.main_adapter_card_view);
 
             cardView.setOnClickListener(this);
-
         }
 
         @Override

@@ -12,22 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.WrongModel;
 import com.example.a4000essentialwordsbook1.R;
 
 import java.util.ArrayList;
 
 public class WrongAnswerFragment extends Fragment {
-    private final Context wngContext;
-    private final ArrayList<WrongModel> wrongList;
+    private final ArrayList<WordModel> wrongList;
+    private final String quizType;
     private final int[] dbInfoList;
     private RecyclerView wrongRecyclerView;
 
 
-    public WrongAnswerFragment(Context context, ArrayList<WrongModel> list, int[] dbInfoList){
-        this.wngContext = context;
+    public WrongAnswerFragment(String quizType, ArrayList<WordModel> list, int[] dbInfoList){
         this.wrongList = list;
         this.dbInfoList = dbInfoList;
+        this.quizType = quizType;
     }
 
     @Nullable
@@ -45,8 +46,8 @@ public class WrongAnswerFragment extends Fragment {
     }
 
     private void recyclerViewFunctions(View view){
-        RecyclerViewWrongAnswer wrongAnswerAdapter = new RecyclerViewWrongAnswer(wngContext, wrongList, dbInfoList);
-        wrongRecyclerView.setLayoutManager(new GridLayoutManager(wngContext, 1));
+        RecyclerViewWrongAnswer wrongAnswerAdapter = new RecyclerViewWrongAnswer(quizType,requireActivity(), wrongList, dbInfoList);
+        wrongRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), 1));
         wrongRecyclerView.setAdapter(wrongAnswerAdapter);
     }
 }

@@ -1,12 +1,15 @@
 package com.example.a4000essentialwordsbook1.SelectedUnitTab;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -21,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentOnAttachListener;
@@ -42,6 +46,8 @@ import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.io.File;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,10 +57,12 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private TextView unitTextNumber;
-    private ViewPager2 viewPager;
+    private ViewPager2 viewPager2;
     private RelativeLayout backBtnLayout;
     private final String msg = "Android : ";
-    private int dbNum, unitNum, unitAudio = R.raw.a;
+    private int dbNum, unitNum;
+    private String unitAudio;
+    private int mediaPosition;
     private CardView cardViewContainer;
     private MediaPlayer storyMediaPlayer;
     private TextView duration, totalTimeTextView;
@@ -71,7 +79,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     private long currentPos;
     private TimeUtil utils;
     private FragmentManager fmManager;
-    private int viewPosition = -1;
+    private int pagerPosition = 0;
 
 
 
@@ -85,6 +93,14 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
 
         //functions' order matters
         viewsFinderById();
+        allFunctions();
+        
+    }
+
+
+    private void allFunctions(){
+        //Functions' Order Matters
+
         extrasValueGetter();
         String strUnitNum = Integer.toString(unitNum);
         unitTextNumber.setText(strUnitNum);
@@ -92,86 +108,6 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         toolbarBackArrow();
         customTabLayout();
     }
-
-    public void pagerAdapterSetter(){
-        fmManager = getSupportFragmentManager();
-        UnitSectionPagerAdapter pagerAdapter =
-                new UnitSectionPagerAdapter(unitNum, dbNum,
-                        fmManager, getLifecycle());
-        viewPager.requestDisallowInterceptTouchEvent(true);
-        viewPager.setAdapter(pagerAdapter);
-        String[] viewPagerTitle = {"", "", "", ""};
-        new TabLayoutMediator(tabLayout, viewPager,
-                ((tab, position) -> tab.setText(viewPagerTitle[position])
-                )).attach();
-    }
-
-    private void mediaPlayerFunctions(){
-        ExecutorService mediaThread = Executors.newSingleThreadExecutor();
-        Handler mediaHandler = new Handler(Looper.getMainLooper());
-
-        mediaThread.execute(() ->{
-            audioFileReceiverFromDatabase(dbNum, unitNum);
-            mediaHandler.post(this::initializeMediaPlayer);
-        });
-    }
-
-    public void audioFileReceiverFromDatabase(int dbId, int unitId){
-        SQLiteDatabase db = unitListDatabase(dbId).getReadableDatabase();
-        Cursor audioCursor = db.query(DB_NOTES.UNIT_TABLE, new String[]{DB_NOTES.UNIT_AUDIO}
-                , DB_NOTES.UNIT_ID + " = ?", new String[]{Integer.toString(unitId)},
-                null, null, null );
-        if (audioCursor != null && audioCursor.getCount() != 0){
-            while (audioCursor.moveToNext()) {
-                unitAudio = audioCursor.getInt(audioCursor.getColumnIndex(DB_NOTES.UNIT_AUDIO));
-            }
-        }
-        db.close();
-        assert audioCursor != null;
-        audioCursor.close();
-    }
-    private SQLiteOpenHelper unitListDatabase(int dbId){
-        if (dbId == 1){
-            return new UnitDatabaseBookOne(this);
-        }else if (dbId == 2){
-            return new UnitDatabaseBookTwo(this);
-        }else if (dbId == 3){
-            return new UnitDatabaseBookThree(this);
-        }else if (dbId == 4){
-            return new UnitDatabaseBookFour(this);
-        }else if (dbId == 5){
-            return new UnitDatabaseBookFive(this);
-        }else {
-            return new UnitDatabaseBookSix(this);
-        }
-    }
-    private void initializeMediaPlayer(){
-        storyMediaPlayer = MediaPlayer.create(this, unitAudio);
-        utils = new TimeUtil();
-        finalTime = storyMediaPlayer.getDuration();
-        seekbar.setMax((int) finalTime);
-        storyMediaPlayer.seekTo((int) currentPos);
-
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                currentPos = seekBar.getProgress();
-                storyMediaPlayer.seekTo((int) currentPos);
-            }
-        });
-        seekbar.setClickable(true);
-        seekbar.setFocusable(true);
-        seekbar.setEnabled(true);
-    }
-
-
 
 
     @Override
@@ -254,6 +190,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
             String leftTime = "" + utils.milliSecondsToTimer(timeElapsed);
             duration.setText(leftTime);
             totalTimeTextView.setText(stringTotalTime);
+            mediaPosition = storyMediaPlayer.getCurrentPosition();
             durationHandler.postDelayed(this, 100);
         }
     };
@@ -271,10 +208,103 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-
-        mediaPlayerFunctions();
-        wordLisDataReSetter();
+        onResumeFunctions();
         Log.d(msg, "The onResume() event");
+    }
+    private void onResumeFunctions(){
+        wordLisDataReSetter();
+        thisOnClickListener();
+
+        viewPager2.setCurrentItem(pagerPosition, false);
+    }
+
+    public void pagerAdapterSetter(){
+        fmManager = getSupportFragmentManager();
+        UnitSectionPagerAdapter pagerAdapter =
+                new UnitSectionPagerAdapter(unitNum, dbNum,
+                        fmManager, getLifecycle());
+        viewPager2.requestDisallowInterceptTouchEvent(true);
+        viewPager2.setAdapter(pagerAdapter);
+
+    }
+    private void mediaPlayerFunctions(){
+        ExecutorService mediaThread = Executors.newSingleThreadExecutor();
+        Handler mediaHandler = new Handler(Looper.getMainLooper());
+
+        mediaThread.execute(() ->{
+            audioFileReceiverFromDatabase(dbNum, unitNum);
+            mediaHandler.post(this::initializeMediaPlayer);
+        });
+    }
+
+
+    @SuppressLint("Range")
+    public void audioFileReceiverFromDatabase(int dbId, int unitId){
+        SQLiteDatabase db = unitListDatabase(dbId).getReadableDatabase();
+        Cursor audioCursor = db.query(DB_NOTES.UNIT_TABLE, new String[]{DB_NOTES.UNIT_AUDIO}
+                , DB_NOTES.UNIT_ID + " = ?", new String[]{Integer.toString(unitId)},
+                null, null, null );
+        if (audioCursor != null && audioCursor.getCount() != 0){
+            while (audioCursor.moveToNext()) {
+                unitAudio = audioCursor.getString(audioCursor.getColumnIndex(DB_NOTES.UNIT_AUDIO));
+            }
+        }
+        db.close();
+        assert audioCursor != null;
+        audioCursor.close();
+    }
+    private SQLiteOpenHelper unitListDatabase(int dbId){
+        if (dbId == 1){
+            return new UnitDatabaseBookOne(this);
+        }else if (dbId == 2){
+            return new UnitDatabaseBookTwo(this);
+        }else if (dbId == 3){
+            return new UnitDatabaseBookThree(this);
+        }else if (dbId == 4){
+            return new UnitDatabaseBookFour(this);
+        }else if (dbId == 5){
+            return new UnitDatabaseBookFive(this);
+        }else {
+            return new UnitDatabaseBookSix(this);
+        }
+    }
+    private void initializeMediaPlayer(){
+        final String appPath = this.getApplicationInfo().dataDir;
+        final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File audioMainPath = new File("Audio Files");
+        final File audioWordPath = new File(audioMainPath, File.separator + "Unit Audios");
+
+
+        final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbNum);
+        final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(unitAudio).getName());
+
+        final String plyPath = Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
+
+        storyMediaPlayer = MediaPlayer.create(this, Uri.parse(plyPath));
+        utils = new TimeUtil();
+        finalTime = storyMediaPlayer.getDuration();
+        seekbar.setMax((int) finalTime);
+        seekbar.setProgress(mediaPosition);
+        storyMediaPlayer.seekTo(mediaPosition);
+
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                currentPos = seekBar.getProgress();
+                storyMediaPlayer.seekTo((int) currentPos);
+            }
+        });
+        seekbar.setClickable(true);
+        seekbar.setFocusable(true);
+        seekbar.setEnabled(true);
     }
 
     private void wordLisDataReSetter(){
@@ -291,13 +321,12 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
 
         setSupportActionBar(toolbar);
         backBtnLayout.setOnClickListener(v -> {
-            viewPosition = 0;
             onBackPressed();
         });
         String[] viewPagerTitle = {"", "", "", ""};
         //tabLayout.setupWithViewPager(viewPager);
-        viewPager.requestDisallowInterceptTouchEvent(true);
-        new TabLayoutMediator(tabLayout, viewPager,
+        viewPager2.requestDisallowInterceptTouchEvent(true);
+        new TabLayoutMediator(tabLayout, viewPager2,
                 ((tab, position) -> tab.setText(viewPagerTitle[position])
                 )).attach();
 
@@ -308,7 +337,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                viewPager2.setCurrentItem(tab.getPosition());
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -320,12 +349,8 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     }
 
     public void customTabLayout(){
-        Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(R.drawable.word_list);
-        Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(R.drawable.story_icon);
-        Objects.requireNonNull(tabLayout.getTabAt(2)).setIcon(R.drawable.ic_puzzle);
 
-
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -340,6 +365,9 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
                         break;
                     case 1:
                         viewPager2FirstPosition();
+                        try {
+                            mediaPlayerFunctions();
+                        }catch (Exception e){Log.e("MediaError", "" + e);}
                         break;
                     case 2:
                         viewPager2SecondPosition();
@@ -354,12 +382,40 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
                 super.onPageScrollStateChanged(state);
             }
         });
+
+        new TabLayoutMediator(tabLayout, viewPager2,
+                ((tab, position) -> {
+                    tab.setText(tabTitle(position));
+                    tab.setIcon(tabIcons(position));
+                }
+                )).attach();
+
         //viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
     }
+    private String tabTitle(int position){
+        final String[] viewPagerTitle = {"word", "story", "quiz"};
+        final String secondPart = "list";
+
+        if (position == 0){
+            return viewPagerTitle[position].substring(0, 1).toUpperCase() +
+                    viewPagerTitle[position].substring(1) +
+                    " " +
+                    secondPart.substring(0, 1).toUpperCase() +
+                    secondPart.substring(1);
+        }else {
+            return viewPagerTitle[position].substring(0, 1).toUpperCase() + viewPagerTitle[position].substring(1);
+        }
+    }
+    private int tabIcons(int position){
+        final int[] viewPagerIcon = {R.drawable.word_list, R.drawable.story_icon ,R.drawable.ic_puzzle};
+        return viewPagerIcon[position];
+    }
+
     private void viewPager2ZeroPosition(){
         cardViewGetDownAnimation();
-        pause();
-        alternateIcon.setImageResource(R.drawable.ic_quiz_result_play_circle_outline_24);
+        //pause();
+        mediaPlayerOnDestroy();
+        alternateIcon.setImageResource(R.drawable.ic_tool_bar_play_circle_filled_24);
         plyImg.setImageResource(R.drawable.mx_play_normal);
         autoPlyFlag = true;
     }
@@ -371,7 +427,8 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     private void viewPager2SecondPosition(){
         cardViewGetDownAnimation();
         autoPlyFlag = false;
-        pause();
+        //pause();
+        mediaPlayerOnDestroy();
         plyImg.setImageResource(R.drawable.mx_play_normal);
         alternateIcon.setImageResource(R.drawable.ic_baseline_bookmark_24);
     }
@@ -412,15 +469,17 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-        if (viewPosition != 0) {
-            viewPosition = viewPager.getCurrentItem();
-        }
-        if (viewPosition == 0){
+        onBackPressedFunctions();
+    }
+    private void onBackPressedFunctions(){
+        if (currentItem() == 0){
             super.onBackPressed();
         }else {
-            viewPager.setCurrentItem(0, true);
+            viewPager2.setCurrentItem(0, true);
         }
     }
+
+    private int currentItem(){return viewPager2.getCurrentItem();}
 
 
     @Override
@@ -428,7 +487,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         super.onPause();
         Log.d(msg, "The onPause() event");
         pause();
-        currentPos = storyMediaPlayer.getCurrentPosition();
+        //currentPos = storyMediaPlayer.getCurrentPosition();
     }
 
 
@@ -441,6 +500,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
 
     private void onStopFunctions(){
         pause();
+        pagerPosition = currentItem();
     }
 
     @Override
@@ -456,12 +516,14 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     }
 
     public void mediaPlayerOnDestroy(){
-        if (storyMediaPlayer != null) {
-            pause();
-            storyMediaPlayer.release();
-            durationHandler.removeCallbacks(updateSeekBarTime);
-            storyMediaPlayer = null;
-        }
+        try {
+            if (storyMediaPlayer != null) {
+                pause();
+                storyMediaPlayer.release();
+                durationHandler.removeCallbacks(updateSeekBarTime);
+                storyMediaPlayer = null;
+            }
+        }catch (Exception e){e.printStackTrace();}
 
     }
 
@@ -469,7 +531,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         cardViewContainer = findViewById(R.id.story_component_container);
         toolbar = findViewById(R.id.toolbar);
         backBtnLayout = findViewById(R.id.tab_layout_bck_bttn_layout);
-        viewPager = findViewById(R.id.viewPager);
+        viewPager2 = findViewById(R.id.viewPager);
         unitTextNumber = findViewById(R.id.unit_selected_tab_number);
         tabLayout = findViewById(R.id.tabs);
         duration = findViewById(R.id.progress_time_text);
@@ -478,8 +540,6 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         plyImg = findViewById(R.id.ply_img_btn);
         searchIcon = findViewById(R.id.selected_search_launcher);
         alternateIcon = findViewById(R.id.selected_alternate_launcher);
-
-        thisOnClickListener();
     }
     private void thisOnClickListener(){
         plyImg.setOnClickListener(this);

@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
@@ -27,6 +29,7 @@ public class StoryTextFontTypeDialogFragment extends DialogFragment implements V
 
     private TextView confirmBtn, rejectBtn;
     private TextView sampleTextView;
+    private AppCompatCheckBox engBolderCheckBox, perBolderCheckBox;
     private Spinner fntTypeSpinner;
     private ArrayAdapter spinnerAdapter;
     private AppCompatRadioButton engFontTypeRadioBtn, perFntTypeRadioBtn;
@@ -49,6 +52,7 @@ public class StoryTextFontTypeDialogFragment extends DialogFragment implements V
     private final String stryFntTypeRadioBtnKey = SettingsPreferencesNotes.STORY_ENG_OR_PER_RADIO_BUTTON_KEY;
     private final String engListPositionKey = SettingsPreferencesNotes.STORY_ENG_PICKER_FONT_VALUE_KEY;
     private final String perListPositionKey = SettingsPreferencesNotes.STORY_PER_PICKER_FONT_VALUE_KEY;
+    private final String textBolderKey= SettingsPreferencesNotes.STORY_TEXT_BOLDER_KEY;
 
     SharedPreferences storyTextSizePreferences;
     private final String storyTextSizePreferencesName = SettingsPreferencesNotes.SETTINGS_STORY_TEXT_VIEW_SIZE_PREFERENCES;
@@ -88,8 +92,22 @@ public class StoryTextFontTypeDialogFragment extends DialogFragment implements V
         sampleTextView = view.findViewById(R.id.story_txt_sample_font_type_text_view);
         sampleTextView.setTextSize(storyTxtSize());
         fntTypeSpinner = view.findViewById(R.id.story_font_picker);
+        engBolderCheckBox = view.findViewById(R.id.story_check_box_text_view_bolder);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onResumeFunctions();
+    }
+    private void onResumeFunctions(){
+        textBolderCheckBoxInitializer();
         valueInitializerFunctions();
         thisDialogClickListener();
+    }
+
+    private void textBolderCheckBoxInitializer(){
+        engBolderCheckBox.setChecked(getBolderPreference());
     }
 
 
@@ -167,9 +185,17 @@ public class StoryTextFontTypeDialogFragment extends DialogFragment implements V
             smplTextViewFontDeterminer(getFontPer(perSpinVal));
         }
     }
+    private Typeface typeface;
     private void smplTextViewFontDeterminer(int font){
-        Typeface typeface = ResourcesCompat.getFont(requireActivity(), font);
-        sampleTextView.setTypeface(typeface);
+        typeface = ResourcesCompat.getFont(requireActivity(), font);
+        sampleTextView.setTypeface(typeface, textStyle());
+    }
+    private int textStyle(){
+        if (isBolderChecked()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
     }
     private int getFontEng(int position){return engFontList[position];}
     private int getFontPer(int position){return perFontList[position];}
@@ -194,6 +220,9 @@ public class StoryTextFontTypeDialogFragment extends DialogFragment implements V
                 break;
             case (R.id.persian_font_radio_button):
                 perRadioBtnFunctions();
+                break;
+            case (R.id.story_check_box_text_view_bolder):
+                sampleTextView.setTypeface(typeface, textStyle());
                 break;
         }
     }
@@ -230,6 +259,7 @@ public class StoryTextFontTypeDialogFragment extends DialogFragment implements V
         storyFontEdit.putString(stryFntTypeRadioBtnKey, whtLang);
         storyFontEdit.putInt(engListPositionKey, engSpinVal);
         storyFontEdit.putInt(perListPositionKey, perSpinVal);
+        storyFontEdit.putBoolean(textBolderKey, isBolderChecked());
         storyFontEdit.apply();
     }
 
@@ -265,10 +295,18 @@ public class StoryTextFontTypeDialogFragment extends DialogFragment implements V
         sampleTextView.setOnClickListener(this);
         engFontTypeRadioBtn.setOnClickListener(this);
         perFntTypeRadioBtn.setOnClickListener(this);
+        engBolderCheckBox.setOnClickListener(this);
     }
 
     private int storyTxtSize(){
         storyTextSizePreferences = requireActivity().getSharedPreferences(storyTextSizePreferencesName, Context.MODE_PRIVATE);
         return storyTextSizePreferences.getInt(storyTextSizeKey, 18);
     }
+
+    private boolean isBolderChecked(){return engBolderCheckBox.isChecked();}
+    private boolean getBolderPreference(){
+        storyFontTypePreferences = requireActivity().getSharedPreferences(storyFontTypePreferencesName, Context.MODE_PRIVATE);
+        return storyFontTypePreferences.getBoolean(textBolderKey, false);
+    }
+
 }

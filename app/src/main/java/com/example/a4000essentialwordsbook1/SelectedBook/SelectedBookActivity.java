@@ -1,5 +1,6 @@
 package com.example.a4000essentialwordsbook1.SelectedBook;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -84,6 +85,7 @@ public class SelectedBookActivity extends AppCompatActivity implements View.OnCl
 
 
 
+    @SuppressLint("Range")
     private void unitDataReceiver(int databaseNum){
         SQLiteDatabase db = database(databaseNum).getReadableDatabase();
         unitList = new ArrayList<>();
@@ -96,10 +98,10 @@ public class SelectedBookActivity extends AppCompatActivity implements View.OnCl
             while (uCursor.moveToNext()){
                 UnitModel modelList = new UnitModel();
 
-                int id = uCursor.getInt(uCursor.getColumnIndex(DB_NOTES.UNIT_ID));
-                int img = uCursor.getInt(uCursor.getColumnIndex(DB_NOTES.UNIT_IMG));
-                int audio = uCursor.getInt(uCursor.getColumnIndex(DB_NOTES.UNIT_AUDIO));
-                String title = uCursor.getString(uCursor.getColumnIndex(DB_NOTES.UNIT_TITLE));
+                final int id = uCursor.getInt(uCursor.getColumnIndex(DB_NOTES.UNIT_ID));
+                final String img = uCursor.getString(uCursor.getColumnIndex(DB_NOTES.UNIT_IMG));
+                final String audio = uCursor.getString(uCursor.getColumnIndex(DB_NOTES.UNIT_AUDIO));
+                final String title = uCursor.getString(uCursor.getColumnIndex(DB_NOTES.UNIT_TITLE));
 
                 modelList.setuId(id);
                 modelList.setUnitImg(img);

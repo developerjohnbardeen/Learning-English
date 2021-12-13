@@ -7,19 +7,25 @@ import android.os.Parcelable;
 public class WrongModel implements Parcelable {
     private int tvImage;
     private int id;
+    private int dbNum;
+    private int unitNum;
     private int hardFlag;
+    private int easyFlag;
     private String tvWord;
     private String wrongWord;
     private String correctWord;
 
 
-    public WrongModel(int id, int tvImage,int flag, String tvWord, String wrongWord , String correctWord){
+    public WrongModel(int id, int tvImage,int flag, int easyFlag, int dbNum, int unitNum, String tvWord, String wrongWord , String correctWord){
         this.id = id;
         this.hardFlag = flag;
         this.tvImage = tvImage;
         this.tvWord = tvWord;
         this.wrongWord = wrongWord;
         this.correctWord = correctWord;
+        this.dbNum = dbNum;
+        this.unitNum = unitNum;
+        this.easyFlag = easyFlag;
     }
 
     public WrongModel(){}
@@ -31,6 +37,9 @@ public class WrongModel implements Parcelable {
         tvWord = in.readString();
         wrongWord = in.readString();
         correctWord = in.readString();
+        dbNum = in.readInt();
+        unitNum = in.readInt();
+        easyFlag = in.readInt();
     }
 
     public static final Creator<WrongModel> CREATOR = new Creator<WrongModel>() {
@@ -58,6 +67,33 @@ public class WrongModel implements Parcelable {
         dest.writeString(tvWord);
         dest.writeString(wrongWord);
         dest.writeString(correctWord);
+        dest.writeInt(dbNum);
+        dest.writeInt(unitNum);
+        dest.writeInt(easyFlag);
+    }
+
+    public int getDbNum() {
+        return dbNum;
+    }
+
+    public void setDbNum(int dbNum) {
+        this.dbNum = dbNum;
+    }
+
+    public int getUnitNum() {
+        return unitNum;
+    }
+
+    public void setUnitNum(int unitNum) {
+        this.unitNum = unitNum;
+    }
+
+    public int getEasyFlag() {
+        return easyFlag;
+    }
+
+    public void setEasyFlag(int easyFlag) {
+        this.easyFlag = easyFlag;
     }
 
     public int getTvImage() {

@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.CorrectModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.SkippedModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.WrongModel;
@@ -21,23 +22,22 @@ import com.example.a4000essentialwordsbook1.QuizFile.QuizRezult.QuizResultFragme
 import java.util.ArrayList;
 
 public class QuizResultPagerAdapter extends FragmentStateAdapter {
-    private final Context qrContext;
+    private final String quizType;
     private final int[] resultCounts = new int[3];
-    private final ArrayList<CorrectModel> correctList;
-    private final ArrayList<WrongModel> wrongList;
-    private final ArrayList<SkippedModel> skippedList;
+    private final ArrayList<WordModel> correctList;
+    private final ArrayList<WordModel> wrongList;
+    private final ArrayList<WordModel> skippedList;
     private final int[] dbInfoList;
 
-    public QuizResultPagerAdapter(Context context, ArrayList<CorrectModel> correctList,
-                                  ArrayList<WrongModel> wrongList, ArrayList<SkippedModel> skippedList, int[] dbInfoList,
+    public QuizResultPagerAdapter(String quizType, ArrayList<WordModel> correctList,
+                                  ArrayList<WordModel> wrongList, ArrayList<WordModel> skippedList, int[] dbInfoList,
                                   FragmentManager fm, Lifecycle lifecycle){
         super(fm, lifecycle);
-        this.qrContext = context;
         this.correctList = correctList;
         this.wrongList = wrongList;
         this.skippedList = skippedList;
         this.dbInfoList = dbInfoList;
-
+        this.quizType = quizType;
         resultCounts[0] = correctList.size();
         resultCounts[1] = wrongList.size();
         resultCounts[2] = skippedList.size();
@@ -48,13 +48,13 @@ public class QuizResultPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == 0){
-            return new QuizPieChartResultFragment(qrContext, resultCounts, dbInfoList);
+            return new QuizPieChartResultFragment(resultCounts, dbInfoList);
         }else if (position == 1){
-            return new CorrectAnswerFragment(qrContext, correctList, dbInfoList);
+            return new CorrectAnswerFragment(quizType, correctList, dbInfoList);
         }else if (position == 2){
-            return new WrongAnswerFragment(qrContext, wrongList, dbInfoList);
+            return new WrongAnswerFragment(quizType, wrongList, dbInfoList);
         }else {
-            return new SkippedAnswerFragment(qrContext, skippedList, dbInfoList);
+            return new SkippedAnswerFragment(quizType, skippedList, dbInfoList);
         }
     }
 

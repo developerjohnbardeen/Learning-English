@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/dialog_play_word_confirm_and_cancel_option_main_layout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/play_word_audio_story_text_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_play_word_audio_story_title_Str"
+                android:textSize="@dimen/_18ssp"
+                android:textColor="@color/black"
+                android:gravity="start"
+                android:layout_margin="@dimen/_15sdp"/>
+
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/play_all_audio_story_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_below="@+id/play_word_audio_story_text_view_title"
+                android:layout_alignParentEnd="true"/>
+            <TextView
+                android:id="@+id/play_all_audio_story_text_View"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_str"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_below="@+id/play_all_audio_story_check_box"
+                android:layout_toStartOf="@+id/play_all_audio_story_check_box"
+                android:layout_alignTop="@+id/play_all_audio_story_check_box"
+                android:layout_alignBottom="@+id/play_all_audio_story_check_box"/>
+
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/play_word_audio_story_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_below="@+id/play_all_audio_story_check_box"
+                android:layout_alignParentEnd="true"/>
+            <TextView
+                android:id="@+id/play_word_audio_story_text_View"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auto_play_word"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_below="@+id/play_word_audio_story_text_view_title"
+                android:layout_toStartOf="@+id/play_word_audio_story_check_box"
+                android:layout_alignTop="@+id/play_word_audio_story_check_box"
+                android:layout_alignBottom="@+id/play_word_audio_story_check_box"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/play_definition_audio_story_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_below="@+id/play_word_audio_story_check_box"
+                android:layout_alignParentEnd="true"/>
+            <TextView
+                android:id="@+id/play_definition_audio_story_text_View"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auto_play_definition"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_below="@+id/play_word_audio_story_check_box"
+                android:layout_toStartOf="@+id/play_definition_audio_story_check_box"
+                android:layout_alignTop="@+id/play_definition_audio_story_check_box"
+                android:layout_alignBottom="@+id/play_definition_audio_story_check_box"/>
+
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/play_example_audio_story_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_below="@+id/play_definition_audio_story_check_box"
+                android:layout_alignParentEnd="true"/>
+            <TextView
+                android:id="@+id/play_example_audio_story_text_View"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auto_play_example"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_below="@+id/play_definition_audio_story_check_box"
+                android:layout_toStartOf="@+id/play_example_audio_story_check_box"
+                android:layout_alignTop="@+id/play_example_audio_story_check_box"
+                android:layout_alignBottom="@+id/play_example_audio_story_check_box"/>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/dialog_play_word_confirm_and_cancel_option_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/play_word_auto_story_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmation"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:padding="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/center_view"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
+
+
+        <View
+            android:id="@+id/center_view"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_centerInParent="true"/>
+
+
+        <TextView
+            android:id="@+id/reject_play_word_auto_story_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reject_str"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/center_view"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

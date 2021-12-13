@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -17,18 +19,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
+import com.bumptech.glide.Glide;
+import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizDataGenerator.GenerateQuizData;
-import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.CorrectModel;
-import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.SkippedModel;
-import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.WrongModel;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizRezult.QuizMainResultActivity;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
-import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.PreferencesNotes.TimerQuizPreferences;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -39,8 +42,16 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout counterLayout, backPressLayout;
     private int[] randomIntList, optNumbGenerator;
     private String mainColumn, optionColumn, answerWord;
-    private int columnId, qzHardFlag, pStatus = 0;
-    private Intent quizResultIntent;
+    private int columnId, qzHardFlag , pStatus = 0;
+    private int id;
+    private int easyFlag;
+    private int wrdStart, wrdEnd;
+    private int defStart, defEnd;
+    private int exmplStart, exmplEnd;
+    private String word, phonetic, translateWord;
+    private String definition, translateDef;
+    private String example, translateExmpl;
+    private String addNote;
     private final String sDbNumber = ExtraNotes.DB_NUMBER;
     private final String sUnitNumber = ExtraNotes.UNIT_NUMBER;
     private final String sWordId = ExtraNotes.WORD_ID;
@@ -50,20 +61,35 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     private final String sSkippedList = ExtraNotes.SKIPPED_LIST;
 
 
+    private final int[] perFontList = GlobalFonts.perFontList;
+    private final int[] engFontList = GlobalFonts.engFontList;
+
+
 
     private SharedPreferences quizDurationPreference;
     private final String quizDurationPreferenceName = SettingsPreferencesNotes.SETTINGS_QUIZ_TIME_DURATION_PREFERENCE;
     private final String quizDurationKey = SettingsPreferencesNotes.QUIZ_TIME_DURATION_KEY;
     private final String cancelTimerKey = SettingsPreferencesNotes.CANCEL_QUIZ_TIMER_KEY;
 
+    private SharedPreferences fontTypePreferences;
+    private SharedPreferences textSizePreferences;
+    private final String fontTypePreferencesName = SettingsPreferencesNotes.SETTINGS_TEXT_FONT_TYPE_PREFERENCES;
+    private final String textViewSizePreferencesName = SettingsPreferencesNotes.SETTINGS_TEXT_VIEW_SIZE_PREFERENCES;
+    private final String engListPositionKey = SettingsPreferencesNotes.ENGLISH_LIST_POSITION_KEY;
+    private final String perListPositionKey = SettingsPreferencesNotes.PERSIAN_LIST_POSITION_KEY;
+    private final String txtViewSizeKey = SettingsPreferencesNotes.PERSIAN_TEXT_VIEW_SIZE_KEY;
+    private final String engTxtViewSizeKey = SettingsPreferencesNotes.ENGLISH_TEXT_VIEW_SIZE_KEY;
+    private final String engTxtBolderKey = SettingsPreferencesNotes.ENGLISH_TEXT_BOLDER_KEY;
+    private final String perTxtBolderKey = SettingsPreferencesNotes.PERSIAN_TEXT_BOLDER_KEY;
+
 
     private final String engType = "engToPer",
             persianType = "perToEng", photoWordType = "picWord";
 
     //Quiz String & Image
-    private String strTvWord, strOptionOne, strOptionTwo,
+    private String engStrTvWord, strTvWord, strOptionOne, strOptionTwo,
             strOptionThree, strOptionFour, quizType;
-    private int tvImage;
+    private String tvImageUrl;
 
     private ProgressBar mProgress;
 
@@ -85,9 +111,9 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     private int unitNumb;
 
     //Quiz Lists
-    private ArrayList<CorrectModel> correctList;
-    private ArrayList<WrongModel> wrongList;
-    private ArrayList<SkippedModel> skippedList;
+    private ArrayList<WordModel> correctList;
+    private ArrayList<WordModel> wrongList;
+    private ArrayList<WordModel> skippedList;
 
     private int correctInt = 0, wrongInt = 0 , skippedInt = 0;
     private CountDownTimer timer;
@@ -98,8 +124,6 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_main);
-
-        quizResultIntent = new Intent(this, QuizMainResultActivity.class);
         //functions' Order Matters
         listsCreator();
         sampleProgress();
@@ -109,17 +133,6 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         timerCountDown();
     }
 
-
-
-
-
-
-
-    public void updateProgress(){
-        String counterPlus = Integer.toString(pStatus);
-        mProgress.setProgress(pStatus);
-        questionCounter.setText(counterPlus);
-    }
 
 
     @Override
@@ -180,10 +193,27 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
             GenerateQuizData quizDataReceiver = new GenerateQuizData(this, columnId, dbNumber, unitNumb);
             quizDataReceiver.quizDataGenerator(mainColumn, optionColumn);
             strList = quizDataReceiver.getWordsOptionList();
-            tvImage = quizDataReceiver.getMainImage();
+            tvImageUrl = quizDataReceiver.getImageUrl();
             strTvWord = quizDataReceiver.getMainWord();
+            engStrTvWord = quizDataReceiver.getEngMainWord();
             answerWord = quizDataReceiver.getAnswerWord();
             qzHardFlag = quizDataReceiver.getHardFlag();
+
+            phonetic = quizDataReceiver.getPhonetic();
+            translateWord = quizDataReceiver.getTranslateWord();
+            definition = quizDataReceiver.getDefinition();
+            translateDef = quizDataReceiver.getTranslateDef();
+            example = quizDataReceiver.getExample();
+            translateExmpl = quizDataReceiver.getTranslateExmpl();
+            easyFlag = quizDataReceiver.getEasyFlag();
+            wrdStart = quizDataReceiver.getWrdStart();
+            wrdEnd = quizDataReceiver.getWrdEnd();
+            defStart = quizDataReceiver.getDefStart();
+            defEnd = quizDataReceiver.getDefEnd();
+            exmplStart = quizDataReceiver.getExmplStart();
+            exmplEnd = quizDataReceiver.getExmplEnd();
+            addNote = quizDataReceiver.getAddNote();
+
 
             int optOne = optNumbGenerator[0];
             int optTwo = optNumbGenerator[1];
@@ -195,7 +225,7 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
             strOptionTwo = strList[optTwo];
             strOptionThree = strList[optThree];
             strOptionFour = strList[optFour];
-            tvQuizImageView.setImageResource(tvImage);
+            //tvQuizImageView.setImageResource(tvImageUrl);
             viewsValueSetter();
         }else {
             skippedInt--;
@@ -214,7 +244,37 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         txtOptionTwo.setText(strOptionTwo);
         txtOptionThree.setText(strOptionThree);
         txtOptionFour.setText(strOptionFour);
-        tvQuizImageView.setImageResource(tvImage);
+        setImageResources();
+        //tvQuizImageView.setImageResource(tvImage);
+    }
+
+    private void setImageResources(){
+        final String appPath = this.getApplicationInfo().dataDir;
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File imgMainPath = new File("Image Files");
+        final File wordImgPath = new File(imgMainPath, File.separator + "Word Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + dbNumber);
+        final File wordUnitImgBookPath = new File(wordImgBookPath, File.separator + "Unit_" + unitNumb);
+
+        final File imgName = new File(wordUnitImgBookPath, File.separator + "." + new File(tvImageUrl).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+            Glide.with(this)
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(tvQuizImageView);
+        }else {
+            Glide.with(this)
+                    .load(tvImageUrl)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(tvQuizImageView);
+        }
     }
 
 
@@ -222,29 +282,71 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     public void answerChecker(TextView txtView){
         String answer = txtView.getText().toString();
         if (answerWord.equalsIgnoreCase(answer)){
-            CorrectModel correctModel = new CorrectModel();
-            if (quizType.equalsIgnoreCase(photoWordType)) {
-                correctModel.setTvImage(tvImage);
-            }
-            correctModel.setTvWord(strTvWord);
-            correctModel.setCorrectWord(answer);
-            correctList.add(correctModel);
+            WordModel correctModel = new WordModel();
+            correctList.add(correctModel(correctModel, answer));
             correctAnswerCounter();
         }else {
-            WrongModel wrongModel = new WrongModel();
-            wrongModel.setId(columnId);
-            if (quizType.equalsIgnoreCase(photoWordType)) {
-                wrongModel.setTvImage(tvImage);
-            }
-            wrongModel.setHardFlag(qzHardFlag);
-            wrongModel.setTvWord(strTvWord);
-            wrongModel.setWrongWord(answer);
-            wrongModel.setCorrectWord(answerWord);
-
-            wrongList.add(wrongModel);
+            WordModel wrongModel = new WordModel();
+            wrongList.add(wrongModel(wrongModel, answer));
             wrongAnswerCounter();
         }
     }
+
+    private WordModel correctModel(WordModel correctModel, String answer){
+        correctModel.setId(columnId);
+        correctModel.setImgUri(tvImageUrl);
+        correctModel.setHardFlag(qzHardFlag);
+        correctModel.setWord(strTvWord);
+        //correctModel.setWrongWord(answer);
+        correctModel.setBookNum(dbNumber);
+        correctModel.setUnitNum(unitNumb);
+        correctModel.setCorrectWord(answer);
+
+        correctModel.setPhonetic(phonetic);
+        correctModel.setTranslateWord(translateWord);
+        correctModel.setDefinition(definition);
+        correctModel.setTranslateDef(translateDef);
+        correctModel.setExample(example);
+        correctModel.setTranslateExmpl(translateExmpl);
+        correctModel.setEasyFlag(easyFlag);
+        correctModel.setWrdStart(wrdStart);
+        correctModel.setWrdEnd(wrdEnd);
+        correctModel.setDefStart(defStart);
+        correctModel.setDefEnd(defEnd);
+        correctModel.setExmplStart(exmplStart);
+        correctModel.setExmplEnd(exmplEnd);
+        correctModel.setAddNote(addNote);
+
+        return correctModel;
+    }
+    private WordModel wrongModel(WordModel wrongModel, String answer){
+        wrongModel.setId(columnId);
+        wrongModel.setImgUri(tvImageUrl);
+        wrongModel.setHardFlag(qzHardFlag);
+        wrongModel.setWord(strTvWord);
+        wrongModel.setWrongWord(answer);
+        wrongModel.setBookNum(dbNumber);
+        wrongModel.setUnitNum(unitNumb);
+        wrongModel.setCorrectWord(answerWord);
+
+        wrongModel.setPhonetic(phonetic);
+        wrongModel.setTranslateWord(translateWord);
+        wrongModel.setDefinition(definition);
+        wrongModel.setTranslateDef(translateDef);
+        wrongModel.setExample(example);
+        wrongModel.setTranslateExmpl(translateExmpl);
+        wrongModel.setEasyFlag(easyFlag);
+        wrongModel.setWrdStart(wrdStart);
+        wrongModel.setWrdEnd(wrdEnd);
+        wrongModel.setDefStart(defStart);
+        wrongModel.setDefEnd(defEnd);
+        wrongModel.setExmplStart(exmplStart);
+        wrongModel.setExmplEnd(exmplEnd);
+        wrongModel.setAddNote(addNote);
+
+        return wrongModel;
+    }
+
 
 
 
@@ -339,15 +441,36 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void skipAnswerChecker(){
+        WordModel skippedModel = new WordModel();
+        skippedList.add(skippedModel(skippedModel));
+    }
+    private WordModel skippedModel(WordModel skippedModel){
 
-        SkippedModel skippedModel = new SkippedModel();
-        skippedModel.setWordId(columnId);
-        if (quizType.equalsIgnoreCase(photoWordType)) {
-            skippedModel.setTvImage(tvImage);
-        }
+        skippedModel.setId(columnId);
+        skippedModel.setWord(strTvWord);
+        skippedModel.setImgUri(tvImageUrl);
         skippedModel.setCorrectWord(answerWord);
-        skippedModel.setTvWord(strTvWord);
-        skippedList.add(skippedModel);
+        skippedModel.setBookNum(dbNumber);
+        skippedModel.setUnitNum(unitNumb);
+        skippedModel.setCorrectWord(strTvWord);
+        skippedModel.setSkippedWord(answerWord);
+
+        skippedModel.setPhonetic(phonetic);
+        skippedModel.setTranslateWord(translateWord);
+        skippedModel.setDefinition(definition);
+        skippedModel.setTranslateDef(translateDef);
+        skippedModel.setExample(example);
+        skippedModel.setTranslateExmpl(translateExmpl);
+        skippedModel.setEasyFlag(easyFlag);
+        skippedModel.setWrdStart(wrdStart);
+        skippedModel.setWrdEnd(wrdEnd);
+        skippedModel.setDefStart(defStart);
+        skippedModel.setDefEnd(defEnd);
+        skippedModel.setExmplStart(exmplStart);
+        skippedModel.setExmplEnd(exmplEnd);
+        skippedModel.setAddNote(addNote);
+
+        return skippedModel;
     }
 
 
@@ -439,11 +562,13 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void listSender(){
+        Intent quizResultIntent = new Intent(this, QuizMainResultActivity.class);
         quizResultIntent.putExtra(sDbNumber, dbNumber);
         quizResultIntent.putExtra(sUnitNumber, unitNumb);
         quizResultIntent.putParcelableArrayListExtra(sCorrectList, correctList);
         quizResultIntent.putParcelableArrayListExtra(sWrongList, wrongList);
         quizResultIntent.putParcelableArrayListExtra(sSkippedList, skippedList);
+        quizResultIntent.putExtra(sQuizType, quizType);
         startActivity(quizResultIntent);
     }
     private void listsCreator(){
@@ -465,6 +590,7 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void viewsFindById(){
+        //Function order Matter
         quizCardViewFindById();
         quizTextViewFindById();
         answerCounterViewsFindById();
@@ -474,6 +600,7 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         backPressLayout = findViewById(R.id.main_quiz_tab_layout_bck_bttn_layout);
         timerComponentsVisibility();
         extraValueGetter();
+        textViewAttributeSetter();
         cardViewsMarginsSetter();
         componentClick();
     }
@@ -593,6 +720,95 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     }
     private int getHeight(){
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+
+    private void textViewAttributeSetter(){
+
+        txtTvWord.setTypeface(typefaceQuestionDeterminer(), txtStyleQuestionDeterminer());
+        txtOptionOne.setTypeface(typefaceOptionsDeterminer(), txtStyleOptionsDeterminer());
+        txtOptionTwo.setTypeface(typefaceOptionsDeterminer(), txtStyleOptionsDeterminer());
+        txtOptionThree.setTypeface(typefaceOptionsDeterminer(), txtStyleOptionsDeterminer());
+        txtOptionFour.setTypeface(typefaceOptionsDeterminer(), txtStyleOptionsDeterminer());
+    }
+
+    private Typeface typefaceQuestionDeterminer(){
+        if (quizType.equalsIgnoreCase(photoWordType) || quizType.equalsIgnoreCase(engType)){
+            return engTypeFace();
+        }else{
+            //quizType.equalsIgnoreCase(persianType)
+            return perTypeFace();
+        }
+    }
+    private int txtStyleQuestionDeterminer(){
+        if (quizType.equalsIgnoreCase(photoWordType) || quizType.equalsIgnoreCase(engType)){
+            return engTextStyle();
+        }else{
+            //quizType.equalsIgnoreCase(persianType)
+            return perTextStyle();
+        }
+    }
+
+    private Typeface typefaceOptionsDeterminer(){
+        if (quizType.equalsIgnoreCase(photoWordType) || quizType.equalsIgnoreCase(engType)){
+            return perTypeFace();
+        }else{
+            //quizType.equalsIgnoreCase(persianType)
+            return engTypeFace();
+        }
+    }
+    private int txtStyleOptionsDeterminer(){
+        if (quizType.equalsIgnoreCase(photoWordType) || quizType.equalsIgnoreCase(engType)){
+            return perTextStyle();
+        }else{
+            //quizType.equalsIgnoreCase(persianType)
+            return engTextStyle();
+        }
+    }
+
+
+    private Typeface perTypeFace(){
+        return ResourcesCompat.getFont(this, perFontFace());
+    }
+    private int perFontFace(){
+        return perFontList[perFontVal()];
+    }
+    private int perTextStyle(){
+        if (getPerBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
+    }
+    private boolean getPerBolderPreference(){
+        fontTypePreferences = this.getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(perTxtBolderKey, false);
+    }
+    private int perFontVal(){
+        fontTypePreferences = this.getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getInt(perListPositionKey, 1);
+    }
+
+    private Typeface engTypeFace(){
+        return ResourcesCompat.getFont(this, engFontFace());
+    }
+    private int engFontFace(){
+        return engFontList[engFontVal()];
+    }
+    private int engTextStyle(){
+        if (getEngBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
+    }
+    private boolean getEngBolderPreference(){
+        fontTypePreferences = this.getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getBoolean(engTxtBolderKey, false);
+    }
+    private int engFontVal(){
+        fontTypePreferences = this.getSharedPreferences(fontTypePreferencesName, Context.MODE_PRIVATE);
+        return fontTypePreferences.getInt(engListPositionKey, 1);
     }
 
 }

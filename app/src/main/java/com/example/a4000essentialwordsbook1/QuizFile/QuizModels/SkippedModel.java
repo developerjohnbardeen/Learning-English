@@ -8,18 +8,24 @@ import java.io.Serializable;
 public class SkippedModel implements Parcelable {
     private int tvImage;
     private int wordId;
+    private int dbNum;
+    private int unitNum;
     private int hardFlag;
+    private int easyFlag;
     private String tvWord;
     private String correctWord;
 
 
 
-    public SkippedModel(int image, int wordId, int hardFlag, String word, String correctWord){
+    public SkippedModel(int image, int wordId, int hardFlag, int easyFlag, int dbNum, int unitNum, String word, String correctWord){
         this.wordId = wordId;
         this.hardFlag = hardFlag;
         this.tvImage = image;
         this.tvWord = word;
         this.correctWord = correctWord;
+        this.dbNum = dbNum;
+        this.unitNum = unitNum;
+        this.easyFlag = easyFlag;
     }
 
     public SkippedModel(){}
@@ -30,6 +36,9 @@ public class SkippedModel implements Parcelable {
         tvImage = in.readInt();
         tvWord = in.readString();
         correctWord = in.readString();
+        dbNum = in.readInt();
+        unitNum = in.readInt();
+        easyFlag = in.readInt();
     }
 
     public static final Creator<SkippedModel> CREATOR = new Creator<SkippedModel>() {
@@ -56,8 +65,34 @@ public class SkippedModel implements Parcelable {
         dest.writeInt(tvImage);
         dest.writeString(tvWord);
         dest.writeString(correctWord);
+        dest.writeInt(dbNum);
+        dest.writeInt(unitNum);
+        dest.writeInt(easyFlag);
     }
 
+    public int getDbNum() {
+        return dbNum;
+    }
+
+    public void setDbNum(int dbNum) {
+        this.dbNum = dbNum;
+    }
+
+    public int getUnitNum() {
+        return unitNum;
+    }
+
+    public void setUnitNum(int unitNum) {
+        this.unitNum = unitNum;
+    }
+
+    public int getEasyFlag() {
+        return easyFlag;
+    }
+
+    public void setEasyFlag(int easyFlag) {
+        this.easyFlag = easyFlag;
+    }
 
     public int getWordId() {
         return wordId;

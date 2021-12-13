@@ -1,6 +1,7 @@
 package com.example.a4000essentialwordsbook1.SelectedUnitTab.StoryList;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.SpannableString;
@@ -18,6 +21,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,10 +34,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookOne;
@@ -47,6 +54,7 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.MarkedWords.MarkedWordActivity;
+import com.example.a4000essentialwordsbook1.Models.UnitModel;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.StoryList.StoryWordDialog.StoryWordTouchedDialog;
 import com.example.a4000essentialwordsbook1.Settings.SettingsPreferencesActivity;
 import com.example.a4000essentialwordsbook1.SpannableString.FindWordsListStory;
@@ -56,7 +64,9 @@ import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -68,12 +78,14 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
     private TextView storyContentTxtView, storyTitleTxt, perStoryTitle;
     private ImageView storyImageView;
     private String unitEngStory, farsiStoryTitle,unitStoryTitle;
+    private CardView btnCardView;
     private int unitNum, dbNum;
-    private int  unitImage;
-    private boolean flag = false;
+    private String  unitImage;
+    private boolean flag = true;
     private final String[] wordsList = new String[20];
     private final String[] phoneticList = new String[20];
     private ArrayList<WordModel> wordModelList;
+    private ArrayList<UnitModel> unitModelList;
     private SpanStringBold storyBolder;
 
     private final String[] perStringList = GlobalFonts.perStringList;
@@ -91,6 +103,7 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
     private final String stryFntTypeRadioBtnKey = SettingsPreferencesNotes.STORY_ENG_OR_PER_RADIO_BUTTON_KEY;
     private final String engListPositionKey = SettingsPreferencesNotes.STORY_ENG_PICKER_FONT_VALUE_KEY;
     private final String perListPositionKey = SettingsPreferencesNotes.STORY_PER_PICKER_FONT_VALUE_KEY;
+    private final String textBolderKey= SettingsPreferencesNotes.STORY_TEXT_BOLDER_KEY;
 
     SharedPreferences storyTextSizePreferences;
     private final String storyTextSizePreferencesName = SettingsPreferencesNotes.SETTINGS_STORY_TEXT_VIEW_SIZE_PREFERENCES;
@@ -136,7 +149,8 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
             handler.post(() ->{
                 storyTitleTxt.setText(unitStoryTitle);
                 perStoryTitle.setText(farsiStoryTitle);
-                storyImageView.setImageResource(unitImage);
+                //storyImageView.setImageResource(unitImage);
+                setImageResources();
             });});
         serviceThread.execute(() ->{
             wordsListReceiver();
@@ -144,12 +158,50 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
         });
         serviceThread.shutdown();
     }
+    private void setImageResources(){
+        final String appPath = requireActivity().getApplicationInfo().dataDir;
+        final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
+
+        final File imgMainPath = new File("Image Files");
+        final File wordImgPath = new File(imgMainPath, File.separator + "Unit Images");
+        final File wordImgBookPath = new File(wordImgPath, File.separator + "Book_" + dbNum);
+
+        final File imgName = new File(wordImgBookPath, File.separator + "." + new File(unitImage).getName());
+        final File imgFile = new File(Environment.getExternalStoragePublicDirectory(imageDir.toString()), imgName.toString());
+
+
+        if (imgFile.exists()){
+            Drawable imgDrawable = Drawable.createFromPath(imgFile.toString());
+            Glide.with(requireActivity())
+                    .load(imgDrawable)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(storyImageView);
+        }else {
+            Glide.with(requireActivity())
+                    .load(unitImage)
+                    .placeholder(R.drawable.loadimg)
+                    .error(R.drawable.loadimg)
+                    .into(storyImageView);
+        }
+    }
     private void textViewBolder(){
         storyBolder = new SpanStringBold();
         storyBolder.storyWordsBolder(unitEngStory, wordsList, phoneticList, wordModelList);
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        onResumeFunctions();
+    }
+    private void onResumeFunctions(){
+        storyTextViewValueSetter();
+        btnCardView.setOnClickListener(this);
+    }
+
+    @SuppressLint("Range")
     private void unitStoryReceiver(int unitId, int dbId){
         SQLiteDatabase storyDB = unitListDatabase(dbId).getReadableDatabase();
 
@@ -163,7 +215,7 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
                 unitEngStory = strCursor.getString(strCursor.getColumnIndex(DB_NOTES.UNIT_ENG_STORY));
                 unitStoryTitle = strCursor.getString(strCursor.getColumnIndex(DB_NOTES.UNIT_TITLE));
                 farsiStoryTitle = strCursor.getString(strCursor.getColumnIndex(DB_NOTES.FARSI_UNIT_TITLE));
-                unitImage = strCursor.getInt(strCursor.getColumnIndex(DB_NOTES.UNIT_IMG));
+                unitImage = strCursor.getString(strCursor.getColumnIndex(DB_NOTES.UNIT_IMG));
             }
         }
         assert strCursor != null;
@@ -171,6 +223,7 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
         strCursor.close();
 
     }
+    @SuppressLint("Range")
     private void wordsListReceiver(){
         int index = 0;
         if (unitNum == 0){
@@ -273,9 +326,11 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
         if (!flag) {
             String text = requireActivity().getString(R.string.story_content);
             storyContentTxtView.setText(text.trim());
+            perStoryTitle.setVisibility(View.GONE);
             flag = true;
         }else {
             spanString();
+            perStoryTitle.setVisibility(View.VISIBLE);
             flag = false;
         }
     }
@@ -293,10 +348,9 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
         perStoryTitle = view.findViewById(R.id.persian_title_story);
         storyImageView = view.findViewById(R.id.image_Story_fragment);
         storyContentTxtView = view.findViewById(R.id.text_view_content_story);
-        ImageButton btn = requireActivity().findViewById(R.id.click_button);
-        storyTextViewValueSetter();
-        btn.setOnClickListener(this);
+        btnCardView = requireActivity().findViewById(R.id.click_card_view);
     }
+
 
 
     private void storyTextViewValueSetter(){
@@ -306,21 +360,26 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
 
     private void storyTitlesValueSetter(){
         if (isLanEnglish()){
-            storyTitleTxt.setTypeface(typeface());
-            // ?? perStoryTitle.setTypeface(typeface());
+            storyTitleTxt.setTypeface(typeface(), textStyle());
         }else {
-            // ?? storyTitleTxt.setTypeface(typeface());
-            perStoryTitle.setTypeface(typeface());
+            perStoryTitle.setTypeface(typeface(), textStyle());
         }
         storyTitleTxt.setTextSize(txtSize());
         perStoryTitle.setTextSize(txtSize());
     }
     private void storyContentTextViewValueSetter(){
         storyContentTxtView.setTextSize(txtSize());
-        storyContentTxtView.setTypeface(typeface());
+        storyContentTxtView.setTypeface(typeface(), textStyle());
     }
     private Typeface typeface(){
         return ResourcesCompat.getFont(requireActivity(), txtViewFont());
+    }
+    private int textStyle(){
+        if (getBolderPreference()){
+            return Typeface.BOLD;
+        }else {
+            return Typeface.NORMAL;
+        }
     }
 
 
@@ -352,21 +411,7 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
         Intent settingIntent = new Intent(requireActivity(), SettingsPreferencesActivity.class);
         startActivity(settingIntent);
     }
-    private void reviewMarkedWordStartActivity(){
-        Intent reviewIntent = new Intent(requireActivity(), MarkedWordActivity.class);
-        startActivity(reviewIntent);
-    }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     public void onDestroy(){
@@ -374,20 +419,6 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
 
 
 
@@ -528,5 +559,10 @@ public class StoryListFragment extends Fragment implements View.OnClickListener{
     private int perFontVal(){
         storyFontTypePreferences = requireActivity().getSharedPreferences(storyFontTypePreferencesName, Context.MODE_PRIVATE);
         return storyFontTypePreferences.getInt(perListPositionKey, 0);
+    }
+
+    private boolean getBolderPreference(){
+        storyFontTypePreferences = requireActivity().getSharedPreferences(storyFontTypePreferencesName, Context.MODE_PRIVATE);
+        return storyFontTypePreferences.getBoolean(textBolderKey, false);
     }
 }

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/marked_word_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_2sdp"
     android:elevation="@dimen/_5sdp"
     app:cardCornerRadius="@dimen/_7sdp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    app:rippleColor="?rippleColor"
+    android:theme="@style/Recycler.Item.CardView.Theme">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,37 +24,43 @@
             android:layout_height="@dimen/_75sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_gravity="center"
+            app:rounded_radius="10"
             android:src="@drawable/peacock"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp">
 
 
             <TextView
                 android:id="@+id/marked_words_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/todo"/>
+                android:text="@string/todo"
+                android:textColor="?android:textColorPrimary"/>
 
             <TextView
                 android:id="@+id/marked_words_phonetic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/todo"
+                android:textColor="?android:textColorPrimary"
                 android:layout_toEndOf="@+id/marked_words_name"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:text="@string/todo"/>
+                android:layout_marginStart="@dimen/_3sdp"/>
 
             <TextView
                 android:id="@+id/marked_words_translate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/todo"
+                android:textColor="?android:textColorPrimary"
                 android:layout_below="@+id/marked_words_name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="@dimen/_3sdp"
-                android:visibility="invisible"
-                android:text="@string/todo"/>
+                android:visibility="invisible"/>
 
 
         </RelativeLayout>
@@ -87,4 +95,4 @@
 
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -8,25 +8,28 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.a4000essentialwordsbook1.Linsteners.TextProvider;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 
+import java.util.ArrayList;
 
 
 public class ReviewWordFragmentPagerAdapter extends FragmentStateAdapter {
     private final TextProvider mProvider;
     private long baseId = 0;
     private static boolean[] shwFarsiFlags;
-    private static WordModel models;
+    private static ArrayList<WordModel> models;
 
     public ReviewWordFragmentPagerAdapter(Lifecycle lifecycle,
+                                          ArrayList<WordModel> listModel,
                                           boolean[] shwFarsiFlags,
                                           @NonNull FragmentManager fm,
                                           TextProvider mProvider) {
         super(fm, lifecycle);
         this.mProvider = mProvider;
+        ReviewWordFragmentPagerAdapter.models = listModel;
         ReviewWordFragmentPagerAdapter.shwFarsiFlags = shwFarsiFlags;
     }
 
 
-    public static void listChanger(WordModel list){models = list;}
+    public static void listChanger(ArrayList<WordModel> list){models = list;}
     public static void shwFarsiFlagsList(boolean[] shwFlagsLists){
         shwFarsiFlags = shwFlagsLists;
     }
@@ -36,7 +39,7 @@ public class ReviewWordFragmentPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return FragmentReviewWord.newInstance(mProvider.getWordModel(models, position), shwFarsiFlags);
+        return FragmentReviewWord.newInstance(models.get(position), shwFarsiFlags);
     }
 
     @Override
@@ -47,7 +50,8 @@ public class ReviewWordFragmentPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return mProvider.getCount();
+        return models.size();
+        //return mProvider.getCount();
     }
 
     public void notifyChangeInPosition(int n) {

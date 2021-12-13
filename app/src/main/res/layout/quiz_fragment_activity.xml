@@ -47,10 +47,11 @@
                 android:gravity="bottom">
 
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/eng_to_per_quiz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:theme="@style/Media.Player.CardView.Theme"
                     android:layout_margin="@dimen/_7sdp"
                     app:cardCornerRadius="@dimen/_3sdp">
 
@@ -76,14 +77,16 @@
                             android:layout_centerInParent="true"/>
 
                     </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/per_to_eng_quiz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:theme="@style/Media.Player.CardView.Theme"
                     android:layout_below="@id/eng_to_per_quiz"
                     android:layout_margin="@dimen/_7sdp"
                     app:cardCornerRadius="@dimen/_3sdp">
+
 
 
                     <RelativeLayout
@@ -107,11 +110,12 @@
                             android:gravity="center"
                             android:layout_centerInParent="true"/>
                     </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/photo_word_quiz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:theme="@style/Media.Player.CardView.Theme"
                     android:layout_below="@+id/per_to_eng_quiz"
                     android:layout_margin="@dimen/_7sdp"
                     app:cardCornerRadius="@dimen/_3sdp">
@@ -138,8 +142,12 @@
                             android:gravity="center"
                             android:layout_centerInParent="true"/>
                     </RelativeLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
+
+
+
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
+
 </androidx.core.widget.NestedScrollView>

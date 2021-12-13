@@ -2,12 +2,12 @@ package com.example.a4000essentialwordsbook1.Models;
 
 public class UnitModel {
     private int uId;
-    private int unitImg;
-    private int unitAudio;
+    private String unitImg;
+    private String unitAudio;
     private String unitTitle;
     private String unitNumber;
 
-    public UnitModel(int id, int img, int audio,  String title, String number){
+    public UnitModel(int id, String img, String audio,  String title, String number){
         this.uId = id;
         this.unitImg = img;
         this.unitAudio = audio;
@@ -25,13 +25,13 @@ public class UnitModel {
     public String getUnitNumber() {
         return unitNumber;
     }
-    public int getUnitImg() {
+    public String getUnitImg() {
         return unitImg;
     }
-    public int getUnitAudio(){return  unitAudio;}
+    public String getUnitAudio(){return  unitAudio;}
 
     public void setuId(int unitId){this.uId =unitId;}
-    public void setUnitImg(int unitImg) {
+    public void setUnitImg(String unitImg) {
         this.unitImg = unitImg;
     }
     public void setUnitTitle(String unitTitle) {
@@ -40,5 +40,5 @@ public class UnitModel {
     public void setUnitNumber(String unitNumber) {
         this.unitNumber = unitNumber;
     }
-    public void setUnitAudio(int unitAudio){this.unitAudio = unitAudio;}
+    public void setUnitAudio(String unitAudio){this.unitAudio = unitAudio;}
 }

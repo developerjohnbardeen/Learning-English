@@ -1,6 +1,8 @@
 package com.example.a4000essentialwordsbook1.SearchWordsClasses;
 
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -26,18 +28,26 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.R;
+import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class SearchWordsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchWordsActivity extends AppCompatActivity implements View.OnClickListener, ActivityStarterInterface {
     private RecyclerView searchRecyclerView;
-    private SearchWordsAdapter searchAdapter;
     private AppCompatEditText searchEditText;
     private ImageView backButton, clearAllButton;
     private ArrayList<WordModel> searchList;
+    private final String strDbNumber = ExtraNotes.DB_NUMBER;
+    private final String strUnitNumber = ExtraNotes.UNIT_NUMBER;
+    private final String strWordId = ExtraNotes.WORD_ID;
+    private final String autoPlayFlagListKey = ExtraNotes.AUTO_PLAY_BOOLEAN_LIST;
+    private final String autoPlayFlagKey = ExtraNotes.AUTO_PLAY_FLAG_KEY;
 
 
     @Override
@@ -108,11 +118,14 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         callingDataBaseBookSixForSearching(searchWord);*/
     }
 
+    @SuppressLint("Range")
     private void callingDataBaseBookOneForSearching(String searchWord){
         WordDatabaseBookOne databaseBookOne = new WordDatabaseBookOne(this);
         SQLiteDatabase db = databaseBookOne.getReadableDatabase();
         Cursor searchCursor = null;
+        String finalWord;
         boolean isWordExists;
+        boolean isFarsiExist;
 
         for (int i = 1 ; i <= 30 ; i++){
             searchCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE +i,
@@ -126,9 +139,15 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
                     WordModel model = new WordModel();
 
                     String word = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.WORD));
+                    String wordFarsi = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+                    int hardInt = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+                    int easyInt = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.EASY_FLAG));
+
                     isWordExists = word.contains(searchWord);
-                    if (isWordExists) {
-                        queryCursor(searchCursor, model, word);
+                    isFarsiExist = wordFarsi.contains(searchWord);
+                    if (isWordExists || isFarsiExist) {
+                        if (isWordExists){finalWord = word;}else { finalWord = wordFarsi;}
+                        queryCursor(searchCursor, model, finalWord);
                     }
                 }
             }
@@ -155,14 +174,17 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    @SuppressLint("Range")
     private void callingDataBaseBookTwoForSearching(String searchWord){
-        WordDatabaseBookTwo database = new WordDatabaseBookTwo(this);
-        SQLiteDatabase db = database.getReadableDatabase();
+        WordDatabaseBookTwo databaseBookOne = new WordDatabaseBookTwo(this);
+        SQLiteDatabase db = databaseBookOne.getReadableDatabase();
         Cursor searchCursor = null;
+        String finalWord;
         boolean isWordExists;
+        boolean isFarsiExist;
 
         for (int i = 1 ; i <= 30 ; i++){
-            searchCursor = db.query("UNIT_" +i,
+            searchCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE +i,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.WORD_IMG,
                             DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
                             DB_NOTES.EASY_FLAG, DB_NOTES.HARD_FLAG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER},
@@ -173,9 +195,13 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
                     WordModel model = new WordModel();
 
                     String word = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.WORD));
+                    String wordFarsi = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+
                     isWordExists = word.contains(searchWord);
-                    if (isWordExists) {
-                        queryCursor(searchCursor, model, word);
+                    isFarsiExist = wordFarsi.contains(searchWord);
+                    if (isWordExists || isFarsiExist) {
+                        if (isWordExists){finalWord = word;}else { finalWord = wordFarsi;}
+                        queryCursor(searchCursor, model, finalWord);
                     }
                 }
             }
@@ -186,14 +212,17 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         db.close();
 
     }
+    @SuppressLint("Range")
     private void callingDataBaseBookThreeForSearching(String searchWord){
         WordDatabaseBookThree database = new WordDatabaseBookThree(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor searchCursor = null;
+        String finalWord;
         boolean isWordExists;
+        boolean isFarsiExist;
 
         for (int i = 1 ; i <= 30 ; i++){
-            searchCursor = db.query("UNIT_" +i,
+            searchCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE +i,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.WORD_IMG,
                             DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
                             DB_NOTES.EASY_FLAG, DB_NOTES.HARD_FLAG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER},
@@ -204,9 +233,13 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
                     WordModel model = new WordModel();
 
                     String word = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.WORD));
+                    String wordFarsi = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+
                     isWordExists = word.contains(searchWord);
-                    if (isWordExists) {
-                        queryCursor(searchCursor, model, word);
+                    isFarsiExist = wordFarsi.contains(searchWord);
+                    if (isWordExists || isFarsiExist) {
+                        if (isWordExists){finalWord = word;}else { finalWord = wordFarsi;}
+                        queryCursor(searchCursor, model, finalWord);
                     }
                 }
             }
@@ -217,14 +250,17 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         db.close();
 
     }
+    @SuppressLint("Range")
     private void callingDataBaseBookFourForSearching(String searchWord){
         WordDatabaseBookFour database = new WordDatabaseBookFour(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor searchCursor = null;
+        String finalWord;
         boolean isWordExists;
+        boolean isFarsiExist;
 
         for (int i = 1 ; i <= 30 ; i++){
-            searchCursor = db.query("UNIT_" +i,
+            searchCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE +i,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.WORD_IMG,
                             DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
                             DB_NOTES.EASY_FLAG, DB_NOTES.HARD_FLAG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER},
@@ -235,9 +271,13 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
                     WordModel model = new WordModel();
 
                     String word = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.WORD));
+                    String wordFarsi = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+
                     isWordExists = word.contains(searchWord);
-                    if (isWordExists) {
-                        queryCursor(searchCursor, model, word);
+                    isFarsiExist = wordFarsi.contains(searchWord);
+                    if (isWordExists || isFarsiExist) {
+                        if (isWordExists){finalWord = word;}else { finalWord = wordFarsi;}
+                        queryCursor(searchCursor, model, finalWord);
                     }
                 }
             }
@@ -248,14 +288,17 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         db.close();
 
     }
+    @SuppressLint("Range")
     private void callingDataBaseBookFiveForSearching(String searchWord){
         WordDatabaseBookFive database = new WordDatabaseBookFive(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor searchCursor = null;
+        String finalWord;
         boolean isWordExists;
+        boolean isFarsiExist;
 
         for (int i = 1 ; i <= 30 ; i++){
-            searchCursor = db.query("UNIT_" +i,
+            searchCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE +i,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.WORD_IMG,
                             DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
                             DB_NOTES.EASY_FLAG, DB_NOTES.HARD_FLAG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER},
@@ -266,9 +309,13 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
                     WordModel model = new WordModel();
 
                     String word = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.WORD));
+                    String wordFarsi = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+
                     isWordExists = word.contains(searchWord);
-                    if (isWordExists) {
-                        queryCursor(searchCursor, model, word);
+                    isFarsiExist = wordFarsi.contains(searchWord);
+                    if (isWordExists || isFarsiExist) {
+                        if (isWordExists){finalWord = word;}else { finalWord = wordFarsi;}
+                        queryCursor(searchCursor, model, finalWord);
                     }
                 }
             }
@@ -277,17 +324,18 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         assert searchCursor != null;
         searchCursor.close();
         db.close();
-
     }
-
+    @SuppressLint("Range")
     private void callingDataBaseBookSixForSearching(String searchWord){
         WordDatabaseBookSix database = new WordDatabaseBookSix(this);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor searchCursor = null;
+        String finalWord;
         boolean isWordExists;
+        boolean isFarsiExist;
 
         for (int i = 1 ; i <= 30 ; i++){
-            searchCursor = db.query("UNIT_" +i,
+            searchCursor = db.query(DB_NOTES.NEUTRAL_WORD_TABLE +i,
                     new String[]{DB_NOTES.WORD_ID, DB_NOTES.WORD, DB_NOTES.PHONETIC_WORD, DB_NOTES.TRANSLATE_WORD, DB_NOTES.WORD_IMG,
                             DB_NOTES.DEFINITION_WORD, DB_NOTES.DEFINITION_TRANSLATE_WORD, DB_NOTES.EXAMPLE_WORD, DB_NOTES.EXAMPLE_TRANSLATE_WORD,
                             DB_NOTES.EASY_FLAG, DB_NOTES.HARD_FLAG, DB_NOTES.BOOK_NUMBER, DB_NOTES.UNIT_NUMBER},
@@ -298,9 +346,13 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
                     WordModel model = new WordModel();
 
                     String word = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.WORD));
+                    String wordFarsi = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+
                     isWordExists = word.contains(searchWord);
-                    if (isWordExists) {
-                        queryCursor(searchCursor, model, word);
+                    isFarsiExist = wordFarsi.contains(searchWord);
+                    if (isWordExists || isFarsiExist) {
+                        if (isWordExists){finalWord = word;}else { finalWord = wordFarsi;}
+                        queryCursor(searchCursor, model, finalWord);
                     }
                 }
             }
@@ -312,23 +364,25 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    @SuppressLint("Range")
     private void queryCursor(Cursor searchCursor, WordModel model, String word){
 
-        String phonetic = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
-        String translateWord = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
-        String definition = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
-        String translateDefinition = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
-        String example = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
-        String translateExample = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
-        int id = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.WORD_ID));
-        int image = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.WORD_IMG));
-        int hardFlag = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.HARD_FLAG));
-        int easyFlag = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.EASY_FLAG));
-        int bookNum = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
-        int unitNum = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
+        final String phonetic = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.PHONETIC_WORD));
+        final String translateWord = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.TRANSLATE_WORD));
+        final String definition = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.DEFINITION_WORD));
+        final String translateDefinition = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.DEFINITION_TRANSLATE_WORD));
+        final String example = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.EXAMPLE_WORD));
+        final String translateExample = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.EXAMPLE_TRANSLATE_WORD));
+        final String image = searchCursor.getString(searchCursor.getColumnIndex(DB_NOTES.WORD_IMG));
+        final int id = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.WORD_ID));
+        final int hardFlag = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.HARD_FLAG));
+        final int easyFlag = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.EASY_FLAG));
+        final int bookNum = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.BOOK_NUMBER));
+        final int unitNum = searchCursor.getInt(searchCursor.getColumnIndex(DB_NOTES.UNIT_NUMBER));
 
         model.setId(id);
-        model.setWordImage(image);
+        //model.setWordImage(image);
+        model.setImgUri(image);
         model.setHardFlag(hardFlag);
         model.setEasyFlag(easyFlag);
         model.setBookNum(bookNum);
@@ -344,7 +398,7 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
         searchList.add(model);
     }
     private void initializeSearchRecyclerView(){
-        SearchWordsAdapter adapter = new SearchWordsAdapter(this, searchList);
+        SearchWordsAdapter adapter = new SearchWordsAdapter(this, searchList, this);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         searchRecyclerView.setAdapter(adapter);
     }
@@ -383,4 +437,16 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
             searchEditText.setText("");
         }
     }
+
+    @Override
+    public void activityInterface(int position) {
+        Intent intent = new Intent(this, WordSlideCardViewActivity.class);
+        intent.putExtra(strDbNumber, dbNumber(position));
+        intent.putExtra(strUnitNumber, unitNumber(position));
+        intent.putExtra(strWordId, itemPosition(position));
+        startActivity(intent);
+    }
+    private int dbNumber(int position){return searchList.get(position).getBookNum();}
+    private int unitNumber(int position){return searchList.get(position).getUnitNum();}
+    private int itemPosition(int position){return searchList.get(position).getId() - 1;}
 }

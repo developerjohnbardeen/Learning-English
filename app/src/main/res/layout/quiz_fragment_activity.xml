@@ -52,6 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/Media.Player.CardView.Theme"
+                    app:rippleColor="?rippleColor"
                     android:layout_margin="@dimen/_7sdp"
                     app:cardCornerRadius="@dimen/_3sdp">
 
@@ -83,6 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/Media.Player.CardView.Theme"
+                    app:rippleColor="?rippleColor"
                     android:layout_below="@id/eng_to_per_quiz"
                     android:layout_margin="@dimen/_7sdp"
                     app:cardCornerRadius="@dimen/_3sdp">
@@ -116,6 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/Media.Player.CardView.Theme"
+                    app:rippleColor="?rippleColor"
                     android:layout_below="@+id/per_to_eng_quiz"
                     android:layout_margin="@dimen/_7sdp"
                     app:cardCornerRadius="@dimen/_3sdp">

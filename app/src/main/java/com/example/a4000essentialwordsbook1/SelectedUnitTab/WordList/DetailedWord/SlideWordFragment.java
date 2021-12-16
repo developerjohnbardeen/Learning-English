@@ -17,21 +17,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.Linsteners.AudioPlayerListener;
-import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
+import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.DisplayTranslationInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.EditedTranslationInterface;
 import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AddNoteInterFace;
 import com.example.a4000essentialwordsbook1.SpannableString.TextViewBolder;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -53,7 +56,7 @@ public class SlideWordFragment extends Fragment implements View.OnClickListener,
     private TextView defTitle, exmplTitle;
     private ImageButton imgTrnBtn;
     private boolean flag = false;
-    private boolean autoTrnFlag = false;
+    private final boolean autoTrnFlag = false;
     private boolean[] shwFarsiFlags;
     private boolean shwAtAll, shwWordFlag, shwDefFlag, shwExmplFlag;
     private ArrayList<Integer> markedFlagList;

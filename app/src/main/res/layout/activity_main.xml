@@ -275,8 +275,11 @@
         android:layout_gravity="start"
         android:theme="@style/NavigationTheme"
         app:menu="@menu/sub_nav_menu_drawer"
+        android:paddingStart="@dimen/_1sdp"
+        android:paddingEnd="@dimen/_15sdp"
         app:itemIconTint="?android:textColorPrimary"
-        app:itemTextColor="?android:textColorPrimary"/>
+        app:itemTextColor="?android:textColorPrimary"
+        app:subheaderColor="?android:textColorPrimary" />
     <!--app:headerLayout="@layout/nav_header_layout"-->
 </androidx.drawerlayout.widget.DrawerLayout>
 

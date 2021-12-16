@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    android:gravity="center">
+    android:background="?android:backgroundTint"
+    android:backgroundTint="?android:backgroundTint"
+    android:gravity="center"
+    android:theme="@style/Custom.Dialog.Theme">
 
     <TextView
         android:id="@+id/settings_text_font_type_title"
@@ -12,9 +15,9 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_choose_text_font_type_title"
         android:textSize="@dimen/_20ssp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="start"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp" />
 
     <RelativeLayout
         android:id="@+id/sample_text_views_layout"
@@ -30,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_sample_text_definition_title"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/_12ssp"
             android:gravity="center"
             android:layout_margin="@dimen/_5sdp"
@@ -42,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" : "
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/_12ssp"
             android:gravity="center"
             android:layout_margin="@dimen/_5sdp"
@@ -53,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/afraid_defi"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/_12ssp"
             android:gravity="center"
             android:layout_margin="@dimen/_5sdp"
@@ -64,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/afraid_dfntn_trnslt"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/_12ssp"
             android:gravity="center"
             android:layout_margin="@dimen/_5sdp"
@@ -88,7 +91,9 @@
             android:id="@+id/settings_english_font_type_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/spinner_center_view"/>
+            android:background="?android:backgroundTint"
+            android:backgroundTint="?android:backgroundTint"
+            android:layout_toStartOf="@+id/spinner_center_view" />
 
         <View
             android:id="@+id/spinner_center_view"
@@ -100,7 +105,9 @@
             android:id="@+id/settings_persian_font_type_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/spinner_center_view"/>
+            android:background="?android:backgroundTint"
+            android:backgroundTint="?android:backgroundTint"
+            android:layout_toEndOf="@+id/spinner_center_view" />
 
     </RelativeLayout>
 
@@ -118,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/eng_text_bolder_str"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="center"
         android:layout_toStartOf="@+id/english_check_box_bolder"
         android:layout_alignTop="@+id/english_check_box_bolder"
@@ -138,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/per_text_bolder_str"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="center"
         android:layout_toStartOf="@+id/persian_check_box_bolder"
         android:layout_alignTop="@+id/persian_check_box_bolder"
@@ -154,43 +161,63 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_below="@id/persian_text_view_bolder">
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/story_font_type_confirmation_settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/confirmation"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:padding="@dimen/_10sdp"
             android:layout_alignParentEnd="true"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_toEndOf="@+id/story_font_center_view"
+            android:background="@drawable/dialog_text_view_ripple_effect"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/confirmation"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
         <View
             android:id="@+id/story_font_center_view"
             android:layout_width="1dp"
             android:layout_height="1dp"
-            android:layout_centerInParent="true"/>
-        <TextView
+            android:layout_centerInParent="true" />
+
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/story_font_type_settings_reject_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reject_str"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:padding="@dimen/_10sdp"
-            android:gravity="center"
             android:layout_toStartOf="@+id/story_font_center_view"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_alignParentStart="true"
             android:clickable="true"
-            android:focusable="true"/>
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/reject_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 </RelativeLayout>

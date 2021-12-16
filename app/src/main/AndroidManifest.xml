@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -60,8 +61,9 @@
         <activity android:name=".SearchWordsClasses.SearchWordsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
-        <activity android:name=".Settings.SettingsPreferencesActivity"
-            android:theme="@style/Theme.4000EssentialWordsBook1"/>
+        <activity
+            android:name=".Settings.SettingsPreferencesActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
         <activity android:name=".DownloadClasses.DownloadFilesActivity"/>
 

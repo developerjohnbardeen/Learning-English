@@ -35,7 +35,6 @@
                 android:foreground="?attr/selectableItemBackground"
                 app:cardCornerRadius="@dimen/_7sdp"
                 app:cardElevation="@dimen/_1sdp"
-                android:backgroundTint="#E1EFEA"
                 android:theme="@style/Custom.WordDetailed.Material.CardView.Theme">
 
                 <RelativeLayout
@@ -155,7 +154,7 @@
                         app:rippleColor="?rippleColor"
                         android:padding="@dimen/_10sdp"
                         app:cardCornerRadius="@dimen/_10sdp"
-                        app:cardElevation="2dp">
+                        app:cardElevation="@dimen/_2sdp">
 
                         <RelativeLayout
                             android:id="@+id/word_detailed_definition_layout"

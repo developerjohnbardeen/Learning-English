@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +15,11 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
-import java.security.PrivateKey;
+public class SettingsQuizTimeDurationDialogFragment extends DialogFragment implements View.OnClickListener {
 
-public class SettingsQuizTimeDurationDialogFragment extends DialogFragment implements View.OnClickListener{
-
-    private TextView cnfmBtn, rjctBtn, cclTimerBtn;
+    private MaterialCardView cnfmBtn, rjctBtn, cclTimerBtn;
     private NumberPicker numberPicker;
     private int intTime;
     private AppCompatCheckBox quzTimerCheckBox;
@@ -31,7 +29,7 @@ public class SettingsQuizTimeDurationDialogFragment extends DialogFragment imple
     private final String quizDurationKey = SettingsPreferencesNotes.QUIZ_TIME_DURATION_KEY;
     private final String cancelTimerKey = SettingsPreferencesNotes.CANCEL_QUIZ_TIMER_KEY;
 
-    public static SettingsQuizTimeDurationDialogFragment newInstance(){
+    public static SettingsQuizTimeDurationDialogFragment newInstance() {
         SettingsQuizTimeDurationDialogFragment quizDurationFragment = new SettingsQuizTimeDurationDialogFragment();
         return quizDurationFragment;
     }

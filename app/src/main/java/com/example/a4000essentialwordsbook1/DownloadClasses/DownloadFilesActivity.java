@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -104,7 +105,6 @@ public class DownloadFilesActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_files);
         allFunctions();
-
     }
     private void allFunctions(){
         findViewsById();
@@ -1385,7 +1385,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         audioRunOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(1);
+                            int count = getAudioSize(1);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 1);
@@ -1406,7 +1406,7 @@ public class DownloadFilesActivity extends AppCompatActivity
                 try {
                     unregisterReceiver(audioBroadcastReceiver_ONE(0, 0));
                 }catch (Exception e){
-                    Log.i("closBroadCastAudioWordLog", "" + e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -1458,7 +1458,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         runOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(1);
+                            int count = getAudioSize(1);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 1);
@@ -1560,7 +1560,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         audioRunOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(2);
+                            int count = getAudioSize(2);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 2);
@@ -1581,7 +1581,7 @@ public class DownloadFilesActivity extends AppCompatActivity
                 try {
                     unregisterReceiver(audioBroadcastReceiver_TWO(0, 0));
                 }catch (Exception e){
-                    Log.i("closBroadCastAudioWordLog", "" + e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -1633,7 +1633,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         runOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(2);
+                            int count = getAudioSize(2);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 2);
@@ -1734,7 +1734,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         audioRunOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(3);
+                            int count = getAudioSize(3);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 3);
@@ -1755,7 +1755,7 @@ public class DownloadFilesActivity extends AppCompatActivity
                 try {
                     unregisterReceiver(audioBroadcastReceiver_THREE(0, 0));
                 }catch (Exception e){
-                    Log.i("closBroadCastAudioWordLog", "" + e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -1807,7 +1807,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         runOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(3);
+                            int count = getAudioSize(3);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 3);
@@ -1907,7 +1907,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         audioRunOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(4);
+                            int count = getAudioSize(4);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 4);
@@ -1928,7 +1928,7 @@ public class DownloadFilesActivity extends AppCompatActivity
                 try {
                     unregisterReceiver(audioBroadcastReceiver_FOUR(0, 0));
                 }catch (Exception e){
-                    Log.i("closBroadCastAudioWordLog", "" + e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -1980,7 +1980,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         runOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(4);
+                            int count = getAudioSize(4);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 4);
@@ -2081,7 +2081,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         audioRunOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(5);
+                            int count = getAudioSize(5);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 5);
@@ -2102,7 +2102,7 @@ public class DownloadFilesActivity extends AppCompatActivity
                 try {
                     unregisterReceiver(audioBroadcastReceiver_FIVE(0, 0));
                 }catch (Exception e){
-                    Log.i("closBroadCastAudioWordLog", "" + e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -2154,7 +2154,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         runOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(5);
+                            int count = getAudioSize(5);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 5);
@@ -2255,7 +2255,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         audioRunOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(5);
+                            int count = getAudioSize(5);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 5);
@@ -2276,7 +2276,7 @@ public class DownloadFilesActivity extends AppCompatActivity
                 try {
                     unregisterReceiver(audioBroadcastReceiver_SIX(0, 0));
                 }catch (Exception e){
-                    Log.i("closBroadCastAudioWordLog", "" + e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -2328,7 +2328,7 @@ public class DownloadFilesActivity extends AppCompatActivity
 
                     if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL){
                         runOnUiThread.post(() -> {
-                            int count = (int) getAudioSize(6);
+                            int count = getAudioSize(6);
                             count++;
                             one_audioLeftTxt.setText(String.valueOf(count));
                             setAudioSize(count, 6);

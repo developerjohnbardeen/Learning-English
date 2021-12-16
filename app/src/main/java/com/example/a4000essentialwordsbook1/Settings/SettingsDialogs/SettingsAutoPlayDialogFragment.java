@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,14 +14,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
-public class SettingsAutoPlayDialogFragment extends DialogFragment implements View.OnClickListener{
+public class SettingsAutoPlayDialogFragment extends DialogFragment implements View.OnClickListener {
     private AppCompatCheckBox plyAllCheckBox, plyWrdCheckBox, plyDefCheckBox, plyExmplCheckBox;
     private AppCompatCheckBox settingsCheckBox;
 
     private final boolean trueFlag = true;
     private final boolean falseFlag = false;
-    private TextView confirmationTxtView, rejectTxtView;
+    private MaterialCardView confirmationTxtView, rejectTxtView;
 
     private SharedPreferences plyAudioPreferences;
     private final String plyAudioPreferenceName = SettingsPreferencesNotes.SETTINGS_AUTO_PLAY_AUDIO_PREFERENCES;

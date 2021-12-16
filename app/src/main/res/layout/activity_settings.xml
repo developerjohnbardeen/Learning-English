@@ -20,7 +20,7 @@
                 android:text="@string/application_category"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?android:textColorPrimary"
                 android:layout_gravity="end"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
@@ -33,9 +33,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="gone"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/auto_dark_mode_title_text_view"
@@ -43,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/night_mode_title"
                     android:textSize="@dimen/_15sdp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
@@ -55,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/night_mode_summary"
                     android:textSize="@dimen/_11ssp"
+                    android:textColor="?android:textColorPrimary"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/auto_dark_mode_title_text_view"
                     android:layout_marginTop="@dimen/_15sdp"/>
@@ -80,9 +83,13 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/settings_layout_ripple_effect"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:gravity="center"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_auto_play_audio_title_text_View"
@@ -90,9 +97,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/auto_play_words_title"
                     android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/black"
+                    android:layout_alignParentTop="true"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
+                    android:textColor="?android:textColorPrimary"
                     android:layout_alignParentEnd="true"/>
 
                 <TextView
@@ -101,10 +108,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/auto_play_words_summary"
                     android:textSize="@dimen/_11ssp"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/settings_auto_play_audio_title_text_View"
                     android:layout_toEndOf="@+id/settings_auto_play_check_box"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:textColor="?android:textColorSecondary" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/settings_auto_play_check_box"
@@ -123,9 +130,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_play_word_audio_story_title_text_view"
@@ -133,20 +142,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/play_word_audio_story_title_str"
                     android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="@dimen/_1sdp"/>
+                    android:textStyle="bold"
+                    android:textColor="?android:textColorPrimary" />
+
                 <TextView
                     android:id="@+id/settings_play_word_audio_story_summary_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/play_word_audio_story_summary_str"
                     android:textSize="@dimen/_11ssp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/settings_play_word_audio_story_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorSecondary" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/settings_play_story_bold_words_check_box"
@@ -166,9 +174,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_display_translation_title_text_view"
@@ -176,19 +186,18 @@
                     android:layout_height="wrap_content"
                     android:text="@string/display_translation_title"
                     android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_alignParentEnd="true" />
 
                 <TextView
                     android:id="@+id/settings_display_translation_summary_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/display_translation_summary"
+                    android:textColor="?android:textColorSecondary"
                     android:textSize="@dimen/_11ssp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_below="@+id/settings_display_translation_title_text_view"
                     android:layout_toEndOf="@+id/settings_display_translation_check_box"/>
 
@@ -209,13 +218,14 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:background="@color/gary"/>
+                android:background="?android:textColorSecondary"
+                android:backgroundTint="?android:textColorSecondary" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_font_settings_str"
                 android:textSize="@dimen/_15sdp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?android:textColorPrimary"
                 android:textStyle="bold"
                 android:layout_gravity="end"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -228,31 +238,36 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/mines5mdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/mines5mdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_texT_font_type_title_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_view_font_title"
-                    android:textSize="@dimen/_15sdp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="@dimen/_1sdp"/>
+                    android:layout_marginStart="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginEnd="@dimen/_1sdp"
+                    android:layout_marginBottom="@dimen/_1sdp"
+                    android:text="@string/text_view_font_title"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/settings_texT_font_type_summary_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_font_summary"
                     android:textSize="@dimen/_10sdp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/settings_texT_font_type_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorSecondary" />
 
             </RelativeLayout>
 
@@ -262,9 +277,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_texT_font_type_story_title_text_view"
@@ -272,20 +289,20 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_story_font_type_title_str"
                     android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/_1sdp"/>
+
                 <TextView
                     android:id="@+id/settings_texT_font_type_story_summary_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_story_font_type_summary_str"
                     android:textSize="@dimen/_10ssp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/settings_texT_font_type_story_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorSecondary" />
 
             </RelativeLayout>
 
@@ -296,13 +313,14 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:background="@color/gary"/>
+                android:background="?android:textColorSecondary"
+                android:backgroundTint="?android:textColorSecondary" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_size_settings_str"
                 android:textSize="@dimen/_15sdp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?android:textColorPrimary"
                 android:textStyle="bold"
                 android:layout_gravity="end"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -317,10 +335,12 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_gravity="top"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/mines5mdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/mines5mdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_text_size_title_text_view"
@@ -328,9 +348,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_size_title"
                     android:textSize="@dimen/_15sdp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/_1sdp"/>
 
@@ -340,10 +359,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_size_summary"
                     android:textSize="@dimen/_10sdp"
-
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/settings_text_size_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorSecondary" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -352,9 +370,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_text_size_story_title_text_view"
@@ -362,9 +382,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_story_size_title_str"
                     android:textSize="@dimen/_15sdp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/_1sdp"/>
 
@@ -374,9 +393,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_story_size_summary_str"
                     android:textSize="@dimen/_10sdp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/settings_text_size_story_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorSecondary" />
             </RelativeLayout>
 
             <View
@@ -385,13 +404,14 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:background="@color/gary"/>
+                android:background="?android:textColorSecondary"
+                android:backgroundTint="?android:textColorSecondary" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_others_settings_str"
                 android:textSize="@dimen/_15sdp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?android:textColorPrimary"
                 android:textStyle="bold"
                 android:layout_gravity="end"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -404,9 +424,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/settings_quiz_timer_title_text_view"
@@ -414,10 +436,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/quiz_timer_duration_title"
                     android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
                     android:layout_toEndOf="@+id/quiz_timer_duration_check_box"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/_1sdp"/>
 
@@ -427,9 +448,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/quiz_timer_duration_summary"
                     android:textSize="@dimen/_11ssp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/settings_quiz_timer_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorSecondary" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/quiz_timer_duration_check_box"
@@ -449,9 +470,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/restore_settings_title_text_view"
@@ -459,20 +482,20 @@
                     android:layout_height="wrap_content"
                     android:text="@string/restore_settings_title_str"
                     android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/_1sdp"/>
+
                 <TextView
                     android:id="@+id/restore_settings_summary_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/restore_settings_Summary_str"
                     android:textSize="@dimen/_11ssp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/restore_settings_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorSecondary" />
 
             </RelativeLayout>
 
@@ -482,9 +505,11 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:background="@drawable/settings_layout_ripple_effect"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/download_settings_title_text_view"
@@ -492,20 +517,20 @@
                     android:layout_height="wrap_content"
                     android:text="@string/download_file_title_str"
                     android:textSize="@dimen/_15ssp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/_1sdp"/>
+
                 <TextView
                     android:id="@+id/download_settings_summary_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/download_file_summary_str"
                     android:textSize="@dimen/_11ssp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/download_settings_title_text_view"
-                    android:layout_marginTop="@dimen/_15sdp"/>
+                    android:layout_alignParentEnd="true"
+                    android:textColor="?android:textColorPrimary" />
 
             </RelativeLayout>
 

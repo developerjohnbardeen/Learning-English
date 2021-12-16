@@ -9,36 +9,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
+
 import com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords.MainReviewMarkedWordActivity;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.R;
-import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AutoPlayInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AutoPlayInterface;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
-import com.google.android.exoplayer2.decoder.DecoderReuseEvaluation;
-import com.nineoldandroids.animation.AnimatorSet;
+import com.google.android.material.card.MaterialCardView;
 import com.nineoldandroids.animation.ValueAnimator;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 
-
-public class AutoPlayDialogFragment extends DialogFragment implements View.OnClickListener{
-    private TextView autoPlayBtn, rejectBtn, saveAndPlayBtn;
+public class AutoPlayDialogFragment extends DialogFragment implements View.OnClickListener {
+    private MaterialCardView autoPlayBtn, rejectBtn, saveAndPlayBtn;
     private TextView replyWordsTextView;
 
     private RelativeLayout tooSlowLayout, slowLayout, normalLayout, fastLayout, tooFastLayout;

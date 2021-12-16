@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,11 +14,12 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
 public class PlayWordsAudioStoryFragment extends DialogFragment implements View.OnClickListener {
     private AppCompatCheckBox plyAllWordCheckBox, plyWordCheckBox, plyDefCheckBox, plyExmplCheckBox;
     private AppCompatCheckBox anyPlayedCheckBox;
-    private TextView confirmBtn, rejectBtn;
+    private MaterialCardView confirmBtn, rejectBtn;
 
     private SharedPreferences playWordAudioPreferences;
     private final String plyWordAudioStoryPreferencesName = SettingsPreferencesNotes.PLAY_WORDS_AUDIO_STORY_PREFERENCES_NAME;
@@ -28,7 +28,7 @@ public class PlayWordsAudioStoryFragment extends DialogFragment implements View.
     private final String plyDefAudioStoryKey = SettingsPreferencesNotes.PLY_DEFINITION_AUDIO_STORY_KEY;
     private final String plyExmplAudioStoryKey = SettingsPreferencesNotes.PLY_EXAMPLE_AUDIO_STORY_KEY;
 
-    public static PlayWordsAudioStoryFragment newInstance(){
+    public static PlayWordsAudioStoryFragment newInstance() {
         PlayWordsAudioStoryFragment fragment = new PlayWordsAudioStoryFragment();
         return fragment;
     }

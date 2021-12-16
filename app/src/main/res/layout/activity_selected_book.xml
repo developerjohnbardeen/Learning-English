@@ -90,18 +90,18 @@
                         android:id="@+id/selected_book_tab_layout_txt_back_button"
                         android:layout_width="wrap_content"
                         android:layout_height="?attr/actionBarSize"
-                        android:layout_toEndOf="@+id/selected_book_img_back_btn"
-                        android:text="@string/back"
                         android:layout_alignBottom="@+id/selected_book_img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/selected_book_img_back_btn"
                         android:gravity="center"
-                        android:visibility="visible"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="@dimen/_14sdp" />
+                        android:text="@string/back"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <RelativeLayout

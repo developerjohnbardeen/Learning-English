@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 
@@ -37,6 +36,7 @@ import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWor
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
@@ -45,12 +45,12 @@ import java.util.concurrent.Executors;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
-public class EditWordDialogFragment extends DialogFragment implements View.OnClickListener{
+public class EditWordDialogFragment extends DialogFragment implements View.OnClickListener {
     private TextFieldBoxes wordTxtField, defTxtFieldBox, exmplTxtFieldBox;
     private ImageView imageTv;
     private String imgVal;
     private TextView wordTxt, phtcTxt;
-    private TextView saveBtn, rejectBtn;
+    private MaterialCardView saveBtn, rejectBtn;
     private ExtendedEditText wrdEditTxt, defEditTxt, exmplEditText;
     private int[] dbInfoLists;
     private String[] editTxtValue;

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:paddingEnd="@dimen/_15sdp"
-    android:paddingStart="@dimen/_15sdp">
+    android:background="?backgroundTint"
+    android:backgroundTint="?backgroundTint"
+    android:paddingStart="@dimen/_15sdp"
+    android:theme="@style/Custom.Dialog.Theme">
 
     <TextView
         android:id="@+id/setting_title_text_View"
@@ -15,7 +18,7 @@
         android:textSize="@dimen/_18ssp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:layout_alignParentEnd="true"/>
 
     <TextView
@@ -25,7 +28,7 @@
         android:text="@string/quiz_time_second_str"
         android:textSize="@dimen/_15ssp"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:layout_alignTop="@+id/quiz_duration_number_picker"
         android:layout_alignBottom="@+id/quiz_duration_number_picker"
         android:layout_above="@+id/quiz_timer_duration_layout"
@@ -39,7 +42,9 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/_7sdp"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/quiz_duration_title_text_View"/>
+        android:background="?android:backgroundTint"
+        android:backgroundTint="?android:backgroundTint"
+        android:layout_toStartOf="@+id/quiz_duration_title_text_View" />
 
     <TextView
         android:id="@+id/quiz_duration_second_text_view"
@@ -47,11 +52,10 @@
         android:layout_height="wrap_content"
         android:text="@string/second_str"
         android:textSize="@dimen/_15ssp"
-        android:textColorLink="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:layout_marginEnd="@dimen/_15sdp"
         android:gravity="start|center"
         android:layout_centerVertical="true"
-        android:textColor="@color/black"
         android:layout_toStartOf="@+id/quiz_duration_number_picker"
         android:layout_alignTop="@+id/quiz_duration_number_picker"
         android:layout_alignBottom="@+id/quiz_duration_number_picker"
@@ -66,37 +70,54 @@
         android:layout_marginTop="@dimen/_50sdp"
         android:layout_marginBottom="@dimen/_10sdp">
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/quiz_timer_duration_confirmation_settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/confirmation"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:padding="@dimen/_10sdp"
             android:layout_alignParentEnd="true"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/confirmation"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/quiz_timer_duration_settings_reject_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reject_str"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
-            android:layout_toStartOf="@+id/quiz_timer_duration_confirmation_settings_button"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:padding="@dimen/_10sdp"
-            android:gravity="center"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_toStartOf="@+id/quiz_timer_duration_confirmation_settings_button"
+            android:background="@drawable/dialog_text_view_ripple_effect"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/reject_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+
+        </com.google.android.material.card.MaterialCardView>
 
 
         <View
@@ -105,20 +126,30 @@
             android:layout_height="@dimen/_1sdp"
             android:layout_centerInParent="true"/>
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/quiz_timer_duration_settings_cancel_timer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/quiz_timer_cancel_str"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
-            android:layout_toStartOf="@+id/quiz_timer_center_view"
             android:layout_alignParentStart="true"
-            android:padding="@dimen/_10sdp"
-            android:gravity="center"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/quiz_timer_cancel_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 </RelativeLayout>

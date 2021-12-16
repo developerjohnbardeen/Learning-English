@@ -18,6 +18,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_7sdp"
+            android:theme="@style/Recycler.Item.CardView.Theme"
             app:cardCornerRadius="@dimen/_7sdp">
 
             <RelativeLayout
@@ -47,55 +48,72 @@
                     android:gravity="start"
                     android:layout_centerVertical="true">
 
-                    <View
+                    <FrameLayout
                         android:id="@+id/correct_view_pie_chart"
                         android:layout_width="@dimen/_11sdp"
                         android:layout_height="@dimen/_11sdp"
                         android:layout_margin="@dimen/_3sdp"
-                        android:background="@color/correctColor"/>
+                        android:layout_alignTop="@+id/quiz_chart_correct_textview"
+                        android:layout_alignBottom="@+id/quiz_chart_correct_textview"
+                        android:background="@color/correctColor"
+                        android:backgroundTint="@color/correctColor" />
+
                     <TextView
+                        android:id="@+id/quiz_chart_correct_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/correct_answer_str"
+                        android:layout_toEndOf="@+id/correct_view_pie_chart"
+                        android:textColor="?android:textColorPrimary"
                         android:gravity="center"
-                        android:layout_alignTop="@+id/correct_view_pie_chart"
-                        android:layout_alignBottom="@+id/correct_view_pie_chart"
-                        android:layout_toEndOf="@+id/correct_view_pie_chart"/>
+                        android:textSize="@dimen/_10ssp" />
 
 
-                    <View
+                    <FrameLayout
                         android:id="@+id/wrong_view_pie_chart"
                         android:layout_width="@dimen/_11sdp"
                         android:layout_height="@dimen/_11sdp"
                         android:layout_margin="@dimen/_3sdp"
+                        android:layout_below="@+id/correct_view_pie_chart"
+                        android:layout_alignTop="@+id/quiz_chart_wrong_textview"
                         android:background="@color/wrongColor"
-                        android:layout_below="@+id/correct_view_pie_chart"/>
+                        android:layout_alignBottom="@+id/quiz_chart_wrong_textview"
+                        android:backgroundTint="@color/wrongColor" />
+
                     <TextView
+                        android:id="@+id/quiz_chart_wrong_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/wrong_answer_str"
+                        android:layout_below="@+id/correct_view_pie_chart"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textColor="?android:textColorPrimary"
                         android:gravity="center"
-                        android:layout_alignTop="@+id/wrong_view_pie_chart"
-                        android:layout_alignBottom="@+id/wrong_view_pie_chart"
                         android:layout_toEndOf="@+id/wrong_view_pie_chart"
-                        android:layout_below="@+id/correct_view_pie_chart"/>
+                        android:textSize="@dimen/_10ssp" />
 
-                    <View
+                    <FrameLayout
                         android:id="@+id/skipped_view_pie_chart"
                         android:layout_width="@dimen/_11sdp"
                         android:layout_height="@dimen/_11sdp"
                         android:layout_margin="@dimen/_3sdp"
+                        android:layout_below="@+id/wrong_view_pie_chart"
+                        android:layout_alignTop="@+id/quiz_chart_skipped_textview"
                         android:background="@color/skippedColor"
-                        android:layout_below="@+id/wrong_view_pie_chart"/>
+                        android:layout_alignBottom="@+id/quiz_chart_skipped_textview"
+                        android:backgroundTint="@color/skippedColor" />
+
                     <TextView
+                        android:id="@+id/quiz_chart_skipped_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/skipped_answer_str"
+                        android:layout_below="@+id/wrong_view_pie_chart"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textColor="?android:textColorPrimary"
                         android:gravity="center"
                         android:layout_toEndOf="@+id/skipped_view_pie_chart"
-                        android:layout_alignTop="@+id/skipped_view_pie_chart"
-                        android:layout_alignBottom="@+id/skipped_view_pie_chart"
-                        android:layout_below="@+id/wrong_view_pie_chart"/>
+                        android:textSize="@dimen/_10ssp" />
 
 
                 </RelativeLayout>
@@ -109,11 +127,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/card_view_graph"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_15sdp"
             android:elevation="@dimen/_7sdp"
+            android:theme="@style/Recycler.Item.CardView.Theme"
             app:cardCornerRadius="@dimen/_7sdp">
 
             <!--Relative layout to display -->
@@ -129,28 +148,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/result_pie_chart"
-                    android:textSize="23sp"
+                    android:layout_margin="@dimen/_18sdp"
+                    android:textColor="?android:textColorPrimary"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="20dp"/>
+                    android:textSize="@dimen/_18ssp" />
 
                 <!--View to display the line-->
-                <View
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#3FED81"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="?android:colorAccent"
+                    android:backgroundTint="?android:colorAccent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_8sdp">
 
                     <!--Text view to display R -->
                     <TextView
@@ -158,8 +178,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@string/correct_answer_str"
-                        android:textSize="18sp"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_alignParentEnd="true"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="@dimen/_13ssp" />
 
                     <!--Text view to display the -->
                     <!-- percentage of programming language -->
@@ -170,37 +191,40 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textAlignment="textEnd"
-                        android:textSize="18sp"
+                        android:backgroundTint="@color/correctColor"
                         android:textColor="@color/correctColor"
+                        android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
                         android:fontFamily="sans-serif-light"
                         android:layout_alignParentStart="true"/>
                 </RelativeLayout>
 
                 <!--View to display the line-->
-                <View
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#3FED81"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="?android:colorAccent"
+                    android:backgroundTint="?android:colorAccent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_8sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@string/wrong_answer_str"
-                        android:textSize="18sp"
-                        android:layout_alignParentEnd="true"/>
-
+                        android:layout_alignParentEnd="true"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="@dimen/_13ssp" />
 
 
                     <TextView
@@ -209,35 +233,41 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textAlignment="textEnd"
-                        android:textSize="18sp"
+                        android:layout_alignParentStart="true"
                         android:textColor="@color/wrongColor"
+                        android:backgroundTint="@color/wrongColor"
                         android:textStyle="bold"
                         android:fontFamily="sans-serif-light"
-                        android:layout_alignParentStart="true"/>
+                        android:textSize="@dimen/_13ssp" />
 
                 </RelativeLayout>
-                <View
+
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#3FED81"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="?android:colorAccent"
+                    android:backgroundTint="?android:colorAccent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_8sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@string/skipped_answer_str"
-                        android:textSize="18sp"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_alignParentEnd="true"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="@dimen/_13ssp" />
 
                     <TextView
                         android:id="@+id/tv_skipped_answer_count"
@@ -245,20 +275,14 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textAlignment="textEnd"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_13ssp"
                         android:textColor="@color/skippedColor"
                         android:textStyle="bold"
                         android:fontFamily="sans-serif-light"
                         android:layout_alignParentStart="true"/>
 
                 </RelativeLayout>
-
-
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
-
     </RelativeLayout>
-
-
 </androidx.core.widget.NestedScrollView>

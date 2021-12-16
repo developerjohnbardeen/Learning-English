@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    android:gravity="center">
+    android:background="?android:backgroundTint"
+    android:backgroundTint="?android:backgroundTint"
+    android:gravity="center"
+    android:theme="@style/Custom.Dialog.Theme">
 
 
     <TextView
@@ -14,11 +17,11 @@
         android:text="@string/auto_play_title"
         android:layout_alignParentEnd="true"
         android:textSize="@dimen/_18ssp"
-        android:textColor="@color/black"
+        android:paddingStart="@dimen/_1sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
         android:paddingEnd="@dimen/_20sdp"
-        android:paddingStart="1dp"/>
+        android:textColor="?android:textColorPrimary" />
 
 
 
@@ -36,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="@string/auto_play_word"
         android:textSize="@dimen/_15sdp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:layout_toStartOf="@+id/auto_play_word_check_box"
         android:layout_alignTop="@+id/auto_play_word_check_box"
         android:layout_alignBottom="@+id/auto_play_word_check_box"
@@ -66,7 +69,7 @@
             android:layout_height="wrap_content"
             android:text="@string/auto_play_definition"
             android:textSize="@dimen/_15ssp"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:layout_alignTop="@+id/auto_play_definition_check_box"
             android:layout_alignBottom="@+id/auto_play_definition_check_box"
             android:gravity="center"/>
@@ -95,7 +98,7 @@
         android:layout_height="wrap_content"
         android:text="@string/auto_play_example"
         android:textSize="@dimen/_15ssp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/auto_play_example_check_box"
         android:layout_alignBottom="@+id/auto_play_example_check_box"
@@ -129,24 +132,25 @@
             android:id="@+id/dialog_auto_play_speed_very_slow_image_view"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_9sdp"
-            android:src="@drawable/speed_too_slow_icon"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_16sdp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/todo"/>
+            android:contentDescription="@string/todo"
+            android:padding="@dimen/_9sdp"
+            android:src="@drawable/speed_too_slow_icon" />
+
         <TextView
             android:id="@+id/auto_play_dialog_too_slow_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/speed_too_slow_str"
-            android:textColor="@color/setting_gray"
-            android:textSize="@dimen/_10ssp"
+            android:layout_below="@+id/dialog_auto_play_speed_very_slow_image_view"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="@dimen/mines15mdp"
             android:layout_marginStart="@dimen/_17sdp"
-            android:layout_below="@+id/dialog_auto_play_speed_very_slow_image_view"/>
+            android:layout_marginTop="@dimen/mines15mdp"
+            android:text="@string/speed_too_slow_str"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="@dimen/_10ssp" />
 
 
 
@@ -177,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/speed_slow_str"
-                android:textColor="@color/setting_gray"
+                android:textColor="?android:textColorSecondary"
                 android:textSize="@dimen/_10ssp"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/mines15mdp"
@@ -204,7 +208,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/speed_normal_str"
-            android:textColor="@color/setting_gray"
+            android:textColor="?android:textColorSecondary"
             android:textSize="@dimen/_10ssp"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/mines15mdp"
@@ -238,7 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/speed_fast_str"
-                android:textColor="@color/setting_gray"
+                android:textColor="?android:textColorSecondary"
                 android:textSize="@dimen/_10ssp"
                 android:layout_marginTop="@dimen/mines15mdp"
                 android:layout_below="@+id/dialog_auto_play_speed_fast_image_view"
@@ -268,7 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/speed_too_fast_str"
-            android:textColor="@color/setting_gray"
+            android:textColor="?android:textColorSecondary"
             android:textSize="@dimen/_10ssp"
             android:layout_marginTop="@dimen/mines15mdp"
             android:layout_marginEnd="@dimen/_19sdp"
@@ -314,7 +318,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/replay_unit_audio_file_str"
                 android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:layout_alignTop="@+id/play_again_unit_check_box"
                 android:layout_alignBottom="@+id/play_again_unit_check_box"
                 android:layout_toStartOf="@+id/play_again_unit_check_box"
@@ -340,7 +344,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/play_next_unit_str"
                 android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:layout_alignTop="@+id/play_next_unit_check_box"
                 android:layout_alignBottom="@+id/play_next_unit_check_box"
                 android:layout_toStartOf="@+id/play_next_unit_check_box"
@@ -365,7 +369,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/display_translation"
                 android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:layout_alignTop="@+id/display_translation_dialog_check_box"
                 android:layout_alignBottom="@+id/display_translation_dialog_check_box"
                 android:layout_toStartOf="@+id/display_translation_dialog_check_box"
@@ -400,7 +404,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/word_str"
                         android:textSize="@dimen/_15ssp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColorPrimary"
                         android:layout_alignTop="@+id/display_word_translation_check_box"
                         android:layout_alignBottom="@+id/display_word_translation_check_box"
                         android:layout_toStartOf="@+id/display_word_translation_check_box"
@@ -424,7 +428,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/definition_Str"
                         android:textSize="@dimen/_15ssp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColorPrimary"
                         android:layout_alignTop="@+id/display_definition_translation_check_box"
                         android:layout_alignBottom="@+id/display_definition_translation_check_box"
                         android:layout_toStartOf="@+id/display_definition_translation_check_box"
@@ -447,7 +451,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/example_str"
                         android:textSize="@dimen/_15ssp"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColorPrimary"
                         android:layout_alignTop="@+id/display_example_translation_check_box"
                         android:layout_alignBottom="@+id/display_example_translation_check_box"
                         android:layout_toStartOf="@+id/display_example_translation_check_box"
@@ -469,52 +473,86 @@
         android:layout_below="@+id/extra_options_auto_play_dialog_parent_layout"
         android:layout_marginTop="@dimen/_20sdp">
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/auto_play_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/auto_play_Str"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:layout_margin="10dp"
-            android:padding="5dp"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
             android:layout_alignParentEnd="true"
             android:foreground="?attr/selectableItemBackground"
+            android:focusable="true"
             android:clickable="true"
-            android:focusable="true"/>
+            android:padding="@dimen/_5sdp"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/auto_play_Str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
 
 
-        <TextView
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/auto_play_reject_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reject_str"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_margin="10dp"
-            android:padding="5dp"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
             android:gravity="start"
-            android:layout_toEndOf="@+id/save_and_play_button"
+            android:focusable="true"
+            android:padding="@dimen/_5sdp"
+            app:cardElevation="0dp"
             android:layout_toStartOf="@+id/auto_play_button"
-            android:foreground="?attr/selectableItemBackground"
             android:clickable="true"
-            android:focusable="true"/>
+            app:rippleColor="?rippleColor">
 
-        <TextView
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/reject_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
+        <!--android:foreground="?attr/selectableItemBackground"-->
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/save_and_play_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save_and_play_str"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:padding="5dp"
-            android:foreground="?attr/selectableItemBackground"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:background="@drawable/dialog_text_view_ripple_effect"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/save_and_play_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
 
     </RelativeLayout>

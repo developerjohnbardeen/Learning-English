@@ -47,18 +47,18 @@
                         android:id="@+id/selected_book_tab_layout_txt_back_button"
                         android:layout_width="wrap_content"
                         android:layout_height="?attr/actionBarSize"
-                        android:layout_toEndOf="@+id/img_back_btn"
                         android:layout_alignBottom="@+id/img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="@dimen/_17sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/img_back_btn"
                         android:gravity="center"
                         android:text="@string/back"
-                        android:visibility="visible"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -75,10 +75,11 @@
                         android:id="@+id/main_quiz_type_title_text_View"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:gravity="center"
                         android:text="@string/app_name"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:layout_marginStart="@dimen/_2sdp"
-                        android:gravity="center"/>
+                        android:textSize="@dimen/_13ssp" />
 
 
                 </RelativeLayout>
@@ -124,15 +125,19 @@
                     android:id="@+id/quiz_text_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:padding="@dimen/_15sdp"
                     android:text="@string/quiz_sample_string"
+                    android:textColor="?android:textColorPrimary"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold"
-                    android:visibility="invisible"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:padding="@dimen/_15sdp"/>
+                    android:visibility="invisible" />
 
 
             </RelativeLayout>
@@ -164,9 +169,8 @@
             android:layout_marginTop="@dimen/_95sdp"
             android:layout_marginStart="@dimen/_30sdp"
             app:cardCornerRadius="@dimen/_10sdp"
-            android:backgroundTint="#EDE7E7"
             app:strokeColor="?android:colorAccent"
-            app:strokeWidth="@dimen/_1sdp"
+            app:strokeWidth="@dimen/_2sdp"
             android:theme="@style/Media.Player.CardView.Theme">
 
             <LinearLayout
@@ -265,6 +269,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+
         <RelativeLayout
             android:id="@+id/time_counter_layout"
             android:layout_width="wrap_content"
@@ -303,11 +308,10 @@
                 android:elevation="@dimen/_8sdp"
                 android:gravity="center"
                 android:text="@string/percent"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_15ssp" />
 
         </RelativeLayout>
-
 
 
         <LinearLayout
@@ -328,13 +332,12 @@
                 app:cardCornerRadius="@dimen/_5sdp"
                 android:theme="@style/Media.Player.CardView.Theme"
                 app:strokeColor="?android:colorAccent"
-                app:rippleColor="?android:colorControlHighlight"
+                app:rippleColor="?rippleColor"
                 app:strokeWidth="@dimen/_1sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:layout_gravity="center"
                     android:gravity="center">
 
@@ -343,7 +346,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/txt_option_one"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColorPrimary"
                         android:layout_margin="@dimen/_15sdp"/>
 
                 </RelativeLayout>
@@ -357,7 +360,7 @@
                 app:cardElevation="@dimen/quiz_card_elevation"
                 app:cardCornerRadius="@dimen/_5sdp"
                 app:strokeColor="?android:colorAccent"
-                app:rippleColor="?android:colorControlHighlight"
+                app:rippleColor="?rippleColor"
                 app:strokeWidth="@dimen/_1sdp"
                 android:theme="@style/Media.Player.CardView.Theme">
 
@@ -372,7 +375,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/txt_option_two"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColorPrimary"
                         android:layout_margin="@dimen/_15sdp"/>
 
                 </RelativeLayout>
@@ -386,7 +389,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
                 app:strokeColor="?android:colorAccent"
-                app:rippleColor="?android:colorControlHighlight"
+                app:rippleColor="?rippleColor"
                 app:strokeWidth="@dimen/_1sdp"
                 android:theme="@style/Media.Player.CardView.Theme">
 
@@ -401,7 +404,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/txt_option_three"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColorPrimary"
                         android:gravity="center"
                         android:layout_margin="@dimen/_15sdp"/>
 
@@ -416,7 +419,7 @@
                 app:cardCornerRadius="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:strokeColor="?android:colorAccent"
-                app:rippleColor="?android:colorControlHighlight"
+                app:rippleColor="?rippleColor"
                 app:strokeWidth="@dimen/_1sdp"
                 android:theme="@style/Media.Player.CardView.Theme">
 
@@ -431,7 +434,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/txt_option_four"
-                        android:textColor="@color/black"
+                        android:textColor="?android:textColorPrimary"
                         android:layout_margin="@dimen/_15sdp"/>
 
                 </RelativeLayout>

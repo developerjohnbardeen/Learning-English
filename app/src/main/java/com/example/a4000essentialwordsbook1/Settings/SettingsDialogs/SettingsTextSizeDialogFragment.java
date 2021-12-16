@@ -8,18 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.DialogFragment;
+
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
 
-
-public class SettingsTextSizeDialogFragment extends DialogFragment implements View.OnClickListener{
+public class SettingsTextSizeDialogFragment extends DialogFragment implements View.OnClickListener {
     private NumberPicker numPicker, engNumPicker;
-    private TextView rjctBtn, cnfmBtn;
+    private MaterialCardView rjctBtn, cnfmBtn;
     private TextView endPickerNameTxtView, perPickerNameTxtView;
     private AppCompatCheckBox bothLanCheckBox;
 

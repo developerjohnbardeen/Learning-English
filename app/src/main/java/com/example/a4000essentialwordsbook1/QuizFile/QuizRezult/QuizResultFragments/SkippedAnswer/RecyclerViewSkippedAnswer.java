@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,12 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.MarkedWords.MarkedWordActivity;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
-import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.WrongModel;
-import com.example.a4000essentialwordsbook1.QuizFile.QuizRezult.QuizResultFragments.CorrectAnswer.RecyclerViewCorrectAnswer;
-import com.example.a4000essentialwordsbook1.QuizFile.QuizRezult.QuizResultFragments.WrongAnswer.RecyclerViewWrongAnswer;
-import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
-import com.example.a4000essentialwordsbook1.QuizFile.QuizModels.SkippedModel;
 import com.example.a4000essentialwordsbook1.R;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
 import com.example.a4000essentialwordsbook1.UpdateDatabases.UpdateWordDatabase;
@@ -95,7 +92,7 @@ public class RecyclerViewSkippedAnswer extends RecyclerView.Adapter<RecyclerView
         ImageView tvImgWord;
         TextView titleWord;
         TextView correctWord;
-        ImageView bookImg;
+        Button bookImg;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -200,19 +197,6 @@ public class RecyclerViewSkippedAnswer extends RecyclerView.Adapter<RecyclerView
         });
 
     }
-
-/*    private void viewValuesGetter(int position){
-        SkippedModel skippedModel = skippedList.get(position);
-        skippedWord = skippedModel.getTvWord();
-        correctWord = skippedModel.getCorrectWord();
-    }
-
-    private void viewValuesSetter(ViewHolder holder, int id){
-        holder.titleWord.setText(skippedWord);
-        holder.trsltWord.setText(correctWord);
-        holder.bookImg.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
-        viewOnClickListener(holder);
-    }*/
 
     private void viewOnClickListener(ViewHolder holder){
         holder.bookImg.setOnClickListener(this);

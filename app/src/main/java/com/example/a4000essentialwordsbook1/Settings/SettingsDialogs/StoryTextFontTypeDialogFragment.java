@@ -9,25 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
+
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
-import java.security.PrivateKey;
+public class StoryTextFontTypeDialogFragment extends DialogFragment implements View.OnClickListener {
 
-public class StoryTextFontTypeDialogFragment extends DialogFragment implements View.OnClickListener{
-
-    private TextView confirmBtn, rejectBtn;
+    private MaterialCardView confirmBtn, rejectBtn;
     private TextView sampleTextView;
     private AppCompatCheckBox engBolderCheckBox, perBolderCheckBox;
     private Spinner fntTypeSpinner;

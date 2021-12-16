@@ -76,18 +76,18 @@
                         android:id="@+id/marked_word_tab_layout_txt_back_button"
                         android:layout_width="wrap_content"
                         android:layout_height="?attr/actionBarSize"
-                        android:layout_toEndOf="@+id/marked_word_img_back_btn"
                         android:layout_alignBottom="@+id/marked_word_img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="@dimen/_17sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/marked_word_img_back_btn"
                         android:gravity="center"
                         android:text="@string/back"
-                        android:visibility="visible"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="@dimen/_13ssp" />
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="@dimen/_13ssp"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <RelativeLayout

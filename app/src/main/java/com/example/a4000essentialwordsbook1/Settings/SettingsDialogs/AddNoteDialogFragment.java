@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
@@ -31,29 +32,29 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookSix;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
-import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AddNoteInterFace;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
 
-
-public class AddNoteDialogFragment extends DialogFragment implements View.OnClickListener{
+public class AddNoteDialogFragment extends DialogFragment implements View.OnClickListener {
 
     private ImageView imageTv;
     private String imgVal;
     private String wordVal, phoneticVal, noteVal;
     private TextFieldBoxes addNoteTxtField;
     private TextView wordTxt, phtcTxt;
-    private TextView saveBtn, rejectBtn;
+    private MaterialCardView rejectBtn, saveBtn;
     private ExtendedEditText addNoteEditTextView;
     private int[] dbInfoLists;
     private String[] editTxtValue;

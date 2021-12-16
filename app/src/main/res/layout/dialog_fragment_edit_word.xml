@@ -6,18 +6,9 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
+    android:background="?android:backgroundTint"
     android:theme="@style/Theme.AppCompat.Light.RTL.DirectionLayout.NoActionBar.FullScreen"
     android:backgroundTint="?android:backgroundTint">
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/edit_word_nested_scroll_view"
-        android:layout_width="wrap_content"
-        android:visibility="gone"
-        android:layout_height="@dimen/_300sdp">
-
-
-
-    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/edit_Text_dialog_main_layout"
@@ -52,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sample"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_13ssp"
                 android:layout_toEndOf="@+id/dialog_fragment_phonetic_text_view"
                 android:layout_marginStart="@dimen/_7sdp"
@@ -64,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sample"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_13ssp"
                 android:layout_gravity="center"
                 android:gravity="center"/>
@@ -84,12 +75,15 @@
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_below="@+id/edit_word_info_layout"
+            android:background="?backgroundTint"
+            app:panelBackgroundColor="?backgroundColor"
             android:layout_marginTop="@dimen/edit_box_mgn_top">
+            <!--app:panelBackgroundColor="?backgroundColor"-->
 
             <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                 android:id="@+id/dialog_fragment_word_extend_edit_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -101,6 +95,7 @@
             app:labelText="@string/definition_edit"
             app:primaryColor="?android:textColorPrimary"
             app:secondaryColor="?android:textColorPrimary"
+            app:panelBackgroundColor="?backgroundColor"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_15sdp"
             android:fontFamily="@font/per_sogand_font"
@@ -125,6 +120,7 @@
             app:labelText="@string/example_edit"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_15sdp"
+            app:panelBackgroundColor="?backgroundColor"
             android:layout_below="@+id/dialog_fragment_definition_text_field_box"
             app:primaryColor="?android:textColorPrimary"
             app:secondaryColor="?android:textColorPrimary"
@@ -150,43 +146,62 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_below="@id/edit_Text_dialog_main_layout">
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/dialog_fragment_save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save_str"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_7sdp"
-            android:layout_marginStart="@dimen/_7sdp"
-            android:padding="@dimen/_7sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/story_font_center_view"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:background="?android:attr/selectableItemBackground"
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_7sdp"
+                android:text="@string/save_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
         <View
             android:id="@+id/story_font_center_view"
             android:layout_width="@dimen/_1sdp"
             android:layout_height="@dimen/_1sdp"
-            android:layout_centerInParent="true"/>
-        <TextView
+            android:layout_centerInParent="true" />
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/dialog_fragment_reject_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reject_str"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_7sdp"
-            android:layout_marginStart="@dimen/_7sdp"
-            android:padding="@dimen/_7sdp"
-            android:gravity="center"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_toEndOf="@+id/story_font_center_view"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:layout_alignParentEnd="true"
             android:clickable="true"
-            android:focusable="true"/>
+            android:background="?android:attr/selectableItemBackground"
+            android:elevation="0dp"
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_7sdp"
+                android:text="@string/reject_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.cardview.widget.CardView
-    android:id="@+id/card_view_wrong_answers"
+<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view_wrong_answers"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_123sdp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:layout_margin="@dimen/_2sdp"
     app:cardCornerRadius="@dimen/_8sdp"
-    app:cardElevation="@dimen/_8sdp"
+    android:elevation="@dimen/_7sdp"
+    app:cardElevation="@dimen/_3sdp"
     android:theme="@style/Recycler.Item.CardView.Theme">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/afraid"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:textStyle="bold"
-            android:textSize="@dimen/_25ssp"
+            android:textSize="@dimen/_22ssp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"/>
 
@@ -31,10 +31,12 @@
             android:id="@+id/wrong_tv_image_view"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_7sdp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/peacock"
+            android:scaleType="centerCrop"
             android:visibility="invisible"
-            app:siRadius="@dimen/_8sdp"/>
+            app:siRadius="@dimen/_7sdp" />
 
 
         <RelativeLayout
@@ -62,15 +64,16 @@
                 android:id="@+id/user_wrong_answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/afraid_translate"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="@dimen/_15ssp"
                 android:layout_below="@+id/wrong_answer_text_view"
                 android:layout_alignStart="@+id/wrong_answer_text_view"
                 android:layout_alignEnd="@+id/wrong_answer_text_view"
-                android:layout_marginBottom="@dimen/_7sdp"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:gravity="center"
+                android:text="@string/afraid_translate"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
 
         </RelativeLayout>
 
@@ -121,9 +124,10 @@
                 android:layout_alignEnd="@+id/correct_answer_text_View"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:gravity="center"
                 android:text="@string/afraid_translate"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/_15ssp" />
 
 

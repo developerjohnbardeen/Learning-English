@@ -1,7 +1,6 @@
 package com.example.a4000essentialwordsbook1.SearchWordsClasses;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -27,7 +26,7 @@ public class SearchWordsAdapter extends RecyclerView.Adapter<SearchWordsAdapter.
     private final Context searchContext;
     private final ArrayList<WordModel> searchList;
     private final LayoutInflater inflater;
-    private ActivityStarterInterface activityInterface;
+    private final ActivityStarterInterface activityInterface;
 
 
 
@@ -98,18 +97,18 @@ public class SearchWordsAdapter extends RecyclerView.Adapter<SearchWordsAdapter.
             holder.studyStatusTitle.setTextColor(ContextCompat.getColor(searchContext, R.color.correctColor));
         }else {
             holder.studyStatusTitle.setText("Need To Review");
-            holder.studyStatusTitle.setTextColor(ContextCompat.getColor(searchContext, R.color.wrongColor));
+            holder.studyStatusTitle.setTextColor(ContextCompat.getColor(searchContext, R.color.needToReviewColor));
         }
     }
 
 
-    public static class SearchViewHolder extends RecyclerView.ViewHolder{
+    public static class SearchViewHolder extends RecyclerView.ViewHolder {
         ImageView searchImage;
         TextView wordTitle, bookTitle, unitTitle;
         TextView studyStatusTitle;
         CardView itemCardView;
-        private ActivityStarterInterface activityInterface;
-        private ArrayList<WordModel> searchList;
+        private final ActivityStarterInterface activityInterface;
+        private final ArrayList<WordModel> searchList;
 
         public SearchViewHolder(@NonNull View itemView, ArrayList<WordModel> searchList, ActivityStarterInterface activityInterface) {
             super(itemView);
@@ -118,7 +117,7 @@ public class SearchWordsAdapter extends RecyclerView.Adapter<SearchWordsAdapter.
             findViewsById(itemView);
         }
 
-        private void findViewsById(View itemView){
+        private void findViewsById(View itemView) {
             itemCardView = itemView.findViewById(R.id.search_item_car_view);
             wordTitle = itemView.findViewById(R.id.search_item_word);
             searchImage = itemView.findViewById(R.id.search_item_image_view);

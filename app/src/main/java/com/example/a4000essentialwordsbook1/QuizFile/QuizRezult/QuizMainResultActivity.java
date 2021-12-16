@@ -7,11 +7,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AutoPlayDialogFragment;
@@ -20,6 +22,7 @@ import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -132,6 +135,7 @@ public class QuizMainResultActivity extends AppCompatActivity implements View.On
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                autoPlayIconVisibility(position);
             }
 
             @Override
@@ -141,13 +145,22 @@ public class QuizMainResultActivity extends AppCompatActivity implements View.On
         });
     }
 
+    private void autoPlayIconVisibility(int position) {
+        if (position >= 2) {
+            autoPlayImgView.setVisibility(View.VISIBLE);
+        } else {
+            autoPlayImgView.setVisibility(View.GONE);
+        }
+    }
 
-    private void dataListReceiver(){
+
+    private void dataListReceiver() {
         correctList = this.getIntent().getParcelableArrayListExtra(sCorrectList);
         wrongList = this.getIntent().getParcelableArrayListExtra(sWrongList);
         skippedList = this.getIntent().getParcelableArrayListExtra(sSkippedList);
     }
-    private void extrasGetter(){
+
+    private void extrasGetter() {
         dbInfoList = new int[2];
         Intent dbIntent = getIntent();
         Intent unitIntent = getIntent();
@@ -203,7 +216,7 @@ public class QuizMainResultActivity extends AppCompatActivity implements View.On
     }
     private void autoPlayWordDialog() {
         AutoPlayDialogFragment playDialogFragment =
-                AutoPlayDialogFragment.quizResultNewInstance(quizResultActivity, list() ,dbDialogInfoList());
+                AutoPlayDialogFragment.quizResultNewInstance(quizResultActivity, newList(), dbDialogInfoList());
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("autoPlayAudio");
         if (prev != null) {
@@ -211,29 +224,40 @@ public class QuizMainResultActivity extends AppCompatActivity implements View.On
         }
         playDialogFragment.show(ft, "autoPlayAudio");
     }
-    private int[] dbDialogInfoList(){
+
+    private int[] dbDialogInfoList() {
         int[] list = new int[2];
         list[0] = dbNum;
         list[1] = unitNum;
 
         return list;
     }
-    private ArrayList<WordModel> list(){
+
+    private ArrayList<WordModel> list() {
         ArrayList<WordModel> list = new ArrayList<>();
-        if (currentItem() == 2){
+        if (currentItem() == 2) {
             list = wrongList;
-        }else if (currentItem() == 3){
+        } else if (currentItem() == 3) {
             list = skippedList;
         }
         return list;
     }
 
+    private ArrayList<WordModel> newList() {
+        if (currentItem() == 2) {
+            return wrongList;
+        } else {
+            return skippedList;
+        }
+    }
 
 
-    private void startSettingsActivity(){
+    private void startSettingsActivity() {
         Intent settingsIntent = new Intent(this, SettingsPreferencesActivity.class);
         startActivity(settingsIntent);
     }
 
-    private int currentItem(){return qrViewPager.getCurrentItem();}
+    private int currentItem() {
+        return qrViewPager.getCurrentItem();
+    }
 }

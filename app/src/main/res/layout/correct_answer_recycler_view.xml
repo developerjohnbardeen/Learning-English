@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_150sdp"
+    android:layout_height="@dimen/_123sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:layout_margin="@dimen/_2sdp"
-    app:cardCornerRadius="@dimen/_7sdp"
-    app:cardElevation="@dimen/_7sdp"
+    android:elevation="@dimen/_7sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardElevation="@dimen/_3sdp"
     android:theme="@style/Recycler.Item.CardView.Theme">
 
     <RelativeLayout
@@ -19,20 +19,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/afraid"
-            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"
             android:textStyle="bold"
-            android:textSize="@dimen/_30ssp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/_22ssp"
             android:layout_centerHorizontal="true" />
 
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/correct_tv_image_view"
-            android:layout_width="@dimen/_75sdp"
-            android:layout_height="@dimen/_75sdp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
             android:src="@drawable/peacock"
             app:siRadius="@dimen/_7sdp"
+            android:layout_centerHorizontal="true"
             android:visibility="invisible"
             android:scaleType="centerCrop"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginTop="@dimen/_7sdp" />
 
         <TextView
             android:id="@+id/correct_txt_answer_word"
@@ -40,10 +42,9 @@
             android:layout_height="wrap_content"
             android:text="@string/afraid_translate"
             android:textColor="#68F137"
-            android:textStyle="italic"
-            android:textSize="@dimen/_22ssp"
+            android:layout_below="@+id/correct_tv_image_view"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
+            android:textSize="@dimen/_15ssp"
             android:layout_marginTop="@dimen/_15sdp"/>
 
     </RelativeLayout>

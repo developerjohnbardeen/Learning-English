@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:background="?android:backgroundTint"
+    android:backgroundTint="?android:backgroundTint"
+    android:theme="@style/Custom.Dialog.Theme">
 
     <TextView
         android:id="@+id/play_word_audio_story_text_view_title"
@@ -11,9 +14,9 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_play_word_audio_story_title_Str"
         android:textSize="@dimen/_18ssp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="start"
-        android:layout_margin="@dimen/_15sdp"/>
+        android:layout_margin="@dimen/_15sdp" />
 
 
     <androidx.appcompat.widget.AppCompatCheckBox
@@ -31,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="@string/all_str"
         android:textSize="@dimen/_15ssp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="center"
         android:layout_below="@+id/play_all_audio_story_check_box"
         android:layout_toStartOf="@+id/play_all_audio_story_check_box"
@@ -54,7 +57,7 @@
         android:layout_height="wrap_content"
         android:text="@string/auto_play_word"
         android:textSize="@dimen/_15ssp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="center"
         android:layout_below="@+id/play_word_audio_story_text_view_title"
         android:layout_toStartOf="@+id/play_word_audio_story_check_box"
@@ -76,7 +79,7 @@
         android:layout_height="wrap_content"
         android:text="@string/auto_play_definition"
         android:textSize="@dimen/_15ssp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="center"
         android:layout_below="@+id/play_word_audio_story_check_box"
         android:layout_toStartOf="@+id/play_definition_audio_story_check_box"
@@ -99,7 +102,7 @@
         android:layout_height="wrap_content"
         android:text="@string/auto_play_example"
         android:textSize="@dimen/_15ssp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:gravity="center"
         android:layout_below="@+id/play_definition_audio_story_check_box"
         android:layout_toStartOf="@+id/play_example_audio_story_check_box"
@@ -111,52 +114,70 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/play_example_audio_story_check_box"
         android:layout_marginTop="@dimen/reject_confirm_margin_top"
         android:layout_marginBottom="@dimen/_10sdp">
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/play_word_auto_story_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/confirmation"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:padding="@dimen/_10sdp"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/center_view"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginStart="@dimen/_5sdp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/confirmation"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
+        <!--android:foreground="?attr/selectableItemBackground"-->
 
 
         <View
             android:id="@+id/center_view"
             android:layout_width="@dimen/_1sdp"
             android:layout_height="@dimen/_1sdp"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true" />
 
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/reject_play_word_auto_story_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reject_str"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:padding="@dimen/_10sdp"
-            android:gravity="center"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:layout_toStartOf="@+id/center_view"
-            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/dialog_text_view_ripple_effect"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/reject_str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
     </RelativeLayout>
 
 

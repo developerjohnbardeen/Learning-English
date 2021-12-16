@@ -7,6 +7,7 @@
         <entry key="..\:/Users/John_Bardeen/.gradle/caches/transforms-2/files-2.1/4e3f4953e5ad9486edc9456339afa90b/jetified-exoplayer-ui-2.16.1/res/drawable-anydpi-v21/exo_ic_settings.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/circular.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/custom_tab_indicator.xml" value="0.14444444444444443" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/dialog_text_view_ripple_effect.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.2203125" />
@@ -18,10 +19,13 @@
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_baseline_support_agent_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_baseline_swap_vert_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_baseline_volume_up_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_dark_mode_moon.xml" value="0.2203125" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_quiz_result_play_circle_outline_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_quiz_result_settings_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_study_hard_word_icon_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_tool_bar_play_circle_filled_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/ic_word_detailed_baseline_translate_24.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/img_btn_updown_radius_shape.xml" value="0.2169230769230769" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/line_indicator.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/main_activity_curved_background.xml" value="0.2203125" />
@@ -31,6 +35,7 @@
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/selected_dot.xml" value="0.14444444444444443" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/selected_tab_icon.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/setting_relative_ripple_effect.xml" value="0.2203125" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/settings_layout_ripple_effect.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/tab_selector.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/tabi_con.xml" value="0.2203125" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/drawable/word_list.xml" value="0.2203125" />
@@ -62,23 +67,23 @@
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_main_constrain_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_main_navigation.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_main_review_marked_word.xml" value="0.22" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_marked_words.xml" value="0.25" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_quiz_main.xml" value="0.2971938775510204" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_marked_words.xml" value="0.22" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_quiz_main.xml" value="0.2" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_quiz_main_rezult.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_sample.xml" value="0.17222222222222222" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_search_words.xml" value="0.33" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_selected_book.xml" value="0.22" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_settings.xml" value="0.25" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_settings.xml" value="0.33" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/activity_sub_navigation.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/adapter.xml" value="0.17222222222222222" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/audio_play_dialog_fragment.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/auto_play_dialog_fragment.xml" value="0.43148148148148147" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/correct_answer_recycler_view.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/auto_play_dialog_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/correct_answer_recycler_view.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dark_mode_switch_activity.xml" value="0.17222222222222222" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_display_stranslation.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_fragment_add_note.xml" value="0.22" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_fragment_auto_night_day_theme.xml" value="0.25" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_fragment_edit_word.xml" value="0.25" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_fragment_auto_night_day_theme.xml" value="0.2" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_fragment_edit_word.xml" value="0.18" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_fragment_restore_settings.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_play_words_audio_story.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_quiz_timer_duration.xml" value="0.22" />
@@ -87,9 +92,9 @@
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_text_font_type.xml" value="0.25" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/dialog_text_size_pikcer.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/display_translation_dialog_fragment.xml" value="0.22" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_correct_answer.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_correct_answer.xml" value="0.15" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_dialog_settings_auto_play.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_result_quiz_pie_chart.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_result_quiz_pie_chart.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_sample.xml" value="0.17222222222222222" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_settings_layout.xml" value="0.17222222222222222" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/fragment_skipped_answer.xml" value="0.20416666666666666" />
@@ -120,7 +125,7 @@
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/simple_underlines.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/single_item_main_adapter.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/single_item_selected_book.xml" value="0.25" />
-        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/skipped_answer_recycler_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/skipped_answer_recycler_view.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/slide_cardivew_viewpager_activity.xml" value="0.22" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/slide_word_review_pager_adapter.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/John_Bardeen/AndroidStudioProjects/4000EssentialWordsBook1/app/src/main/res/layout/themed_circles.xml" value="0.20416666666666666" />

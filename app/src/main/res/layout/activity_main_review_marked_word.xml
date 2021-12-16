@@ -77,18 +77,18 @@
                         android:id="@+id/main_marked_word_tab_layout_txt_back_button"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/main_marked_word_img_back_btn"
                         android:layout_alignBottom="@+id/main_marked_word_img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/main_marked_word_img_back_btn"
                         android:gravity="center"
                         android:text="@string/back"
-                        android:visibility="visible"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="@dimen/_14ssp"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -136,8 +136,7 @@
             android:layout_marginStart="@dimen/_7sdp"
             android:layout_below="@+id/main_review_easy_hard_layout"
             app:rippleColor="?rippleColor"
-            android:theme="@style/Custom.Material.CardView.Theme">
-
+            android:theme="@style/Media.Player.CardView.Theme">
 
 
             <RelativeLayout
@@ -179,7 +178,10 @@
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/main_review_marked_word_word_detailed_divider_text"
                             android:gravity="center"
-                            android:text="@string/default_time" />
+                            android:text="@string/default_time"
+                            android:textColor="@color/darkModeTextColorPrimary"
+                            android:textStyle="bold" />
+
                         <TextView
                             android:id="@+id/main_review_marked_word_word_detailed_divider_text"
                             android:layout_width="wrap_content"
@@ -187,16 +189,21 @@
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/main_review_marked_word_audio_total_time_text"
                             android:gravity="center"
-                            android:text="@string/divide_1"/>
+                            android:text="@string/divide_1"
+                            android:textColor="@color/darkModeTextColorPrimary"
+                            android:textStyle="bold" />
+
                         <TextView
                             android:id="@+id/main_review_marked_word_audio_total_time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/default_time"
+                            android:textColor="@color/darkModeTextColorPrimary"
+                            android:textStyle="bold"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentEnd="true"
-                            android:gravity="center"/>
+                            android:gravity="center" />
 
                     </RelativeLayout>
 

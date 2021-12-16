@@ -9,17 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.DialogFragment;
+
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
-public class DisplayTranslationDialog extends DialogFragment implements View.OnClickListener{
+public class DisplayTranslationDialog extends DialogFragment implements View.OnClickListener {
     private RelativeLayout entranceRel, wordRel, defRel, exmplRel;
-    private TextView confirmBtn, rejectBtn;
+    private MaterialCardView confirmBtn, rejectBtn;
     private final boolean trueFlag = true;
     private final boolean falseFlag = false;
     private AppCompatCheckBox shwEntranceCheckBox, shwWordCheckBox, shwDefCheckBox, shwExmplCheckBox, shwStoryCheckBox;

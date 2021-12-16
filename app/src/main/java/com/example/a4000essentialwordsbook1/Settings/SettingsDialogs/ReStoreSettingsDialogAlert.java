@@ -16,16 +16,18 @@ import androidx.fragment.app.DialogFragment;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.ReSetSettingsInterface;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ReStoreSettingsDialogAlert extends DialogFragment implements View.OnClickListener {
-    private TextView messageTxtView, confirmBtn, rejectBtn;
+    private MaterialCardView confirmBtn, rejectBtn;
+    private TextView messageTxtView;
 
     private ReSetSettingsInterface restInterface;
 
-    public static ReStoreSettingsDialogAlert newInstance(){
+    public static ReStoreSettingsDialogAlert newInstance() {
         return new ReStoreSettingsDialogAlert();
     }
 

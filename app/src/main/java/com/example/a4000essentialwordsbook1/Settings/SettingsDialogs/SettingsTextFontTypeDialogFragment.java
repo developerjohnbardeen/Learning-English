@@ -11,19 +11,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
+
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.google.android.material.card.MaterialCardView;
 
 public class SettingsTextFontTypeDialogFragment extends DialogFragment implements View.OnClickListener {
     private TextView defTitleSmpl, defSmplTxtView, defTrnsltSmplTxtView;
-    private TextView confirmBtn, rejectBtn;
+    private MaterialCardView confirmBtn, rejectBtn;
     private AppCompatCheckBox engBolderCheckBox, perBolderCheckBox;
     private Spinner engFontSpinnerList, perFontSpinnerList;
 

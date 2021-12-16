@@ -1,5 +1,29 @@
 package com.example.a4000essentialwordsbook1;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.format.Formatter;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,32 +39,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.DisplayMetrics;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowMetrics;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookOne;
@@ -54,23 +52,19 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookThree;
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.MarkedWords.MarkedWordActivity;
-import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.NavigationClasses.SubNavigationDrawer.NavRecyclerView.SubNavModel;
 import com.example.a4000essentialwordsbook1.SearchWordsClasses.SearchWordsActivity;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
 import com.example.a4000essentialwordsbook1.Settings.SettingsPreferencesActivity;
-import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.CreateTables.InsertTablesValues;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.PreferencesNotes.ResumeStudyPreferences;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.PreferencesNotes.SharedPreferencesNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
-import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -108,10 +102,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //resume preferences
     private SharedPreferences resumeSharedPreferences;
     private final String resumePreferencesName = ResumeStudyPreferences.RESUMEPREFERENCES;
-    private String bookStr = ResumeStudyPreferences.BOOKNUMBER;
-    private String unitStr = ResumeStudyPreferences.UNITNUMBER;
-    private String resumeWordStr = ResumeStudyPreferences.RESUMEWORD;
-    private String wordPositionStr = ResumeStudyPreferences.WORDPOSITION;
+    private final String bookStr = ResumeStudyPreferences.BOOKNUMBER;
+    private final String unitStr = ResumeStudyPreferences.UNITNUMBER;
+    private final String resumeWordStr = ResumeStudyPreferences.RESUMEWORD;
+    private final String wordPositionStr = ResumeStudyPreferences.WORDPOSITION;
     private int pBookNum, pUnitNum;
     private String word2Resume;
     private SharedPreferences autoNighModePreference;
@@ -121,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final String nightModeKey = SettingsPreferencesNotes.NIGHT_MODE_KEY;
 
 
-
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,16 +122,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         themeMode();
         allFunctions();
         permissionRequester();
+        toastIdAddress();
+
     }
 
+    private void toastIdAddress() {
+        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        Toast.makeText(this, "" + ipAddress, Toast.LENGTH_LONG).show();
+    }
 
 
     private final String[] uriList = new String[20];
     private final String[] audioUrlList = new String[30];
 
 
-
-    private void downloadFunctions(){
+    private void downloadFunctions() {
         haveStoragePermission();
         ExecutorService thread = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
@@ -451,33 +450,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActivityCompat.requestPermissions(this,permissions, 1);
     }
 
-    private void permissionRequester(){
-        if (!hasInternetAccess()){
+    private void permissionRequester() {
+        if (!hasInternetAccess()) {
             ActivityCompat.requestPermissions(this, permissions(), 1);
         }
-        if (!hasWritePermission()){
+        if (!hasWifiAccess()) {
             ActivityCompat.requestPermissions(this, permissions(), 1);
         }
-        if (!hasReadPermission()){
+        if (!hasWritePermission()) {
+            ActivityCompat.requestPermissions(this, permissions(), 1);
+        }
+        if (!hasReadPermission()) {
             ActivityCompat.requestPermissions(this, permissions(), 1);
         }
     }
 
-    private boolean hasReadPermission(){
+    private boolean hasReadPermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
-    private boolean hasWritePermission(){
+
+    private boolean hasWritePermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
-    private boolean hasInternetAccess(){
+
+    private boolean hasInternetAccess() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
     }
 
-    private String[] permissions(){
+    private boolean hasWifiAccess() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private String[] permissions() {
         return new String[]{
                 Manifest.permission.INTERNET,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.CHANGE_WIFI_MULTICAST_STATE,
+                Manifest.permission.CHANGE_WIFI_STATE
         };
     }
 

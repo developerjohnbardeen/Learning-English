@@ -15,11 +15,12 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
+import com.google.android.material.card.MaterialCardView;
 
-public class SettingsStoryTextSizeDialogFragment extends DialogFragment implements View.OnClickListener{
+public class SettingsStoryTextSizeDialogFragment extends DialogFragment implements View.OnClickListener {
 
     private NumberPicker stryNumPicker;
-    private TextView stryConfirmBtn, stryRejectBtn;
+    private MaterialCardView stryConfirmBtn, stryRejectBtn;
     private TextView storySampleTextView;
     private int stryIntSize;
 
@@ -27,7 +28,7 @@ public class SettingsStoryTextSizeDialogFragment extends DialogFragment implemen
     private final String storyTextSizePreferencesName = SettingsPreferencesNotes.SETTINGS_STORY_TEXT_VIEW_SIZE_PREFERENCES;
     private final String storyTextSizeKey = SettingsPreferencesNotes.STORY_TEXT_VIEW_SIZE_KEY;
 
-    public static SettingsStoryTextSizeDialogFragment newInstance(){
+    public static SettingsStoryTextSizeDialogFragment newInstance() {
         SettingsStoryTextSizeDialogFragment storyTextSizeFragment = new SettingsStoryTextSizeDialogFragment();
         return storyTextSizeFragment;
     }

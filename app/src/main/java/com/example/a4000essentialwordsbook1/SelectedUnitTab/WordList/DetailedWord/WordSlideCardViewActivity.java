@@ -15,9 +15,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
-import android.provider.MediaStore;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,13 +24,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.os.Handler;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -40,8 +38,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.a4000essentialwordsbook1.AudioTimeUtil.TimeUtil;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
@@ -57,22 +55,22 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.Linsteners.AudioPlayerListener;
 import com.example.a4000essentialwordsbook1.Linsteners.TextProvider;
+import com.example.a4000essentialwordsbook1.MarkedWords.MarkedWordActivity;
+import com.example.a4000essentialwordsbook1.Models.WordModel;
+import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SearchWordsClasses.SearchWordsActivity;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.DisplayTranslationInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.EditedTranslationInterface;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordDetailedInterfaces.SaveEditsInterface;
 import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AddNoteInterFace;
+import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AutoPlayInterface;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AddNoteDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AutoPlayDialogFragment;
-import com.example.a4000essentialwordsbook1.Settings.SettingListanerInterface.AutoPlayInterface;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.EditWordDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsPreferencesActivity;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayTypeNotes.AutoPlayTypeNote;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
-import com.example.a4000essentialwordsbook1.MarkedWords.MarkedWordActivity;
-import com.example.a4000essentialwordsbook1.R;
-import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.PreferencesNotes.ResumeStudyPreferences;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
@@ -82,7 +80,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -161,35 +158,43 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     private final String plySpeedKey = SettingsPreferencesNotes.SPEED_PLAY_KEY;
 
 
-
     //resume preferences
     SharedPreferences resumeSharedPreferences;
     private final String resumePreferencesName = ResumeStudyPreferences.RESUMEPREFERENCES;
-    private String bookStr = ResumeStudyPreferences.BOOKNUMBER;
-    private String unitStr = ResumeStudyPreferences.UNITNUMBER;
-    private String resumeWordStr = ResumeStudyPreferences.RESUMEWORD;
-    private String wordPositionStr = ResumeStudyPreferences.WORDPOSITION;
+    private final String bookStr = ResumeStudyPreferences.BOOKNUMBER;
+    private final String unitStr = ResumeStudyPreferences.UNITNUMBER;
+    private final String resumeWordStr = ResumeStudyPreferences.RESUMEWORD;
+    private final String wordPositionStr = ResumeStudyPreferences.WORDPOSITION;
     private int pBookNum, pUnitNum;
 
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.slide_cardivew_viewpager_activity);
         allFunctions();
     }
 
 
-    private void allFunctions(){
+    private void allFunctions() {
         //Function's order matters
         extrasGetter();
         viewsFinderById();
         threadsRunners();
     }
 
-    private void allAudioPlayers(String plyAudio){
-        final String appPath = this.getApplicationInfo().dataDir;
+    private void allAudioPlayers() {
+
+
+        mainPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(playPath()));
+        mainPlayer.start();
+        mainPlayer.pause();
+        twoMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(playPath()));
+        singleMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(playPath()));
+        mainMediaPlayer();
+    }
+
+    private String playPath() {
         final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
 
         final File audioMainPath = new File("Audio Files");
@@ -199,13 +204,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         final File audioWordBookPath = new File(audioWordPath, File.separator + "Book_" + dbNum);
         final File secondSubFile = new File(audioWordBookPath, File.separator + "." + new File(plyAudio).getName());
 
-        final String plyPath = Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
-        mainPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(plyPath));
-        mainPlayer.start();
-        mainPlayer.pause();
-        twoMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(plyPath));
-        singleMediaPlayer = MediaPlayer.create(WordSlideCardViewActivity.this, Uri.parse(plyPath));
-        mainMediaPlayer();
+        return Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
     }
 
 
@@ -276,7 +275,12 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         pauseMainPlayer();
         singleMediaPlayerPause();
 
-        if (twoMediaPlayer.isPlaying()){
+
+        //mediaPlayerOnDestroy();
+        //allAudioPlayers();
+
+
+        if (twoMediaPlayer.isPlaying()) {
             twoMediaPlayHandler.removeCallbacks(twoAudioOneThread);
             twoMediaPlayHandler.removeCallbacks(twoAudioTwoThread);
             twoMediaPlayer.pause();
@@ -304,7 +308,6 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         }
         twoMediaPlayer.start();
         twoMediaPlayHandler.postDelayed(twoAudioOneThread, (int) (firstEnd / autoPlayerSpeedVal));
-        Log.d("firstEnd", "" + firstEnd);
     }
     private final Handler twoMediaPlayHandler = new Handler(Looper.getMainLooper());
     private  Runnable twoAudioOneThread;
@@ -568,7 +571,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
             while (awCursor.moveToNext()){
                 plyAudio = awCursor.getString(awCursor.getColumnIndex(DB_NOTES.UNIT_COMPLETE_WORD_AUDIO));
             }
-            allAudioPlayers(plyAudio);
+            allAudioPlayers();
         }
         awCursor.close();
         db.close();
@@ -748,7 +751,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
     private void tabLayoutFun(){
 
-        String[] viewPagerTitle = new String[20];
+        final String[] viewPagerTitle = new String[20];
 
         layoutMediator = new TabLayoutMediator(tabIndicator, wordViewPager,
                 ((tab, position) -> tab.setText(viewPagerTitle[position])));
@@ -953,7 +956,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
         } else if (isExmplPlayedOnly()) {
             examplePlayerOnceOrAgainDeterminer();
         }else if (isWordAndDef()) {
-            autoTwoPlayOnceOrAgainDeterminer(autoPlyWordAndDefList());// ?? 4
+            autoTwoPlayOnceOrAgainDeterminer(autoPlyWordAndDefList());
         } else if (isWordAndExmpl()) {
             autoTwoPlayOnceOrAgainDeterminer(autoPlyWordAndExmplList());
         }else if (isDefAndExmpl()) {
@@ -1015,7 +1018,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     }
     private void playTwoAudios(int finalIndex, String startFirst, String durationFirst, String startSecond, String durationSecond){
         shwTranslationsInAutoPlay();
-        final int startOne = startAudio(startFirst, finalIndex);//?? 7
+        final int startOne = startAudio(startFirst, finalIndex);
         final int endOne = durationAudio(durationFirst, finalIndex);
         final int startTwo = startAudio(startSecond, finalIndex);
         final int endTwo = durationAudio(durationSecond, finalIndex);
@@ -1031,7 +1034,7 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
 
     private int startAudio(String type, int index){
         if (type.equalsIgnoreCase(wrdStartNote)){
-            return wordStart(index);//?? 8
+            return wordStart(index);
         }else if (type.equalsIgnoreCase(defStartNote)){
             return defStart(index);
         }else {
@@ -1202,20 +1205,17 @@ public class WordSlideCardViewActivity extends AppCompatActivity implements View
     /***********************************************************************************************/
 
 
+    private int wordDuration(int index) {
+        return (wordEnd(index) - wordStart(index));
+    }
 
+    private int wordStart(int index) {
+        return listWordModel.get(index).getWrdStart();
+    }
 
-
-
-
-
-
-
-
-
-
-    private int wordDuration(int index){return (wordEnd(index) - wordStart(index));}
-    private int wordStart(int index){return listWordModel.get(index).getWrdStart();}// ?? 9
-    private int wordEnd(int index){return listWordModel.get(index).getWrdEnd();}
+    private int wordEnd(int index) {
+        return listWordModel.get(index).getWrdEnd();
+    }
 
 
     private int defDuration(int index){

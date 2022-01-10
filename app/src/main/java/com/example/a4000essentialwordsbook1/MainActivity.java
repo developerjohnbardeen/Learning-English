@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void toastIdAddress() {
         WifiManager wm = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         String ipAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        Toast.makeText(this, "" + ipAddress, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "" + ipAddress, Toast.LENGTH_LONG).show();
     }
 
 

@@ -5,17 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -32,13 +29,7 @@ import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsSto
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsTextFontTypeDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.SettingsTextSizeDialogFragment;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.StoryTextFontTypeDialogFragment;
-import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.PreferencesNotes.SharedPreferencesNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
-import com.google.android.exoplayer2.offline.Download;
-
-import java.security.PrivilegedAction;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class SettingsPreferencesActivity extends AppCompatActivity implements View.OnClickListener, ReSetSettingsInterface {
     private RelativeLayout autoNightModeLayout, autoPlayLayout, displayTranslationLayout, restoreSettingsLayout;
@@ -68,8 +59,8 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
     private final String cancelTimerKey = SettingsPreferencesNotes.CANCEL_QUIZ_TIMER_KEY;
 
 
-
-
+    private RelativeLayout sttngOnBckPressedLayout;
+    private TextView sttngTxtViewTitle;
 
 
     @Override
@@ -250,6 +241,14 @@ public class SettingsPreferencesActivity extends AppCompatActivity implements Vi
         autoNightCheckBox = findViewById(R.id.settings_auto_dark_mode_check_box);
         autoPlayCheckBox = findViewById(R.id.settings_auto_play_check_box);
         shwTrnslCheckBox = findViewById(R.id.settings_display_translation_check_box);
+
+        sttngTxtViewTitle = findViewById(R.id.settings_title);
+
+        sttngOnBckPressedLayout = findViewById(R.id.settings_tab_layout_bck_bttn_layout);
+        sttngOnBckPressedLayout.setOnClickListener(view -> onBackPressed());
+        sttngTxtViewTitle.setText(R.string.settings_title_eng_str);
+
+
         onThisClickListener();
         quizTimerCheckBoxValueSetter();
         displayTranslationsCheckBoxChecker();

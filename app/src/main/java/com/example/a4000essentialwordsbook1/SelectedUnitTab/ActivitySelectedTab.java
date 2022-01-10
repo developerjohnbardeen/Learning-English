@@ -24,12 +24,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentOnAttachListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.a4000essentialwordsbook1.AudioTimeUtil.TimeUtil;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFive;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookFour;
@@ -38,17 +38,16 @@ import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitData
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookThree;
 import com.example.a4000essentialwordsbook1.DataBases.UnitBookDatabases.UnitDatabaseBookTwo;
 import com.example.a4000essentialwordsbook1.MarkedWords.MarkedWordActivity;
+import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SearchWordsClasses.SearchWordsActivity;
 import com.example.a4000essentialwordsbook1.Settings.SettingsDialogs.AutoPlayDialogFragment;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
-import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.File;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -65,7 +64,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     private int mediaPosition;
     private CardView cardViewContainer;
     private MediaPlayer storyMediaPlayer;
-    private TextView duration, totalTimeTextView;
+    private TextView duration, totalTimeTextView, tabTitleTxtView;
     private long timeElapsed = 0, finalTime = 0;
     private SeekBar seekbar;
     private final String sDbNumber = ExtraNotes.DB_NUMBER;
@@ -269,7 +268,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
         }
     }
     private void initializeMediaPlayer(){
-        final String appPath = this.getApplicationInfo().dataDir;
+
         final File audioDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
 
         final File audioMainPath = new File("Audio Files");
@@ -359,6 +358,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                tabTitleTxtView.setText(tabTitle(position));
                 switch (position){
                     case 0:
                         viewPager2ZeroPosition();
@@ -385,7 +385,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
 
         new TabLayoutMediator(tabLayout, viewPager2,
                 ((tab, position) -> {
-                    tab.setText(tabTitle(position));
+                    //tab.setText(tabTitle(position));
                     tab.setIcon(tabIcons(position));
                 }
                 )).attach();
@@ -530,6 +530,7 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
     public void viewsFinderById(){
         cardViewContainer = findViewById(R.id.story_component_container);
         toolbar = findViewById(R.id.toolbar);
+        tabTitleTxtView = findViewById(R.id.selected_book_tab_layout_txt_title);
         backBtnLayout = findViewById(R.id.tab_layout_bck_bttn_layout);
         viewPager2 = findViewById(R.id.viewPager);
         unitTextNumber = findViewById(R.id.unit_selected_tab_number);

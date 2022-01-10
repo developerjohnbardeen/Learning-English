@@ -58,7 +58,7 @@ public class SearchWordsAdapter extends RecyclerView.Adapter<SearchWordsAdapter.
     }
 
     private void searchImageViewValueSetter(SearchViewHolder holder, WordModel model){
-        final String appPath = searchContext.getApplicationInfo().dataDir;
+
         final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
 
         final File imgMainPath = new File("Image Files");

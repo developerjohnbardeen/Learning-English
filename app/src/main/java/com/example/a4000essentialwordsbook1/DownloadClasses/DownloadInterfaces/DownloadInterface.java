@@ -1,6 +1,7 @@
 package com.example.a4000essentialwordsbook1.DownloadClasses.DownloadInterfaces;
 
 public interface DownloadInterface {
-    void audioDownload(int position);
-    void imageDownload(int position);
+    void itemListener(int position, String whtDown);
+
+    void downDialogDismissed();
 }

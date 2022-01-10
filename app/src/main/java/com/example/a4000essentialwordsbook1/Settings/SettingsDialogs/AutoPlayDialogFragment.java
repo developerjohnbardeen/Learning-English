@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.a4000essentialwordsbook1.MarkedWords.ReviewWords.MainReviewMarkedWordActivity;
@@ -38,7 +39,6 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
     private MaterialCardView autoPlayBtn, rejectBtn, saveAndPlayBtn;
     private TextView replyWordsTextView;
 
-    private RelativeLayout tooSlowLayout, slowLayout, normalLayout, fastLayout, tooFastLayout;
     private ImageView tooSlowImgView, slowImgView, normalImgView, fastImgView, tooFastImgView;
     private TextView tooSlowTextView, slowTextView, normalTextView, fastTextView, tooFastTextView;
 
@@ -48,17 +48,10 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
     private AppCompatCheckBox plyAgainUnitCheckBox, plyNxtUnitCheckBox, displayTranslationCheckBox;
     private AppCompatCheckBox wordTrnslCheckBox, defTrnslCheckBox, exmplTrnslCheckBox;
     private AutoPlayInterface autoPlayInterface;
-    private boolean[] checkBoxesStatusFlags;
-    private int[] dbInfoList;
     private float plySpeedValue = 1f;
     private final static String keyActivity = AutoPlayNotes.ACTIVITY_NAME;
     private final static String dbInfoKey = AutoPlayNotes.DB_INFO_DIALOG_LIST_KEY;
     private String nameActivity;
-    private final String strWordId = ExtraNotes.WORD_ID;
-    private final String strDbNumber = ExtraNotes.DB_NUMBER;
-    private final String strUnitNumber = ExtraNotes.UNIT_NUMBER;
-    private final String autoPlayFlagKey = ExtraNotes.AUTO_PLAY_FLAG_KEY;
-    private final String autoPlayFlagListKey = ExtraNotes.AUTO_PLAY_BOOLEAN_LIST;
     private final static String selectedTabActivity = AutoPlayNotes.SELECTED_TAB_ACTIVITY;
     private final static String detailedWordSlideActivity = AutoPlayNotes.WORD_SLIDE_CARD_VIEW_ACTIVITY;
     private final static String markedWordActivity = AutoPlayNotes.MARKED_WORD_ACTIVITY;
@@ -116,10 +109,8 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbInfoList = requireArguments().getIntArray(dbInfoKey);
         wordList = requireArguments().getParcelableArrayList("reviewList");
         nameActivity = requireArguments().getString(keyActivity);
-        checkBoxesStatusFlags = new boolean[]{false, true, false, false, false, false, false, false, false, false, false, false};
     }
 
 
@@ -193,7 +184,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
                 if (wordList.size() > 0){
                     requireActivity().startActivity(plyIntent);
                 }else {
-                    Toast.makeText(requireActivity(), "اولاد سگ کلمه ای برای پخش نداری نوب سگ:)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireActivity(), "کلمه ای برای پخش وجود ندارد!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case mainReviewActivity:
@@ -202,12 +193,17 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         }
     }
     private void extraSetter(Intent intent){
+        String strDbNumber = ExtraNotes.DB_NUMBER;
         intent.putExtra(strDbNumber, dbNum());
+        String strUnitNumber = ExtraNotes.UNIT_NUMBER;
         intent.putExtra(strUnitNumber, unitNum());
+        String autoPlayFlagKey = ExtraNotes.AUTO_PLAY_FLAG_KEY;
         intent.putExtra(autoPlayFlagKey, true);
+        String strWordId = ExtraNotes.WORD_ID;
         intent.putExtra(strWordId, 0);
         intent.putParcelableArrayListExtra("reviewList", wordList);
         intent.putExtra(speedMeterKey, plySpeedValue);
+        String autoPlayFlagListKey = ExtraNotes.AUTO_PLAY_BOOLEAN_LIST;
         intent.putExtra(autoPlayFlagListKey, setCheckBoxesStatusFlags());
     }
     private boolean[] setCheckBoxesStatusFlags(){
@@ -341,14 +337,6 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         fastImageViewClickListener();
         tooFastImageViewClickListener();
     }
-    private void preSpeedImageViewSize(){
-        speedViewsAnimation(normalImgView, secondImageView);
-        speedTextViewsAnimation(normalTextView, secondTxtView);
-
-        secondImageView = normalTextView;
-        secondTxtView = normalTextView;
-
-    }
 
     private View secondImageView;
     private TextView secondTxtView;
@@ -460,7 +448,7 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         final ValueAnimator increaseAnimator = ValueAnimator.ofFloat(strtSize, endSize);
         increaseAnimator.setDuration(animDuration);
 
-        view.setTextColor(requireActivity().getColor(R.color.colorAccent));
+        view.setTextColor(ContextCompat.getColor(requireActivity(), R.color.colorAccent));
 
         increaseAnimator.addUpdateListener(animation -> {
             view.setScaleX((float) animation.getAnimatedValue());
@@ -474,7 +462,8 @@ public class AutoPlayDialogFragment extends DialogFragment implements View.OnCli
         if (view != null) {
             final ValueAnimator decreaseAnimator = ValueAnimator.ofFloat(endSize, strtSize);
             decreaseAnimator.setDuration(animDuration);
-            view.setTextColor(requireActivity().getColor(R.color.setting_gray));
+            view.setTextColor(ContextCompat.getColor(requireActivity(),
+                    R.color.setting_gray));
 
             decreaseAnimator.addUpdateListener(animation -> {
                 view.setScaleX((float) animation.getAnimatedValue());

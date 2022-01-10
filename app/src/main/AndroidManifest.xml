@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.a4000essentialwordsbook1">
 
+    <!--final String appPath = this.getApplicationInfo().dataDir;-->
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
@@ -30,21 +32,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SelectedBook.SelectedBookActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+        <activity
+            android:name=".SelectedBook.SelectedBookActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
 
-        <activity android:name=".SelectedUnitTab.ActivitySelectedTab"
+        <activity
+            android:name=".SelectedUnitTab.ActivitySelectedTab"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+
+        <activity
+            android:name=".DownloadClasses.Downloads.DownloadActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+
         <activity
             android:name=".SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".MarkedWords.MarkedWordActivity"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity"/>
+            android:parentActivityName=".SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity" />
         <activity
             android:name=".MarkedWords.ReviewWords.MainReviewMarkedWordActivity"
             android:configChanges="orientation|screenSize"
@@ -55,17 +65,20 @@
         <activity
             android:name=".QuizFile.QuizRezult.QuizMainResultActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
 
-        <activity android:name=".SearchWordsClasses.SearchWordsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+        <activity
+            android:name=".SearchWordsClasses.SearchWordsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
         <activity
             android:name=".Settings.SettingsPreferencesActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
-        <activity android:name=".DownloadClasses.DownloadFilesActivity"/>
+        <activity
+            android:name=".DownloadClasses.DownloadFilesActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
     </application>
 

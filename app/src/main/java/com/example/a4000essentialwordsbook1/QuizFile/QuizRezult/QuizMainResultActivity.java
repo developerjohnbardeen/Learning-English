@@ -81,7 +81,7 @@ public class QuizMainResultActivity extends AppCompatActivity implements View.On
 
         new TabLayoutMediator(qrTabLayout, qrViewPager,
                 ((tab, position) -> {
-                    tab.setText(tabTitle(position));
+                    //tab.setText(tabTitle(position));
                     tab.setIcon(tabIcon(position));
                 }
                 )).attach();
@@ -135,6 +135,7 @@ public class QuizMainResultActivity extends AppCompatActivity implements View.On
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                qrTitleTab.setText(tabTitle(position));
                 autoPlayIconVisibility(position);
             }
 
@@ -182,7 +183,6 @@ public class QuizMainResultActivity extends AppCompatActivity implements View.On
         autoPlayImgView = findViewById(R.id.quiz_result_auto_play_img_view);
 
 
-        qrTitleTab.setText(appBarTitle());
         thisOnClickListener();
     }
     private String appBarTitle(){

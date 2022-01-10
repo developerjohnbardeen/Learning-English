@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a4000essentialwordsbook1.Models.UnitModel;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.ActivitySelectedTab;
@@ -30,12 +28,8 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
     public final Context unitContext;
     private final ArrayList<UnitModel> unitList;
     private final LayoutInflater inflater;
-    private int itemPosition;
 
     private final int dbNUm;
-    private final String sDbNumber = ExtraNotes.DB_NUMBER;
-    private final String sUnitNumber = ExtraNotes.UNIT_NUMBER;
-    private final String sWordId = ExtraNotes.WORD_ID;
 
     public AdapterSelectedBook(Context context, ArrayList<UnitModel> list, int dbNum){
         this.unitContext = context;
@@ -57,15 +51,6 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UnitModel model = unitList.get(holder.getLayoutPosition());
-        itemPosition = holder.getLayoutPosition();
-
-
-/*        Glide.with(unitContext)
-                .load(model.getUnitImg())
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.loadimg)
-                .error(R.drawable.loadimg)
-                .into(holder.unitImg);*/
 
         setImageResources(holder, model);
 
@@ -75,7 +60,7 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
     }
 
     private void setImageResources(ViewHolder holder, UnitModel model){
-        final String appPath = unitContext.getApplicationInfo().dataDir;
+
         final File imageDir = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
 
         final File imgMainPath = new File("Image Files");
@@ -113,10 +98,9 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
         ImageView unitImg;
         TextView unitTtl;
         TextView unitNum;
-        CardView cardUnit, storyBtn;
+        CardView cardUnit;
         Context context;
         Intent unitIntent;
-        boolean flag = false;
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -125,20 +109,19 @@ public class AdapterSelectedBook  extends RecyclerView.Adapter<AdapterSelectedBo
             unitTtl = itemView.findViewById(R.id.unit_title);
             unitNum = itemView.findViewById(R.id.unit_num);
             cardUnit = itemView.findViewById(R.id.unit_card_view);
-            storyBtn = itemView.findViewById(R.id.story_tab_card_view);
             componentsClickListener();
         }
 
         public void componentsClickListener(){
             cardUnit.setOnClickListener(this);
-            storyBtn.setOnClickListener(this);
-            storyBtn.setOnLongClickListener(this);
         }
 
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            String sDbNumber = ExtraNotes.DB_NUMBER;
+            String sUnitNumber = ExtraNotes.UNIT_NUMBER;
+            switch (v.getId()) {
                 case (R.id.unit_card_view):
                     int position = getBindingAdapterPosition() + 1;
                     unitIntent = new Intent(this.context, ActivitySelectedTab.class);

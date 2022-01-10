@@ -9,16 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -49,11 +44,8 @@ public class SelectedBookActivity extends AppCompatActivity implements View.OnCl
     private RelativeLayout backBtnLayout;
     private ArrayList<UnitModel> unitList;
     private Handler handler;
-    private final String sDbNumber = ExtraNotes.DB_NUMBER;
-    private final String sUnitNumber = ExtraNotes.UNIT_NUMBER;
-    private final String sWordId = ExtraNotes.WORD_ID;
     private ImageView searchIcon, reviewIcon, settingIcon;
-    private TextView backBtnTxtView, bookTitle, bookNum;
+    private TextView bookNum;
 
 
     @Override
@@ -133,30 +125,6 @@ public class SelectedBookActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        menu.clear();
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_selected_book, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-
-        switch (item.getItemId()){
-            case (R.id.hard_selected_book_item):
-                Toast.makeText(this, "Hard Words Study Is Under Process", Toast.LENGTH_SHORT).show();
-                return true;
-            case (R.id.marked_selected_book_item):
-                return true;
-            case (R.id.settings_selected_book_item):
-                settingStartActivity();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
 
     private void setBookNum(){
         String databaseNum = Integer.toString(intDatabaseNum());
@@ -196,6 +164,7 @@ public class SelectedBookActivity extends AppCompatActivity implements View.OnCl
 
     private int intDatabaseNum(){
         Intent intent = getIntent();
+        String sDbNumber = ExtraNotes.DB_NUMBER;
         return intent.getIntExtra(sDbNumber, 1);
     }
 
@@ -204,8 +173,6 @@ public class SelectedBookActivity extends AppCompatActivity implements View.OnCl
         searchIcon = findViewById(R.id.selected_book_search_launcher);
         reviewIcon = findViewById(R.id.selected_book_review_launcher);
         settingIcon = findViewById(R.id.selected_book_settings_launcher);
-        backBtnTxtView = findViewById(R.id.selected_book_tab_layout_txt_back_button);
-        bookTitle = findViewById(R.id.selected_book_text_title);
         bookNum = findViewById(R.id.selected_book_text_view);
         backBtnLayout = findViewById(R.id.selected_book_tab_layout_bck_bttn_layout);
         Toolbar toolbar = findViewById(R.id.selected_book_toolbar);

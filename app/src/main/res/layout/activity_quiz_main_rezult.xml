@@ -57,7 +57,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:gravity="center"
-                        android:text="@string/back"
+                        android:text="@string/result_eng_str"
                         android:visibility="visible"
                         android:textColor="?android:textColorPrimary"
                         android:textSize="@dimen/_14sdp" />

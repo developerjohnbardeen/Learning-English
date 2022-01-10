@@ -29,7 +29,6 @@ import com.example.a4000essentialwordsbook1.DataBases.WordBookDatabases.WordData
 import com.example.a4000essentialwordsbook1.Models.WordModel;
 import com.example.a4000essentialwordsbook1.R;
 import com.example.a4000essentialwordsbook1.SelectedUnitTab.WordList.DetailedWord.WordSlideCardViewActivity;
-import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.AutoPlayNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 
@@ -173,6 +172,7 @@ public class SearchWordsActivity extends AppCompatActivity implements View.OnCli
             return new WordDatabaseBookSix(this);
         }
     }
+
 
     @SuppressLint("Range")
     private void callingDataBaseBookTwoForSearching(String searchWord){

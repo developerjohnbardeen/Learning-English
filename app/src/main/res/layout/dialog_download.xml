@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_rond_corner">
+
+    <RelativeLayout
+        android:id="@+id/download_dialog_no_internet_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/download_dialog_warning_icon_image_view"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/warning_icon"
+            app:riv_corner_radius="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/download_dialog_warning_text_View"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_warning_icon_image_view"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/no_internet_content_str"
+            android:textColor="?android:textColorPrimary" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/download_dialog_cancel_no_internet_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_warning_text_View"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:visibility="visible"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_7sdp"
+                android:text="@string/cancel_download_Str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/download_dialog_downloading_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/dialog_download_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_20sdp"
+            android:gravity="center"
+            android:text="لطفا صبر کنین"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/_13ssp" />
+
+
+        <TextView
+            android:id="@+id/dialog_download_announcement_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_download_title_text_view"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="@string/app_name"
+            android:textColor="?android:textColorPrimary" />
+
+
+        <ProgressBar
+            android:id="@+id/download_dialog_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_download_announcement_text_view"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp" />
+
+
+        <TextView
+            android:id="@+id/download_dialog_progress_percent_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_progressbar"
+            android:layout_alignStart="@+id/download_dialog_progressbar"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="0"
+            android:textColor="?android:textColorPrimary"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_progressbar"
+            android:layout_marginStart="@dimen/_1sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/download_dialog_progress_percent_text_view"
+            android:text="%"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/download_dialog_total_number_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_progressbar"
+            android:layout_alignTop="@+id/download_dialog_cancel_card_view"
+            android:layout_alignBottom="@+id/download_dialog_cancel_card_view"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="60"
+            android:textColor="?android:textColorPrimary" />
+
+        <TextView
+            android:id="@+id/download_dialog_slash_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/download_dialog_progressbar"
+            android:layout_alignTop="@+id/download_dialog_cancel_card_view"
+            android:layout_alignBottom="@+id/download_dialog_cancel_card_view"
+            android:layout_toStartOf="@+id/download_dialog_total_number_text_view"
+            android:gravity="center"
+            android:text="/" />
+
+        <TextView
+            android:id="@+id/download_dialog_number_done_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/download_dialog_progressbar"
+            android:layout_alignTop="@+id/download_dialog_cancel_card_view"
+            android:layout_alignBottom="@+id/download_dialog_cancel_card_view"
+            android:layout_toStartOf="@+id/download_dialog_slash_divider"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="?android:textColorPrimary" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/download_dialog_cancel_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_progressbar"
+            android:layout_alignStart="@+id/download_dialog_progressbar"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/dialog_text_view_ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:visibility="visible"
+            app:cardElevation="0dp"
+            app:rippleColor="?rippleColor">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_7sdp"
+                android:text="@string/cancel_download_Str"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/_15ssp" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/download_dialog_failed_download_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/download_dialog_failed_download_image_View"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/triangle_failed_icon_warning_alike" />
+
+        <TextView
+            android:id="@+id/download_dialog_failed_download_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_failed_download_image_View"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/failed_download_str"
+            android:textColor="?android:textColorPrimary" />
+
+
+        <RelativeLayout
+            android:id="@+id/download_dialog_failed_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/download_dialog_failed_download_text_view"
+            android:layout_marginTop="@dimen/reject_confirm_margin_top">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/download_dialog_failed_download_cancel_download_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:layout_toStartOf="@+id/download_dialog_failed_download_center_view"
+                android:background="@drawable/dialog_text_view_ripple_effect"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardElevation="0dp"
+                app:rippleColor="?rippleColor">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/cancel_download_Str"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/_15ssp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <View
+                android:id="@+id/download_dialog_failed_download_center_view"
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_centerInParent="true" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/download_dialog_failed_download_retry_download_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:layout_toEndOf="@+id/download_dialog_failed_download_center_view"
+                android:background="@drawable/dialog_text_view_ripple_effect"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                app:cardElevation="0dp"
+                app:rippleColor="?rippleColor">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/retry_download_str"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/_15ssp" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

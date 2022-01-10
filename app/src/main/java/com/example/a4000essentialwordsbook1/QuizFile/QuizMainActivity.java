@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -23,10 +24,10 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.a4000essentialwordsbook1.Models.WordModel;
-import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizDataGenerator.GenerateQuizData;
 import com.example.a4000essentialwordsbook1.QuizFile.QuizRezult.QuizMainResultActivity;
 import com.example.a4000essentialwordsbook1.R;
+import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.DB_NOTES;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.ExtraNotes;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.FontTypeFiles.GlobalFonts;
 import com.example.a4000essentialwordsbook1.StringNote.DB_NOTES.SettingsPreferencesNotes.SettingsPreferencesNotes;
@@ -505,15 +506,12 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
     private void quizImageViewAndTextViewVisibility(){
         assert quizType != null;
         if (quizType.equalsIgnoreCase(photoWordType)){
-            quizTypeTxtView.setText(R.string.Photo_word_quiz);
             tvQuizImageView.setVisibility(View.VISIBLE);
             counterLayoutMargin(1,10,2,3);
         }else if (quizType.equalsIgnoreCase(engType)){
-            quizTypeTxtView.setText(R.string.eng_to_per_quiz);
             txtTvWord.setVisibility(View.VISIBLE);
             counterLayoutMargin(2,11,3,1);
         }else if (quizType.equalsIgnoreCase(persianType)){
-            quizTypeTxtView.setText(R.string.Per_to_eng_quiz);
             counterLayoutMargin(4,12,1,3);
             txtTvWord.setVisibility(View.VISIBLE);
         }
@@ -703,6 +701,7 @@ public class QuizMainActivity extends AppCompatActivity implements View.OnClickL
         txtOptionFour = findViewById(R.id.txt_quiz_option_four);
         txtOptionSkip = findViewById(R.id.txt_quiz_option_skip_answer);
         quizTypeTxtView = findViewById(R.id.main_quiz_type_title_text_View);
+        quizTypeTxtView.setText(R.string.quiz);
     }
     public void componentClick() {
         cardOptionOne.setOnClickListener(this);

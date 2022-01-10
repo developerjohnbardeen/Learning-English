@@ -59,9 +59,11 @@
                 <RelativeLayout
                     android:id="@+id/slide_word_card_view_tab_layout_bck_bttn_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="?actionBarSize"
                     android:clickable="true"
                     android:focusable="true"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/_7sdp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     tools:ignore="RelativeOverlap">
 
@@ -73,21 +75,29 @@
                         android:contentDescription="@string/todo" />
 
                     <TextView
-                        android:id="@+id/slide_word_card_view_tab_layout_txt_back_button"
+                        android:id="@+id/slide_word_card_view_unit"
                         android:layout_width="wrap_content"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_toEndOf="@+id/slide_word_card_view_img_back_btn"
-                        android:layout_alignBottom="@+id/slide_word_card_view_img_back_btn"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_height="?actionBarSize"
                         android:gravity="center"
-                        android:text="@string/back"
-                        android:visibility="visible"
+                        android:text="@string/unit"
                         android:textColor="?android:textColorPrimary"
-                        android:textSize="@dimen/_13ssp" />
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <TextView
+                        android:id="@+id/slide_word_card_view_unit_selected_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?actionBarSize"
+                        android:layout_alignTop="@+id/slide_word_card_view_unit"
+                        android:layout_alignBottom="@+id/slide_word_card_view_unit"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_toEndOf="@+id/slide_word_card_view_unit"
+                        android:gravity="center"
+                        android:text="@string/number"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="@dimen/_15ssp" />
+
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -97,30 +107,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/slide_word_card_view_unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/unit"
-                        android:textColor="?android:textColorPrimary"
-                        android:textSize="@dimen/_15sdp" />
-
-                    <TextView
-                        android:id="@+id/slide_word_card_view_unit_selected_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/slide_word_card_view_unit"
-                        android:layout_alignBottom="@+id/slide_word_card_view_unit"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_toEndOf="@+id/slide_word_card_view_unit"
-                        android:gravity="center"
-                        android:text="@string/number"
-                        android:textSize="@dimen/_15ssp"
-                        android:textColor="?android:textColorPrimary" />
-
+                    android:gravity="center"
+                    android:visibility="gone">
 
 
                 </RelativeLayout>

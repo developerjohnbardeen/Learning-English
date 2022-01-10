@@ -13,6 +13,10 @@
     <string name="unit_eng_str">Unit</string>
     <string name="quiz_result_eng_str">Quiz Result</string>
 
+    <string name="result_eng_str">Results</string>
+
+    <string name="settings_title_eng_str">Settings</string>
+
 
     //word detailed strings
     <string name="word_text_definition">Definition</string>
@@ -215,14 +219,19 @@
         با این کار تمامی تنظیمات به حالت پیش فرض بازنشانی خواهند شد!</string>
 
 
-
     <string name="save_str">ذخیره</string>
     <string name="confirmation">تایید</string>
     <string name="reject_str">لغو</string>
+
     <string name="quiz_timer_cancel_str">لغو زمان سنج</string>
     <string name="save_and_play_str">ذخیره و پخش</string>
     <string name="auto_play_Str">پخش</string>
     <string name="cancel_story_font_str">لغو فونت استوری</string>
+
+    <string name="no_internet_content_str">اینترنت شما برای مدتی است که قطع شده است!</string>
+    <string name="failed_download_str">دانلود فایل ها با مشکل مواجه شده است!</string>
+    <string name="cancel_download_Str">لغو دانلود</string>
+    <string name="retry_download_str">دانلود دوباره</string>
 
 
     <string name="dark_mode_str">حالت شب</string>
@@ -235,6 +244,7 @@
     <string name="others">سایر</string>
     <string name="study_hard_words_str">مطالعه لغات سخت</string>
     <string name="download_str">دانلود فایل ها</string>
+    <string name="download_eng_str">Downloads</string>
 
 
     //menu marked book

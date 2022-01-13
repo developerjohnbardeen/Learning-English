@@ -61,6 +61,8 @@
         <item name="android:colorAccent">#018F8A</item>
         <item name="colorAccent">#018F8A</item>
 
+        <item name="android:textColorHint">@color/white_blur</item>
+
         <item name="android:layoutDirection">ltr</item>
         <item name="android:textColorPrimary">#F6FAF6</item>
         <item name="android:textColorSecondary">#9A9A9A</item>

@@ -25,7 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                android:overScrollMode="ifContentScrolls"
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+                app:titleCollapseMode="fade">
 
 
                 <ImageView
@@ -34,6 +36,7 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:scaleType="fitXY"
+                    android:src="@drawable/english_background_2"
                     app:layout_collapseMode="parallax"
                     android:contentDescription="@string/todo"/>
 
@@ -264,6 +267,7 @@
                     android:paddingBottom="@dimen/_2sdp"/>
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
@@ -281,5 +285,7 @@
         app:itemTextColor="?android:textColorPrimary"
         app:subheaderColor="?android:textColorPrimary" />
     <!--app:headerLayout="@layout/nav_header_layout"-->
+
+
 </androidx.drawerlayout.widget.DrawerLayout>
 

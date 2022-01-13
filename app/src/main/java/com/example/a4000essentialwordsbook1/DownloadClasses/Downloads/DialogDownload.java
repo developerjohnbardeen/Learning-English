@@ -215,6 +215,8 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
         }
     }
 
+    private String errorMessage;
+
     private void downloadImagesFunctions() {
         ExecutorService thread = Executors.newSingleThreadExecutor();
         thread.execute(() -> {
@@ -224,8 +226,10 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
                 wordImageDownloader(wordImageList);
                 unitImageDownloader(unitImagesList);
             } catch (Exception e) {
-                //cursor_status
-                Log.e("imageDownError", "" + e);
+
+                errorMessage = e.toString();
+                Log.e("imageDownError", "" + errorMessage);
+                dismiss();
             }
         });
     }
@@ -237,6 +241,8 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
 
 
         Handler wrdImgRunOnUiThread = new Handler(Looper.getMainLooper());
+
+        //final File mainPath = new File(Environment.DIRECTORY_DOWNLOADS, File.separator + "4000 Essential Words");
 
 
         final File imgMainPath = new File("Image Files");
@@ -250,6 +256,8 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
             Uri downloadUri = Uri.parse(imgUrlList[index]);
 
             final File secondSubFile = new File(wordUnitImgBookPath, File.separator + "." + new File(imgUrlList[index]).getName());
+            final File finalPath = new File("4000 Essential Words", secondSubFile.toString());
+
             final File file = new File(Environment.getExternalStoragePublicDirectory(mainPath.toString()), secondSubFile.toString());
 
 
@@ -264,7 +272,7 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
                         .setAllowedOverRoaming(true)
                         .setTitle(imageName)
                         .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
-                        .setDestinationInExternalPublicDir(mainPath.toString(), secondSubFile.toString());
+                        .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalPath.toString());
 
 
                 DownloadManager wrdImgDownloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -358,6 +366,8 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
 
         for (int index = 0; index < 30; index++) {
             final File secondSubFile = new File(unitImgBookPath, File.separator + "." + new File(unitImgUrlList[index]).getName());
+            final File finalPath = new File("4000 Essential Words", secondSubFile.toString());
+
             final File file = new File(Environment.getExternalStoragePublicDirectory(mainPath.toString()), secondSubFile.toString());
             final boolean imgExists = file.exists();
             boolean[] cancelFlags;
@@ -373,7 +383,7 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
                         .setAllowedOverRoaming(true)
                         .setTitle(imageName)
                         .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
-                        .setDestinationInExternalPublicDir(mainPath.toString(), secondSubFile.toString());
+                        .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalPath.toString());
 
 
                 DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -470,6 +480,8 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
                 audioDownloaderFunctions();
             } catch (Exception e) {
                 Log.e("audiosDownError", "" + e);
+                dismiss();
+                ImageView imageView = new ImageView(context);
             }
         });
 
@@ -501,6 +513,8 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
         final File audioUnitBookPath = new File(audioUnitPath, File.separator + "Book_" + dbNum);
 
         final File secondSubFile = new File(audioUnitBookPath, File.separator + "." + new File(unitAudioList[index]).getName());
+        final File finalPath = new File("4000 Essential Words", secondSubFile.toString());
+
         final File file = new File(Environment.getExternalStoragePublicDirectory(mainPath.toString()), secondSubFile.toString());
         final boolean audioExists = file.exists();
 
@@ -514,7 +528,7 @@ public class DialogDownload extends DialogFragment implements View.OnClickListen
                     .setAllowedOverRoaming(true)
                     .setTitle(imageName)
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
-                    .setDestinationInExternalPublicDir(mainPath.toString(), secondSubFile.toString());
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalPath.toString());
 
 
             DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);

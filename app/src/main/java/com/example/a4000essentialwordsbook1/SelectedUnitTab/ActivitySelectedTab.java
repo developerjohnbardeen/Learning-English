@@ -280,6 +280,10 @@ public class ActivitySelectedTab extends AppCompatActivity implements View.OnCli
 
         final String plyPath = Environment.getExternalStoragePublicDirectory(audioDir.toString()).toString() + File.separator + secondSubFile.toString();
 
+        final File path = new File(plyPath);
+        path.exists();
+
+
         storyMediaPlayer = MediaPlayer.create(this, Uri.parse(plyPath));
         utils = new TimeUtil();
         finalTime = storyMediaPlayer.getDuration();

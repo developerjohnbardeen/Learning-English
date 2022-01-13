@@ -38,17 +38,18 @@
                         android:id="@+id/search_compat_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/search_hint"
-                        android:gravity="start|center"
-                        android:singleLine="true"
-                        android:scrollHorizontally="true"
+                        android:layout_toStartOf="@+id/search_delete_all_words"
+                        android:layout_toEndOf="@+id/search_back_button"
                         android:allowUndo="true"
+                        android:background="@color/fui_transparent"
+                        android:gravity="start|center"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="actionSearch"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
-                        android:layout_toEndOf="@+id/search_back_button"
-                        android:layout_toStartOf="@+id/search_delete_all_words"
-                        android:background="@color/fui_transparent"
-                        android:imeOptions="actionSearch"/>
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColor="?android:textColorPrimary" />
 
                     <ImageView
                         android:id="@+id/search_delete_all_words"

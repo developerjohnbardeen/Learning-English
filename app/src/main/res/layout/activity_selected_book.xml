@@ -90,7 +90,7 @@
                             android:layout_height="?android:actionBarSize"
                             android:layout_alignTop="@+id/selected_book_img_back_btn"
                             android:layout_alignBottom="@+id/selected_book_img_back_btn"
-                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginStart="@dimen/_17sdp"
                             android:gravity="center"
                             android:text="@string/Book"
                             android:textColor="?android:attr/textColorPrimary"

@@ -49,18 +49,18 @@
                         android:id="@+id/quiz_result_tab_layout_txt_back_button"
                         android:layout_width="wrap_content"
                         android:layout_height="?attr/actionBarSize"
-                        android:layout_toEndOf="@+id/quiz_result_img_back_btn"
                         android:layout_alignBottom="@+id/quiz_result_img_back_btn"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginStart="@dimen/_17sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_toEndOf="@+id/quiz_result_img_back_btn"
                         android:gravity="center"
                         android:text="@string/result_eng_str"
-                        android:visibility="visible"
                         android:textColor="?android:textColorPrimary"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <RelativeLayout
